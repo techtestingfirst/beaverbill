@@ -4,11 +4,11 @@
 
 | Phase | Milestone / Feature | Status | Automated Tests | Browser Screenshot | Commit Hash |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | Base App Setup & Roles | Complete | Passed | Captured | `phase-1` |
-| Phase 1 | IPAM & Infrastructure DocTypes | Complete | Passed | Captured | `phase-1` |
-| **Phase 2** | Product Groups & Catalog DocTypes | Complete | Passed | Captured | `phase-2` |
-| Phase 2 | Configurable Options & Addons | Complete | Passed | Captured | `phase-2` |
-| Phase 2 | Discount & Promo Code Engine | Complete | Passed | Captured | `phase-2` |
+| **Phase 1** | Base App Setup & Roles | Pending | Pending | Pending | - |
+| Phase 1 | IPAM & Infrastructure DocTypes | Pending | Pending | Pending | - |
+| **Phase 2** | Product Groups & Catalog DocTypes | Pending | Pending | Pending | - |
+| Phase 2 | Configurable Options & Addons | Pending | Pending | Pending | - |
+| Phase 2 | Discount & Promo Code Engine | Pending | Pending | Pending | - |
 | **Phase 3** | Orders, Cart & Invoice Workflow | Pending | Pending | Pending | - |
 | Phase 3 | Payments Integration (`frappe/payments`) | Pending | Pending | Pending | - |
 | Phase 3 | Recurring Subscriptions & Dunning Scheduler | Pending | Pending | Pending | - |
@@ -33,16 +33,12 @@
 
 ### Step 1: Foundation & Infrastructure Architecture
 - **Objective:** Configure app modules, user roles (`Hosting Customer`, `Hosting Support`, `Hosting Admin`), and core infrastructure models (`Hosting Provider Account`, `Server Node`, `IPAM Subnet`, `IPAM IP Address`, `Datacenter Asset`).
-- **Target Site:** `beaverbill.localhost:8000`
+- **Target Site:** `beaver.localhost:8000`
 - **Verification Plan:**
   - Run unit tests for IP allocation and infrastructure doc creation.
   - Capture browser screenshots of desk forms and list views.
   - Update `progress.md` and commit.
 
-### Step 2: Product Groups, Catalog & Promo Engine
-- **Objective:** Implement Product Groups, Hosting Products, Configurable Options, Addons, and the Discount & Promo Code Engine.
-- **Target Site:** `beaverbill.localhost:8000`
-- **Verification Plan:**
-  - Run tests for promo code validation and discount calculation.
-  - Capture browser screenshots of catalog and promo configuration.
-  - Update `progress.md` and commit.
+---
+
+*Note: As each item is completed, this file will record test outcomes, screenshot reference paths, and git commit hashes.*
