@@ -6,12 +6,12 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Phase 1** | Base App Setup & Roles | Completed | Passed | Verified | e1a2b3c |
 | Phase 1 | IPAM & Infrastructure DocTypes | Completed | Passed | Verified | e1a2b3c |
-| **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | - |
-| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | - |
-| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | - |
-| **Phase 3** | Orders, Cart & Invoice Workflow | Pending | Pending | Pending | - |
-| Phase 3 | Payments Integration (`frappe/payments`) | Pending | Pending | Pending | - |
-| Phase 3 | Recurring Subscriptions & Dunning Scheduler | Pending | Pending | Pending | - |
+| **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | f4956a0 |
+| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | f4956a0 |
+| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | f4956a0 |
+| **Phase 3** | Orders, Cart & Invoice Workflow | Completed | Passed | Verified | - |
+| Phase 3 | Payments Integration (`frappe/payments`) | Completed | Passed | Verified | - |
+| Phase 3 | Recurring Subscriptions & Dunning Scheduler | Completed | Passed | Verified | - |
 | **Phase 4** | Service Upgrade & Downgrade Proration Engine | Pending | Pending | Pending | - |
 | Phase 4 | Automated Modification & Resizing Actions | Pending | Pending | Pending | - |
 | **Phase 5** | Base Provisioning Driver Framework | Pending | Pending | Pending | - |
@@ -47,6 +47,14 @@
   - Run unit tests for pricing calculations, configurable options, addons, and promo code validation.
   - Update `progress.md` and commit.
 - **Status:** Completed. Created `Hosting Product Group`, `Hosting Product`, `Hosting Configurable Option`, `Hosting Product Addon`, and `Hosting Promo Code` DocTypes. Implemented `calculate_total_price` service and comprehensive unit tests verifying base pricing, options, addons, and promo code restrictions/limits.
+
+### Step 3: Order Management, Payments & Subscriptions
+- **Objective:** Implement orders, invoices, subscriptions, and customer credit transactions with automated renewal and dunning scheduler.
+- **Target Site:** `beaver.localhost:8000`
+- **Verification Plan:**
+  - Run unit tests for checkout, payment processing, subscription creation, auto-renewal via wallet balance, and dunning suspension.
+  - Update `progress.md` and commit.
+- **Status:** Completed. Created `Hosting Order`, `Hosting Order Item`, `Hosting Invoice`, `Hosting Subscription`, and `Customer Credit Transaction` DocTypes. Implemented payment processing, wallet balance tracking, and a daily renewal scheduler with dunning logic. All unit tests are passing.
 
 ---
 
