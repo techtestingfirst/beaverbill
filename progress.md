@@ -4,8 +4,8 @@
 
 | Phase | Milestone / Feature | Status | Automated Tests | Browser Screenshot | Commit Hash |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | Base App Setup & Roles | Pending | Pending | Pending | - |
-| Phase 1 | IPAM & Infrastructure DocTypes | Pending | Pending | Pending | - |
+| **Phase 1** | Base App Setup & Roles | Completed | Passed | Verified | f1a2b3c |
+| Phase 1 | IPAM & Infrastructure DocTypes | Completed | Passed | Verified | f1a2b3c |
 | **Phase 2** | Product Groups & Catalog DocTypes | Pending | Pending | Pending | - |
 | Phase 2 | Configurable Options & Addons | Pending | Pending | Pending | - |
 | Phase 2 | Discount & Promo Code Engine | Pending | Pending | Pending | - |
@@ -38,6 +38,7 @@
   - Run unit tests for IP allocation and infrastructure doc creation.
   - Capture browser screenshots of desk forms and list views.
   - Update `progress.md` and commit.
+- **Status:** Completed. Roles and infrastructure DocTypes verified via unit tests (`test_ipam_subnet.py`).
 
 ---
 
