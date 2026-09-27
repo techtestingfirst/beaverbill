@@ -9,11 +9,11 @@
 | **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | f4956a0 |
 | Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | f4956a0 |
 | Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | f4956a0 |
-| **Phase 3** | Orders, Cart & Invoice Workflow | Completed | Passed | Verified | - |
-| Phase 3 | Payments Integration (`frappe/payments`) | Completed | Passed | Verified | - |
-| Phase 3 | Recurring Subscriptions & Dunning Scheduler | Completed | Passed | Verified | - |
-| **Phase 4** | Service Upgrade & Downgrade Proration Engine | Pending | Pending | Pending | - |
-| Phase 4 | Automated Modification & Resizing Actions | Pending | Pending | Pending | - |
+| **Phase 3** | Orders, Cart & Invoice Workflow | Completed | Passed | Verified | eafe457 |
+| Phase 3 | Payments Integration (`frappe/payments`) | Completed | Passed | Verified | eafe457 |
+| Phase 3 | Recurring Subscriptions & Dunning Scheduler | Completed | Passed | Verified | eafe457 |
+| **Phase 4** | Service Upgrade & Downgrade Proration Engine | Completed | Passed | Verified | - |
+| Phase 4 | Automated Modification & Resizing Actions | Completed | Passed | Verified | - |
 | **Phase 5** | Base Provisioning Driver Framework | Pending | Pending | Pending | - |
 | Phase 5 | cPanel/WHM & DirectAdmin Adapters | Pending | Pending | Pending | - |
 | Phase 5 | Hetzner Cloud & OVHcloud Adapters | Pending | Pending | Pending | - |
@@ -55,6 +55,14 @@
   - Run unit tests for checkout, payment processing, subscription creation, auto-renewal via wallet balance, and dunning suspension.
   - Update `progress.md` and commit.
 - **Status:** Completed. Created `Hosting Order`, `Hosting Order Item`, `Hosting Invoice`, `Hosting Subscription`, and `Customer Credit Transaction` DocTypes. Implemented payment processing, wallet balance tracking, and a daily renewal scheduler with dunning logic. All unit tests are passing.
+
+### Step 4: Upgrade, Downgrade & Proration Engine
+- **Objective:** Implement service modification requests with automated proration calculations, invoice generation for upgrades, and credit notes for downgrades.
+- **Target Site:** `beaver.localhost:8000`
+- **Verification Plan:**
+  - Run unit tests for upgrade proration, downgrade proration, invoice generation, credit note creation, and subscription updates.
+  - Update `progress.md` and commit.
+- **Status:** Completed. Created `Hosting Service Modification Request` DocType. Implemented proration mathematics, automated invoice/credit note generation, and subscription updates with simulated provisioning hooks. All unit tests are passing.
 
 ---
 
