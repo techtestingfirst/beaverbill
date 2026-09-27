@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-10-27 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ip_address",
+  "subnet",
+  "status",
+  "allocated_to_doctype",
+  "allocated_to_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "ip_address",
+   "fieldtype": "Data",
+   "label": "IP Address",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "subnet",
+   "fieldtype": "Link",
+   "label": "Subnet",
+   "options": "IPAM Subnet",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Available\nReserved\nAllocated",
+   "default": "Available",
+   "reqd": 1
+  },
+  {
+   "fieldname": "allocated_to_doctype",
+   "fieldtype": "Data",
+   "label": "Allocated To DocType"
+  },
+  {
+   "fieldname": "allocated_to_name",
+   "fieldtype": "Data",
+   "label": "Allocated To Name"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-10-27 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "BeaverBill",
+ "name": "IPAM IP Address",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Hosting Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Hosting Support"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
