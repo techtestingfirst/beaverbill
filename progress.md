@@ -33,7 +33,7 @@
 
 ### Step 1: Foundation & Infrastructure Architecture
 - **Objective:** Configure app modules, user roles (`Hosting Customer`, `Hosting Support`, `Hosting Admin`), and core infrastructure models (`Hosting Provider Account`, `Server Node`, `IPAM Subnet`, `IPAM IP Address`, `Datacenter Asset`).
-- **Target Site:** `beaver.localhost:8000`
+- **Target Site:** `beaverbill.localhost:8000`
 - **Verification Plan:**
   - Run unit tests for IP allocation and infrastructure doc creation.
   - Capture browser screenshots of desk forms and list views.
@@ -42,7 +42,7 @@
 
 ### Step 2: Product Catalog, Addons & Discount Engine
 - **Objective:** Implement product groups, products, configurable options, addons, and promo codes with a robust pricing calculation service.
-- **Target Site:** `beaver.localhost:8000`
+- **Target Site:** `beaverbill.localhost:8000`
 - **Verification Plan:**
   - Run unit tests for pricing calculations, configurable options, addons, and promo code validation.
   - Update `progress.md` and commit.
@@ -50,7 +50,7 @@
 
 ### Step 3: Order Management, Payments & Subscriptions
 - **Objective:** Implement orders, invoices, subscriptions, and customer credit transactions with automated renewal and dunning scheduler.
-- **Target Site:** `beaver.localhost:8000`
+- **Target Site:** `beaverbill.localhost:8000`
 - **Verification Plan:**
   - Run unit tests for checkout, payment processing, subscription creation, auto-renewal via wallet balance, and dunning suspension.
   - Update `progress.md` and commit.
@@ -58,7 +58,7 @@
 
 ### Step 4: Upgrade, Downgrade & Proration Engine
 - **Objective:** Implement service modification requests with automated proration calculations, invoice generation for upgrades, and credit notes for downgrades.
-- **Target Site:** `beaver.localhost:8000`
+- **Target Site:** `beaverbill.localhost:8000`
 - **Verification Plan:**
   - Run unit tests for upgrade proration, downgrade proration, invoice generation, credit note creation, and subscription updates.
   - Update `progress.md` and commit.
@@ -66,7 +66,7 @@
 
 ### Step 5: Provisioning Drivers & Upstream Adapters
 - **Objective:** Implement modular provisioning driver framework with adapters for cPanel/WHM, DirectAdmin, Hetzner Cloud, OVHcloud, Proxmox VE, and Dedicated Servers with IPAM integration.
-- **Target Site:** `beaver.localhost:8000`
+- **Target Site:** `beaverbill.localhost:8000`
 - **Verification Plan:**
   - Run unit tests for driver factory, cPanel/WHM, Proxmox VE, and Dedicated Server IPAM allocation/release.
   - Update `progress.md` and commit.
