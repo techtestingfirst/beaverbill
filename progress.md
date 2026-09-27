@@ -6,9 +6,9 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Phase 1** | Base App Setup & Roles | Completed | Passed | Verified | cfa0e32 |
 | Phase 1 | IPAM & Infrastructure DocTypes | Completed | Passed | Verified | cfa0e32 |
-| **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | phase2-impl |
-| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | phase2-impl |
-| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | phase2-impl |
+| **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | 7f61402 |
+| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | 7f61402 |
+| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | 7f61402 |
 | **Phase 3** | Orders, Cart & Invoice Workflow | Pending | Pending | Pending | - |
 | Phase 3 | Payments Integration (`frappe/payments`) | Pending | Pending | Pending | - |
 | Phase 3 | Recurring Subscriptions & Dunning Scheduler | Pending | Pending | Pending | - |
@@ -47,7 +47,7 @@
   - Run unit tests for promo code validation and pricing calculations across billing cycles.
   - Verify product group and configurable option structures.
   - Update `progress.md` and commit.
-- **Status:** Completed. Catalog DocTypes, Configurable Options, Addons, and Promo Code Engine implemented and verified.
+- **Status:** Completed. Catalog DocTypes, Configurable Options, Addons, and Promo Code Engine implemented and verified. Commit hash: `7f61402`.
 
 ---
 
