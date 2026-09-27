@@ -9,7 +9,7 @@ Beaver Bill is an automated billing and service provisioning application for web
 - Add-on services: domains, SSL certificates, additional IPs, floating storage, backup storage.
 
 ### Core Integrations
-- **Backend**: Frappe Framework (`beaverbill` app) on site `beaverbill.localhost`.
+- **Backend**: Frappe Framework (`beaverbill` app) on site `beaverbill.localhost:8000`.
 - **Payments**: `frappe/payments` integration for gateways (Stripe, PayPal, Razorpay) and recurring auto-charge.
 - **Support & Ticketing**: `frappe/helpdesk` integration with customer account syncing.
 - **Customer Portal**: `frappe-ui` (Vue 3 + Tailwind CSS SPA).
@@ -77,4 +77,53 @@ Beaver Bill is an automated billing and service provisioning application for web
 ### Phase 1: Base Configuration, Roles & Infrastructure Setup
 - Verify app configuration, hooks, modules, dependencies.
 - Define roles: `Hosting Customer`, `Hosting Support`, `Hosting Admin`.
-- Infrastructure DocTypes:
+- Infrastructure DocTypes: `Hosting Provider Account`, `Server Node`, `IPAM Subnet`, `IPAM IP Address`, `Datacenter Asset`.
+- Test infrastructure creation and validation.
+- Capture desk configuration screenshots.
+
+### Phase 2: Product Catalog, Addons & Discount Engine
+- DocTypes: `Hosting Product Group`, `Hosting Product`, `Hosting Configurable Option`, `Hosting Product Addon`.
+- Discount DocType: `Hosting Promo Code` and validation service (percentage, fixed amount, recurring, limits).
+- Pricing calculation service with multi-currency and billing cycle support.
+- Unit tests for discount logic, cycle calculations, and limit enforcement.
+
+### Phase 3: Order Management, Payments & Subscriptions
+- DocTypes: `Hosting Order`, `Hosting Order Item`, `Hosting Invoice`, `Hosting Subscription`, `Customer Credit Transaction`.
+- Integration with `frappe/payments`.
+- Subscription lifecycle scheduler (daily check, dunning, auto-charge, suspension, cancellation).
+- Automated tests for checkout, payment webhook handling, and renewal triggers.
+- Visual verification of order and invoice records.
+
+### Phase 4: Upgrade and Downgrade Engine
+- DocType: `Hosting Service Modification Request`.
+- Proration engine: calculate unused period credit vs new product cost.
+- Automated generation of invoice (upgrade) or credit note (downgrade).
+- Provisioning hook integration to apply changes dynamically on the hypervisor/panel.
+- Tests for proration mathematics and state transitions.
+
+### Phase 5: Provisioning Drivers & Upstream Adapters
+- Driver architecture: `BaseProvisioningDriver` interface.
+- Implement WHM/cPanel driver (create account, suspend, unsuspend, terminate, change package).
+- Implement DirectAdmin driver.
+- Implement Hetzner Cloud driver (create server, reboot, resize, delete).
+- Implement OVHcloud driver.
+- Implement Proxmox VE driver (create VM/LXC, power controls, VNC ticket).
+- Implement Dedicated Server & IPAM allocation driver (MAC, IP assignment, rescue mode).
+- Provisioning background queue and error recovery.
+
+### Phase 6: Customer Portal (`frappe-ui`) & Helpdesk Bridge
+- Setup `frappe-ui` SPA frontend in `beaverbill`.
+- Customer auth, dashboard, and service details.
+- Self-service actions: power controls, VNC console, root password reset, upgrade/downgrade wizard.
+- Coupon input and checkout flow in the portal.
+- Frappe Helpdesk customer ticketing portal embed/bridge.
+- Browser screenshot verification across all desktop and mobile views.
+
+### Phase 7: End-to-End Testing & Security Hardening
+- Complete integration tests:
+  - Customer registers → browses catalog → applies discount → checks out → payment confirmed → service auto-provisioned.
+  - Customer requests upgrade → pays prorated invoice → service resized.
+  - Renewal failure simulation → grace period → service suspended → service terminated.
+- Security audit against OWASP, safe execution, parameter sanitization, and access checks.
+- Documentation and final deployment verification.
+````

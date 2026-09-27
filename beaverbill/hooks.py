@@ -17,3 +17,8 @@ after_install = "beaverbill.setup.after_install"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/beaverbill/css/beaverbill.css"
 # app_include_js = "/assets/beaverbill/js/beaverbill.js"
+
+# Load the frontend on every path under /beaverbill
+website_route_rules = [
+	{"from_route": "/beaverbill/<path:app_path>", "to_route": "beaverbill"},
+]
