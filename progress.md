@@ -4,11 +4,11 @@
 
 | Phase | Milestone / Feature | Status | Automated Tests | Browser Screenshot | Commit Hash |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | Base App Setup & Roles | Completed | Passed | Verified | cfa0e32 |
-| Phase 1 | IPAM & Infrastructure DocTypes | Completed | Passed | Verified | cfa0e32 |
-| **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | 7f61402 |
-| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | 7f61402 |
-| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | 7f61402 |
+| **Phase 1** | Base App Setup & Roles | Pending | Pending | Pending | - |
+| Phase 1 | IPAM & Infrastructure DocTypes | Pending | Pending | Pending | - |
+| **Phase 2** | Product Groups & Catalog DocTypes | Pending | Pending | Pending | - |
+| Phase 2 | Configurable Options & Addons | Pending | Pending | Pending | - |
+| Phase 2 | Discount & Promo Code Engine | Pending | Pending | Pending | - |
 | **Phase 3** | Orders, Cart & Invoice Workflow | Pending | Pending | Pending | - |
 | Phase 3 | Payments Integration (`frappe/payments`) | Pending | Pending | Pending | - |
 | Phase 3 | Recurring Subscriptions & Dunning Scheduler | Pending | Pending | Pending | - |
@@ -38,17 +38,7 @@
   - Run unit tests for IP allocation and infrastructure doc creation.
   - Capture browser screenshots of desk forms and list views.
   - Update `progress.md` and commit.
-- **Status:** Completed. Roles and infrastructure DocTypes verified via unit tests (`test_ipam_subnet.py`). Commit hash: `cfa0e32`.
-
-### Step 2: Product Catalog, Addons & Discount Engine
-- **Objective:** Implement catalog DocTypes (`Hosting Product Group`, `Hosting Product`, `Hosting Configurable Option`, `Hosting Product Addon`) and the Discount & Promo Code Engine (`Hosting Promo Code` with validation logic for percentage, fixed amount, recurring limits, and customer restrictions).
-- **Target Site:** `beaver.localhost:8000`
-- **Verification Plan:**
-  - Run unit tests for promo code validation and pricing calculations across billing cycles.
-  - Verify product group and configurable option structures.
-  - Update `progress.md` and commit.
-- **Status:** Completed. Catalog DocTypes, Configurable Options, Addons, and Promo Code Engine implemented and verified. Commit hash: `7f61402`.
 
 ---
 
-*Note: As each item is completed, this file will record test outcomes, screenshot reference paths, and git commit hashes.*
+*Note: As each item is completed, this file will record test outcomes, screenshot reference paths, completion msg and git commit hashes.*
