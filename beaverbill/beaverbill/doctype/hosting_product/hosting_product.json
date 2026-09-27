@@ -1,7 +1,8 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00.000000",
+ "autoname": "field:product_name",
+ "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -17,6 +18,7 @@
   {
    "fieldname": "product_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Product Name",
    "reqd": 1,
    "unique": 1
@@ -24,6 +26,7 @@
   {
    "fieldname": "product_group",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Product Group",
    "options": "Hosting Product Group",
    "reqd": 1
@@ -31,6 +34,7 @@
   {
    "fieldname": "billing_cycle",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Billing Cycle",
    "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
    "reqd": 1
@@ -38,15 +42,16 @@
   {
    "fieldname": "price",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Price",
    "reqd": 1
   },
   {
+   "default": "USD",
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
-   "options": "Currency",
-   "default": "USD"
+   "options": "Currency"
   },
   {
    "fieldname": "description",
@@ -56,7 +61,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-01 00:00:00.000000",
+ "modified": "2026-09-27 19:49:51.027622",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Product",
@@ -75,6 +80,8 @@
    "write": 1
   }
  ],
- "states": [],
- "autoname": "field:product_name"
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
 }

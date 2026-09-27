@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00.000000",
+ "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -18,6 +18,7 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Customer",
    "options": "User",
    "reqd": 1
@@ -25,15 +26,17 @@
   {
    "fieldname": "order_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Order Date",
    "reqd": 1
   },
   {
+   "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Status",
    "options": "Pending\nPaid\nCancelled",
-   "default": "Pending",
    "reqd": 1
   },
   {
@@ -43,15 +46,16 @@
    "options": "Hosting Promo Code"
   },
   {
+   "default": "USD",
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
-   "options": "Currency",
-   "default": "USD"
+   "options": "Currency"
   },
   {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Total Amount",
    "reqd": 1
   },
@@ -65,7 +69,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-01 00:00:00.000000",
+ "modified": "2026-09-27 19:48:40.994276",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Order",
@@ -84,5 +88,8 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
  "states": []
 }

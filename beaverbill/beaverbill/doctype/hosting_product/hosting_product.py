@@ -2,6 +2,22 @@ import frappe
 from frappe.model.document import Document
 
 class HostingProduct(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		billing_cycle: DF.Literal["Monthly", "Quarterly", "Semi-Annually", "Annually", "Biennially", "Triennially"]
+		currency: DF.Link | None
+		description: DF.Text | None
+		price: DF.Currency
+		product_group: DF.Link
+		product_name: DF.Data
+	# end: auto-generated types
+
 	pass
 
 @frappe.whitelist()

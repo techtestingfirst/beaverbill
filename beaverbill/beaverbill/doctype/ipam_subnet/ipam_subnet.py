@@ -3,6 +3,20 @@ from frappe.model.document import Document
 import ipaddress
 
 class IPAMSubnet(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		cidr: DF.Data
+		dns_servers: DF.Text | None
+		gateway: DF.Data | None
+		subnet_name: DF.Data
+	# end: auto-generated types
+
 	def after_insert(self):
 		# Automatically generate IP addresses for the subnet
 		try:

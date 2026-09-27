@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00.000000",
+ "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -19,6 +19,7 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Customer",
    "options": "User",
    "reqd": 1
@@ -26,21 +27,24 @@
   {
    "fieldname": "product",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Product",
    "options": "Hosting Product",
    "reqd": 1
   },
   {
+   "default": "Active",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Status",
    "options": "Active\nSuspended\nTerminated",
-   "default": "Active",
    "reqd": 1
   },
   {
    "fieldname": "billing_cycle",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Billing Cycle",
    "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
    "reqd": 1
@@ -58,11 +62,11 @@
    "reqd": 1
   },
   {
+   "default": "USD",
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
-   "options": "Currency",
-   "default": "USD"
+   "options": "Currency"
   },
   {
    "fieldname": "order",
@@ -73,7 +77,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-01 00:00:00.000000",
+ "modified": "2026-09-27 19:51:19.126055",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Subscription",
@@ -92,5 +96,8 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
  "states": []
 }

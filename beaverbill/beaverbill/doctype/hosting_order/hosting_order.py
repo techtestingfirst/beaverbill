@@ -3,6 +3,24 @@ from frappe.model.document import Document
 from frappe.utils import today, add_months
 
 class HostingOrder(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from beaverbill.beaverbill.doctype.hosting_order_item.hosting_order_item import HostingOrderItem
+		from frappe.types import DF
+
+		currency: DF.Link | None
+		customer: DF.Link
+		items: DF.Table[HostingOrderItem]
+		order_date: DF.Date
+		promo_code: DF.Link | None
+		status: DF.Literal["Pending", "Paid", "Cancelled"]
+		total_amount: DF.Currency
+	# end: auto-generated types
+
 	def on_submit(self):
 		pass
 

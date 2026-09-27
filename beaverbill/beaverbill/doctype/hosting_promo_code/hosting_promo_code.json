@@ -1,7 +1,8 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00.000000",
+ "autoname": "field:code",
+ "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -19,6 +20,7 @@
   {
    "fieldname": "code",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Promo Code",
    "reqd": 1,
    "unique": 1
@@ -26,6 +28,7 @@
   {
    "fieldname": "discount_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Discount Type",
    "options": "Percentage\nFixed Amount",
    "reqd": 1
@@ -33,10 +36,12 @@
   {
    "fieldname": "discount_value",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Discount Value",
    "reqd": 1
   },
   {
+   "default": "0",
    "fieldname": "is_recurring",
    "fieldtype": "Check",
    "label": "Is Recurring"
@@ -52,10 +57,10 @@
    "label": "Usage Limit"
   },
   {
+   "default": "0",
    "fieldname": "used_count",
    "fieldtype": "Int",
    "label": "Used Count",
-   "default": 0,
    "read_only": 1
   },
   {
@@ -67,7 +72,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-01 00:00:00.000000",
+ "modified": "2026-09-27 19:50:37.631189",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Promo Code",
@@ -86,6 +91,8 @@
    "write": 1
   }
  ],
- "states": [],
- "autoname": "field:code"
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
 }

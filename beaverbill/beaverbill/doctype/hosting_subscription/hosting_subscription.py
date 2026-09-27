@@ -3,6 +3,24 @@ from frappe.model.document import Document
 from frappe.utils import today, getdate, add_months
 
 class HostingSubscription(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		amount: DF.Currency
+		billing_cycle: DF.Literal["Monthly", "Quarterly", "Semi-Annually", "Annually", "Biennially", "Triennially"]
+		currency: DF.Link | None
+		customer: DF.Link
+		next_renewal_date: DF.Date
+		order: DF.Link | None
+		product: DF.Link
+		status: DF.Literal["Active", "Suspended", "Terminated"]
+	# end: auto-generated types
+
 	pass
 
 def process_subscription_renewals():

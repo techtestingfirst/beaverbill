@@ -2,4 +2,17 @@ import frappe
 from frappe.model.document import Document
 
 class HostingProductAddon(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		addon_name: DF.Data
+		price: DF.Currency
+		product: DF.Link
+	# end: auto-generated types
+
 	pass

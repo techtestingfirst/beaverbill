@@ -3,6 +3,22 @@ from frappe.model.document import Document
 from frappe.utils import today, getdate, date_diff, add_months
 
 class HostingServiceModificationRequest(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		credit_transaction: DF.Link | None
+		invoice: DF.Link | None
+		new_product: DF.Link
+		proration_amount: DF.Currency
+		status: DF.Literal["Pending", "Approved", "Completed", "Rejected"]
+		subscription: DF.Link
+	# end: auto-generated types
+
 	def validate(self):
 		if self.status == "Pending":
 			self.calculate_proration()

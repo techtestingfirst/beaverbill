@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00.000000",
+ "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -18,6 +18,7 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Customer",
    "options": "User",
    "reqd": 1
@@ -25,21 +26,24 @@
   {
    "fieldname": "invoice_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Invoice Date",
    "reqd": 1
   },
   {
    "fieldname": "due_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Due Date",
    "reqd": 1
   },
   {
+   "default": "Unpaid",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Status",
    "options": "Unpaid\nPaid\nOverdue\nCancelled",
-   "default": "Unpaid",
    "reqd": 1
   },
   {
@@ -49,11 +53,11 @@
    "reqd": 1
   },
   {
+   "default": "USD",
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
-   "options": "Currency",
-   "default": "USD"
+   "options": "Currency"
   },
   {
    "fieldname": "order",
@@ -64,7 +68,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-01 00:00:00.000000",
+ "modified": "2026-09-27 19:49:29.128488",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Invoice",
@@ -83,5 +87,8 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
  "states": []
 }

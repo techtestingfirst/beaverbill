@@ -1,7 +1,8 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00.000000",
+ "autoname": "field:product_group_name",
+ "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -13,6 +14,7 @@
   {
    "fieldname": "product_group_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Product Group Name",
    "reqd": 1,
    "unique": 1
@@ -25,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-01 00:00:00.000000",
+ "modified": "2026-09-27 19:52:23.067954",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Product Group",
@@ -44,6 +46,8 @@
    "write": 1
   }
  ],
- "states": [],
- "autoname": "field:product_group_name"
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
 }

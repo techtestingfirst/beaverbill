@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-10-27 12:00:00.000000",
+ "creation": "2023-10-27 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -16,6 +16,7 @@
   {
    "fieldname": "asset_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Asset Name",
    "reqd": 1,
    "unique": 1
@@ -23,6 +24,7 @@
   {
    "fieldname": "asset_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Asset Type",
    "options": "Rack\nPDU\nSwitch\nPatch Panel\nUPS",
    "reqd": 1
@@ -38,16 +40,16 @@
    "label": "U Position"
   },
   {
+   "default": "Active",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nSpare\nFaulty",
-   "default": "Active"
+   "options": "Active\nSpare\nFaulty"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-10-27 12:00:00.000000",
+ "modified": "2026-09-27 19:54:40.872903",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Datacenter Asset",
@@ -70,6 +72,7 @@
    "role": "Hosting Support"
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

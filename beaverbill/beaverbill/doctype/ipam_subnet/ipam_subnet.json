@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-10-27 12:00:00.000000",
+ "creation": "2023-10-27 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -15,6 +15,7 @@
   {
    "fieldname": "subnet_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Subnet Name",
    "reqd": 1,
    "unique": 1
@@ -22,6 +23,7 @@
   {
    "fieldname": "cidr",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "CIDR",
    "reqd": 1
   },
@@ -38,7 +40,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-10-27 12:00:00.000000",
+ "modified": "2026-09-27 19:54:15.367900",
  "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "IPAM Subnet",
@@ -61,6 +63,7 @@
    "role": "Hosting Support"
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

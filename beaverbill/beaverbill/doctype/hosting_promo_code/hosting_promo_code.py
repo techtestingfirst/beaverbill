@@ -3,6 +3,24 @@ from frappe.model.document import Document
 from frappe.utils import getdate, today
 
 class HostingPromoCode(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		code: DF.Data
+		discount_type: DF.Literal["Percentage", "Fixed Amount"]
+		discount_value: DF.Float
+		expiration_date: DF.Date | None
+		is_recurring: DF.Check
+		product_group_restriction: DF.Link | None
+		usage_limit: DF.Int
+		used_count: DF.Int
+	# end: auto-generated types
+
 	def validate_promo(self, product_name):
 		# Check expiration
 		if self.expiration_date and getdate(self.expiration_date) < getdate(today()):
