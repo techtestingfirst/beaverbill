@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "code",
+  "discount_type",
+  "discount_value",
+  "is_recurring",
+  "expiration_date",
+  "usage_limit",
+  "used_count",
+  "product_group_restriction"
+ ],
+ "fields": [
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Promo Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "discount_type",
+   "fieldtype": "Select",
+   "label": "Discount Type",
+   "options": "Percentage\nFixed Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "discount_value",
+   "fieldtype": "Float",
+   "label": "Discount Value",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_recurring",
+   "fieldtype": "Check",
+   "label": "Is Recurring"
+  },
+  {
+   "fieldname": "expiration_date",
+   "fieldtype": "Date",
+   "label": "Expiration Date"
+  },
+  {
+   "fieldname": "usage_limit",
+   "fieldtype": "Int",
+   "label": "Usage Limit"
+  },
+  {
+   "fieldname": "used_count",
+   "fieldtype": "Int",
+   "label": "Used Count",
+   "default": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "product_group_restriction",
+   "fieldtype": "Link",
+   "label": "Product Group Restriction",
+   "options": "Hosting Product Group"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "BeaverBill",
+ "name": "Hosting Promo Code",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "states": [],
+ "autoname": "field:code"
+}
