@@ -4,8 +4,8 @@
 
 | Phase | Milestone / Feature | Status | Automated Tests | Browser Screenshot | Commit Hash |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | Base App Setup & Roles | Pending | Pending | Pending | - |
-| Phase 1 | IPAM & Infrastructure DocTypes | Pending | Pending | Pending | - |
+| **Phase 1** | Base App Setup & Roles | Complete | Passed | Captured | `phase-1` |
+| Phase 1 | IPAM & Infrastructure DocTypes | Complete | Passed | Captured | `phase-1` |
 | **Phase 2** | Product Groups & Catalog DocTypes | Pending | Pending | Pending | - |
 | Phase 2 | Configurable Options & Addons | Pending | Pending | Pending | - |
 | Phase 2 | Discount & Promo Code Engine | Pending | Pending | Pending | - |
