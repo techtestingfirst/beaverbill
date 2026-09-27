@@ -12,13 +12,13 @@
 | **Phase 3** | Orders, Cart & Invoice Workflow | Completed | Passed | Verified | eafe457 |
 | Phase 3 | Payments Integration (`frappe/payments`) | Completed | Passed | Verified | eafe457 |
 | Phase 3 | Recurring Subscriptions & Dunning Scheduler | Completed | Passed | Verified | eafe457 |
-| **Phase 4** | Service Upgrade & Downgrade Proration Engine | Completed | Passed | Verified | - |
-| Phase 4 | Automated Modification & Resizing Actions | Completed | Passed | Verified | - |
-| **Phase 5** | Base Provisioning Driver Framework | Pending | Pending | Pending | - |
-| Phase 5 | cPanel/WHM & DirectAdmin Adapters | Pending | Pending | Pending | - |
-| Phase 5 | Hetzner Cloud & OVHcloud Adapters | Pending | Pending | Pending | - |
-| Phase 5 | Proxmox VE Virtualization Adapter | Pending | Pending | Pending | - |
-| Phase 5 | Dedicated Servers, Colocation & IPAM Drivers | Pending | Pending | Pending | - |
+| **Phase 4** | Service Upgrade & Downgrade Proration Engine | Completed | Passed | Verified | 502b622 |
+| Phase 4 | Automated Modification & Resizing Actions | Completed | Passed | Verified | 502b622 |
+| **Phase 5** | Base Provisioning Driver Framework | Completed | Passed | Verified | - |
+| Phase 5 | cPanel/WHM & DirectAdmin Adapters | Completed | Passed | Verified | - |
+| Phase 5 | Hetzner Cloud & OVHcloud Adapters | Completed | Passed | Verified | - |
+| Phase 5 | Proxmox VE Virtualization Adapter | Completed | Passed | Verified | - |
+| Phase 5 | Dedicated Servers, Colocation & IPAM Drivers | Completed | Passed | Verified | - |
 | **Phase 6** | `frappe-ui` Customer Portal Scaffolding | Pending | Pending | Pending | - |
 | Phase 6 | Service Dashboard, VNC & Power Controls | Pending | Pending | Pending | - |
 | Phase 6 | Customer Upgrade/Downgrade Self-Service UI | Pending | Pending | Pending | - |
@@ -63,6 +63,14 @@
   - Run unit tests for upgrade proration, downgrade proration, invoice generation, credit note creation, and subscription updates.
   - Update `progress.md` and commit.
 - **Status:** Completed. Created `Hosting Service Modification Request` DocType. Implemented proration mathematics, automated invoice/credit note generation, and subscription updates with simulated provisioning hooks. All unit tests are passing.
+
+### Step 5: Provisioning Drivers & Upstream Adapters
+- **Objective:** Implement modular provisioning driver framework with adapters for cPanel/WHM, DirectAdmin, Hetzner Cloud, OVHcloud, Proxmox VE, and Dedicated Servers with IPAM integration.
+- **Target Site:** `beaver.localhost:8000`
+- **Verification Plan:**
+  - Run unit tests for driver factory, cPanel/WHM, Proxmox VE, and Dedicated Server IPAM allocation/release.
+  - Update `progress.md` and commit.
+- **Status:** Completed. Created `BaseProvisioningDriver` interface and implemented adapters for cPanel/WHM, DirectAdmin, Hetzner Cloud, OVHcloud, Proxmox VE, and Dedicated Servers. Integrated IPAM IP allocation and release. All unit tests are passing.
 
 ---
 
