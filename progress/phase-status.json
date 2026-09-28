@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-11",
+  "current_phase": "phase-12",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -125,15 +125,18 @@
     "phase-11": {
       "id": "phase-11",
       "title": "frappe-ui Customer Portal",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "0100062f29a08806f35f97089790d948f85615f5",
+      "completed_at": "2026-09-28T18:59:40+00:00",
+      "evidence": [
+        "docs/phase-11-portal-ui.md",
+        "docs/evidence/phase-11-baseline.json"
+      ]
     },
     "phase-12": {
       "id": "phase-12",
       "title": "Helpdesk Integration",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
