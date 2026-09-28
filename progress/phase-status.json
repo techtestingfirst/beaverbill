@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-15",
+  "current_phase": "phase-16",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -169,15 +169,18 @@
     "phase-15": {
       "id": "phase-15",
       "title": "Observability and Reconciliation",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "d8c76ade8f2d2eb58bf9e342e37d88be7e2898da",
+      "completed_at": "2026-09-28T20:11:00+00:00",
+      "evidence": [
+        "docs/phase-15-observability.md",
+        "docs/evidence/phase-15-baseline.json"
+      ]
     },
     "phase-16": {
       "id": "phase-16",
       "title": "Deployment, Backup, Disaster Recovery, and Release",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
