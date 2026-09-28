@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-13",
+  "current_phase": "phase-15",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -147,23 +147,29 @@
     "phase-13": {
       "id": "phase-13",
       "title": "Security and Compliance",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "3ffa70b02fbf93acbe8a04e652860d36c4f6910c",
+      "completed_at": "2026-09-28T19:37:12+00:00",
+      "evidence": [
+        "docs/phase-13-security.md",
+        "docs/evidence/phase-13-baseline.json"
+      ]
     },
     "phase-14": {
       "id": "phase-14",
       "title": "Testing and Visual Verification",
-      "status": "not_started",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "eb009e080a181923872e9798670b5014670bce51",
+      "completed_at": "2026-09-28T19:52:47+00:00",
+      "evidence": [
+        "docs/phase-14-testing.md",
+        "docs/evidence/phase-14-baseline.json"
+      ]
     },
     "phase-15": {
       "id": "phase-15",
       "title": "Observability and Reconciliation",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
