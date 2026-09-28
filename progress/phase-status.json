@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-2",
+  "current_phase": "phase-3",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -26,15 +26,18 @@
     "phase-2": {
       "id": "phase-2",
       "title": "Catalog, Pricing, Tax, and Discount Compatibility",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "b9ca3368e5e7878b58fba94861310cd70758e947",
+      "completed_at": "2026-09-28T15:47:18+00:00",
+      "evidence": [
+        "docs/phase-2-catalog.md",
+        "docs/evidence/phase-2-baseline.json"
+      ]
     },
     "phase-3": {
       "id": "phase-3",
       "title": "Customer Accounts and Hosting Service Model",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
