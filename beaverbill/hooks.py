@@ -202,11 +202,40 @@ use_json_request_body = True
 permission_query_conditions = {
 	"Hosting Service": "beaverbill.beaverbill.permissions.hosting_service_query_conditions",
 	"Hosting Customer": "beaverbill.beaverbill.permissions.hosting_customer_query_conditions",
+	"Hosting Order": "beaverbill.beaverbill.permissions.hosting_order_query_conditions",
+	"Hosting Invoice": "beaverbill.beaverbill.permissions.hosting_invoice_query_conditions",
+	"Hosting Subscription": "beaverbill.beaverbill.permissions.hosting_subscription_query_conditions",
+	"Hosting Payment Transaction": "beaverbill.beaverbill.permissions.hosting_payment_query_conditions",
+	"Hosting Payment Method": "beaverbill.beaverbill.permissions.hosting_payment_method_query_conditions",
+	"Hosting Customer Contact": "beaverbill.beaverbill.permissions.hosting_contact_query_conditions",
+	"Hosting Domain": "beaverbill.beaverbill.permissions.hosting_domain_query_conditions",
+	"Hosting DNS Record": "beaverbill.beaverbill.permissions.hosting_dns_query_conditions",
+	"SSL Certificate": "beaverbill.beaverbill.permissions.ssl_certificate_query_conditions",
+	"Service Backup": "beaverbill.beaverbill.permissions.service_backup_query_conditions",
+	"Restore Request": "beaverbill.beaverbill.permissions.restore_request_query_conditions",
+	"Service Addon": "beaverbill.beaverbill.permissions.service_addon_query_conditions",
+	"Service Action": "beaverbill.beaverbill.permissions.service_action_query_conditions",
+	"Service Storage Usage": "beaverbill.beaverbill.permissions.service_usage_query_conditions",
+	"Customer Notification": "beaverbill.beaverbill.permissions.customer_notification_query_conditions",
 }
 
 has_permission = {
 	"Hosting Service": "beaverbill.beaverbill.permissions.check_service_ownership",
 	"Hosting Customer": "beaverbill.beaverbill.permissions.check_customer_ownership",
+	"Hosting Order": "beaverbill.beaverbill.permissions.check_order_ownership",
+	"Hosting Customer Contact": "beaverbill.beaverbill.permissions.check_contact_ownership",
+	"Hosting Domain": "beaverbill.beaverbill.permissions.check_domain_ownership",
+	"Hosting DNS Record": "beaverbill.beaverbill.permissions.check_dns_ownership",
+	"SSL Certificate": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
+	"Service Backup": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
+	"Restore Request": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
+	"Service Addon": "beaverbill.beaverbill.permissions.check_addon_ownership",
+	"Service Action": "beaverbill.beaverbill.permissions.check_action_ownership",
+	"Service Storage Usage": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
+	"Hosting Invoice": "beaverbill.beaverbill.permissions.check_invoice_ownership",
+	"Hosting Payment Transaction": "beaverbill.beaverbill.permissions.check_payment_ownership",
+	"Hosting Subscription": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
+	"Customer Notification": "beaverbill.beaverbill.permissions.check_notification_ownership",
 }
 
 # Document Events

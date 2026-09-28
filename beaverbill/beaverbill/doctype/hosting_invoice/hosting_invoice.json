@@ -217,8 +217,10 @@
    "write": 1
   },
   {
+   "create": 1,
    "read": 1,
-   "role": "Hosting Customer"
+   "role": "Hosting Customer",
+   "write": 1
   }
  ],
  "row_format": "Dynamic",

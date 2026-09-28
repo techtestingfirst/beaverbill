@@ -6,67 +6,49 @@
   "editable_grid": 1,
   "engine": "InnoDB",
   "field_order": [
-    "domain",
-    "record_type",
-    "host",
-    "value",
-    "ttl",
-    "priority",
-    "status"
+    "customer",
+    "user",
+    "subject",
+    "message",
+    "read",
+    "created_at"
   ],
   "fields": [
     {
-      "fieldname": "domain",
+      "fieldname": "customer",
       "fieldtype": "Link",
       "in_list_view": 1,
-      "label": "Domain",
-      "options": "Hosting Domain",
-      "reqd": 1
+      "label": "Customer",
+      "options": "Hosting Customer"
     },
     {
-      "default": "A",
-      "fieldname": "record_type",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Type",
-      "options": "A\nAAAA\nCNAME\nMX\nTXT\nSRV\nNS\nCAA",
-      "reqd": 1
+      "fieldname": "user",
+      "fieldtype": "Data",
+      "label": "User"
     },
     {
-      "default": "@",
-      "fieldname": "host",
+      "fieldname": "subject",
       "fieldtype": "Data",
       "in_list_view": 1,
-      "label": "Host",
+      "label": "Subject",
       "reqd": 1
     },
     {
-      "fieldname": "value",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Value",
-      "reqd": 1
-    },
-    {
-      "default": 3600,
-      "fieldname": "ttl",
-      "fieldtype": "Int",
-      "label": "TTL (seconds)"
+      "fieldname": "message",
+      "fieldtype": "Small Text",
+      "label": "Message"
     },
     {
       "default": 0,
-      "fieldname": "priority",
-      "fieldtype": "Int",
-      "label": "Priority (MX/SRV)"
+      "fieldname": "read",
+      "fieldtype": "Check",
+      "in_list_view": 1,
+      "label": "Read"
     },
     {
-      "default": "Active",
-      "fieldname": "status",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Status",
-      "options": "Active\nInactive",
-      "reqd": 1
+      "fieldname": "created_at",
+      "fieldtype": "Datetime",
+      "label": "Created At"
     }
   ],
   "istable": 0,
@@ -74,7 +56,7 @@
   "modified": "2026-09-28 00:00:00",
   "modified_by": "Administrator",
   "module": "BeaverBill",
-  "name": "Hosting DNS Record",
+  "name": "Customer Notification",
   "owner": "Administrator",
   "permissions": [
     {
@@ -105,7 +87,6 @@
       "role": "Hosting Support"
     },
     {
-      "create": 1,
       "read": 1,
       "role": "Hosting Customer",
       "write": 1

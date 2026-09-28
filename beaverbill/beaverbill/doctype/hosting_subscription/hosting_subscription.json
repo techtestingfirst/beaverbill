@@ -260,6 +260,10 @@
       "role": "System Manager",
       "share": 1,
       "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
     }
   ],
   "row_format": "Dynamic",

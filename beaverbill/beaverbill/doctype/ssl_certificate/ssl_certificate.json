@@ -131,6 +131,7 @@
       "role": "Hosting Support"
     },
     {
+      "create": 1,
       "read": 1,
       "role": "Hosting Customer"
     }

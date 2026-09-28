@@ -152,7 +152,8 @@
   },
   {
    "read": 1,
-   "role": "Hosting Customer"
+   "role": "Hosting Customer",
+   "write": 1
   }
  ],
  "sort_field": "modified",

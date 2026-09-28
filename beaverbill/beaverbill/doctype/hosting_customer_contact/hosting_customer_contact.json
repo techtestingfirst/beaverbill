@@ -83,6 +83,13 @@
    "read": 1,
    "role": "Hosting Support",
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "Hosting Customer",
+   "write": 1
   }
  ],
  "sort_field": "modified",

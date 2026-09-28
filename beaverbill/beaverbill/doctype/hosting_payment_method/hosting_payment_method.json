@@ -104,6 +104,10 @@
    "read": 1,
    "report": 1,
    "role": "Hosting Support"
+  },
+  {
+   "read": 1,
+   "role": "Hosting Customer"
   }
  ],
  "sort_field": "modified",

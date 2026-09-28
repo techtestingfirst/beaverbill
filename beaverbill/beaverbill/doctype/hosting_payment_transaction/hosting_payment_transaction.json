@@ -157,6 +157,12 @@
    "read": 1,
    "report": 1,
    "role": "Hosting Support"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Hosting Customer",
+   "write": 1
   }
  ],
  "sort_field": "modified",

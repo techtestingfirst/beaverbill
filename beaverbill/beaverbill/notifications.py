@@ -33,10 +33,37 @@ def notify(customer: str | None, subject: str, message: str, reference_doctype: 
 			).insert(ignore_permissions=True)
 		except Exception:
 			pass
+	_add_portal_notification(customer, subject, message)
 	try:
 		email = customer_email(customer)
 		if email:
 			frappe.sendmail(recipients=[email], subject=subject, message=message)
+	except Exception:
+		pass
+
+
+def _add_portal_notification(customer: str | None, subject: str, message: str) -> None:
+	"""Mirror engine notices into the portal notification feed. Never raises."""
+	try:
+		customer_name = None
+		user = None
+		if customer and frappe.db.exists("Hosting Customer", customer):
+			customer_name = customer
+			user = frappe.db.get_value("Hosting Customer", customer, "primary_user")
+		elif customer and "@" in customer:
+			user = customer if frappe.db.exists("User", customer) else None
+			customer_name = frappe.db.get_value("Hosting Customer", {"primary_user": customer}, "name")
+		if not customer_name and not user:
+			return
+		frappe.get_doc(
+			{
+				"doctype": "Customer Notification",
+				"customer": customer_name,
+				"user": user,
+				"subject": subject[:200],
+				"message": message[:1000],
+			}
+		).insert(ignore_permissions=True)
 	except Exception:
 		pass
 

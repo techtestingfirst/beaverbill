@@ -6,67 +6,45 @@
   "editable_grid": 1,
   "engine": "InnoDB",
   "field_order": [
-    "domain",
-    "record_type",
-    "host",
-    "value",
-    "ttl",
-    "priority",
-    "status"
+    "user",
+    "endpoint",
+    "status",
+    "detail",
+    "at"
   ],
   "fields": [
     {
-      "fieldname": "domain",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Domain",
-      "options": "Hosting Domain",
-      "reqd": 1
-    },
-    {
-      "default": "A",
-      "fieldname": "record_type",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Type",
-      "options": "A\nAAAA\nCNAME\nMX\nTXT\nSRV\nNS\nCAA",
-      "reqd": 1
-    },
-    {
-      "default": "@",
-      "fieldname": "host",
+      "fieldname": "user",
       "fieldtype": "Data",
       "in_list_view": 1,
-      "label": "Host",
+      "label": "User",
       "reqd": 1
     },
     {
-      "fieldname": "value",
+      "fieldname": "endpoint",
       "fieldtype": "Data",
       "in_list_view": 1,
-      "label": "Value",
+      "label": "Endpoint",
       "reqd": 1
     },
     {
-      "default": 3600,
-      "fieldname": "ttl",
-      "fieldtype": "Int",
-      "label": "TTL (seconds)"
-    },
-    {
-      "default": 0,
-      "fieldname": "priority",
-      "fieldtype": "Int",
-      "label": "Priority (MX/SRV)"
-    },
-    {
-      "default": "Active",
+      "default": "OK",
       "fieldname": "status",
       "fieldtype": "Select",
       "in_list_view": 1,
       "label": "Status",
-      "options": "Active\nInactive",
+      "options": "OK\nDenied\nRate Limited\nError",
       "reqd": 1
+    },
+    {
+      "fieldname": "detail",
+      "fieldtype": "Small Text",
+      "label": "Detail"
+    },
+    {
+      "fieldname": "at",
+      "fieldtype": "Datetime",
+      "label": "At"
     }
   ],
   "istable": 0,
@@ -74,7 +52,7 @@
   "modified": "2026-09-28 00:00:00",
   "modified_by": "Administrator",
   "module": "BeaverBill",
-  "name": "Hosting DNS Record",
+  "name": "Portal Audit Event",
   "owner": "Administrator",
   "permissions": [
     {
@@ -103,12 +81,6 @@
     {
       "read": 1,
       "role": "Hosting Support"
-    },
-    {
-      "create": 1,
-      "read": 1,
-      "role": "Hosting Customer",
-      "write": 1
     }
   ],
   "sort_field": "creation",
