@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-3",
+  "current_phase": "phase-4",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -37,15 +37,18 @@
     "phase-3": {
       "id": "phase-3",
       "title": "Customer Accounts and Hosting Service Model",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "41d825ce7b1d1bec3c9f98938c4e8c519094f94c",
+      "completed_at": "2026-09-28T15:58:03+00:00",
+      "evidence": [
+        "docs/phase-3-customer.md",
+        "docs/evidence/phase-3-baseline.json"
+      ]
     },
     "phase-4": {
       "id": "phase-4",
       "title": "Billing, Invoices, Credits, and Financial Ledger",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
