@@ -1,0 +1,11 @@
+{
+  "current_phase": "phase-0",
+  "phases": {
+    "phase-0": {
+      "id": "phase-0",
+      "title": "Automatic Workflow Infrastructure and Baseline",
+      "status": "in_progress",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
