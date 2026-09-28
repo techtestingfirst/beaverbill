@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-12",
+  "current_phase": "phase-13",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -136,15 +136,18 @@
     "phase-12": {
       "id": "phase-12",
       "title": "Helpdesk Integration",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "774612fee312d7f5c0c3446cdc949339563d8299",
+      "completed_at": "2026-09-28T19:22:34+00:00",
+      "evidence": [
+        "docs/phase-12-helpdesk.md",
+        "docs/evidence/phase-12-baseline.json"
+      ]
     },
     "phase-13": {
       "id": "phase-13",
       "title": "Security and Compliance",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
