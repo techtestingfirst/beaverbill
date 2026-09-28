@@ -11,6 +11,7 @@
   "discount_type",
   "discount_value",
   "is_recurring",
+  "applies_to",
   "expiration_date",
   "usage_limit",
   "used_count",
@@ -45,6 +46,14 @@
    "fieldname": "is_recurring",
    "fieldtype": "Check",
    "label": "Is Recurring"
+  },
+  {
+   "default": "All Orders",
+   "fieldname": "applies_to",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Applies To",
+   "options": "All Orders\nFirst Order Only\nRenewals Only\nUpgrades Only"
   },
   {
    "fieldname": "expiration_date",

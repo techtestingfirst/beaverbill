@@ -9,7 +9,11 @@
   "product",
   "qty",
   "price",
-  "total"
+  "total",
+  "base_price",
+  "discount_amount",
+  "billing_cycle",
+  "calculation_snapshot"
  ],
  "fields": [
   {
@@ -41,6 +45,31 @@
    "in_list_view": 1,
    "label": "Total",
    "reqd": 1
+  },
+  {
+   "fieldname": "base_price",
+   "fieldtype": "Currency",
+   "label": "Base Price Snapshot",
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount Snapshot",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billing_cycle",
+   "fieldtype": "Select",
+   "label": "Billing Cycle Snapshot",
+   "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
+   "read_only": 1
+  },
+  {
+   "fieldname": "calculation_snapshot",
+   "fieldtype": "Long Text",
+   "label": "Calculation Snapshot (JSON)",
+   "read_only": 1
   }
  ],
  "istable": 1,

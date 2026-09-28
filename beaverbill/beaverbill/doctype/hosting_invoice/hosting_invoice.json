@@ -10,9 +10,13 @@
   "invoice_date",
   "due_date",
   "status",
+  "subtotal",
+  "discount_amount",
+  "tax_amount",
   "total_amount",
   "currency",
-  "order"
+  "order",
+  "pricing_snapshot"
  ],
  "fields": [
   {
@@ -47,6 +51,24 @@
    "reqd": 1
   },
   {
+   "fieldname": "subtotal",
+   "fieldtype": "Currency",
+   "label": "Subtotal",
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Tax Amount",
+   "read_only": 1
+  },
+  {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
    "label": "Total Amount",
@@ -64,6 +86,12 @@
    "fieldtype": "Link",
    "label": "Order",
    "options": "Hosting Order"
+  },
+  {
+   "fieldname": "pricing_snapshot",
+   "fieldtype": "Long Text",
+   "label": "Pricing Snapshot (JSON)",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,

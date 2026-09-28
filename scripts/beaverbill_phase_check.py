@@ -279,6 +279,32 @@ def check_phase1_reports(root):
     return check
 
 
+def check_phase2_models(root):
+    check = Check("phase2_models")
+    wanted = [
+        "beaverbill/beaverbill/doctype/hosting_product_price/hosting_product_price.json",
+        "beaverbill/beaverbill/doctype/hosting_tax_rule/hosting_tax_rule.json",
+        "beaverbill/beaverbill/doctype/hosting_customer_tax_profile/hosting_customer_tax_profile.json",
+        "beaverbill/beaverbill/doctype/hosting_currency_exchange_rate/hosting_currency_exchange_rate.json",
+        "beaverbill/beaverbill/doctype/hosting_promo_redemption/hosting_promo_redemption.json",
+        "beaverbill/beaverbill/pricing.py",
+    ]
+    missing = [r for r in wanted if not os.path.isfile(repo_path(root, r))]
+    try:
+        with open(repo_path(root, "beaverbill", "patches.txt"), encoding="utf-8") as fh:
+            has_patch = "phase2_seed_product_prices" in fh.read()
+    except OSError:
+        has_patch = False
+    problems = []
+    if missing:
+        problems.append(f"missing: {', '.join(missing)}")
+    if not has_patch:
+        problems.append("phase2 seed patch not registered")
+    check.passed = not problems
+    check.detail = "catalog models and seed patch present" if check.passed else "; ".join(problems)
+    return check
+
+
 def check_phase1_patch(root):
     check = Check("phase1_patch")
     patches_file = repo_path(root, "beaverbill", "patches.txt")
@@ -312,6 +338,14 @@ PHASE_CHECKS = {
         "phase1_reports",
         "phase1_patch",
     ),
+    "phase-2": (
+        "progress_scripts",
+        "erpnext_scan",
+        "git_commit",
+        "existing_tests",
+        "phase2_doc",
+        "phase2_models",
+    ),
 }
 
 ALL_CHECKS = {
@@ -322,6 +356,8 @@ ALL_CHECKS = {
     "evidence": check_evidence,
     "existing_tests": check_tests,
     "phase1_doc": lambda root: sized_doc(root, "docs/phase-1-hardening.md", name="phase1_doc"),
+    "phase2_doc": lambda root: sized_doc(root, "docs/phase-2-catalog.md", name="phase2_doc"),
+    "phase2_models": check_phase2_models,
     "phase1_reports": check_phase1_reports,
     "phase1_patch": check_phase1_patch,
 }

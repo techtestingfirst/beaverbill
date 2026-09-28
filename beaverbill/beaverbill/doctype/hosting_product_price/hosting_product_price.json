@@ -1,0 +1,87 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product",
+  "billing_cycle",
+  "currency",
+  "price",
+  "effective_from",
+  "effective_to"
+ ],
+ "fields": [
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Product",
+   "options": "Hosting Product",
+   "reqd": 1
+  },
+  {
+   "fieldname": "billing_cycle",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Billing Cycle",
+   "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Currency",
+   "options": "Currency",
+   "default": "USD",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price",
+   "reqd": 1
+  },
+  {
+   "fieldname": "effective_from",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Effective From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "effective_to",
+   "fieldtype": "Date",
+   "label": "Effective To"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": ["product", "billing_cycle", "currency", "effective_from"]
+  }
+ ],
+ "links": [],
+ "module": "BeaverBill",
+ "name": "Hosting Product Price",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "effective_from",
+ "sort_order": "DESC",
+ "states": []
+}

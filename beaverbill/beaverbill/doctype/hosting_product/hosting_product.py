@@ -21,53 +21,46 @@ class HostingProduct(Document):
 	pass
 
 @frappe.whitelist()
-def calculate_total_price(product_name, config_options=None, addons=None, promo_code=None):
+def calculate_total_price(
+	product_name: str,
+	config_options: list | None = None,
+	addons: list | None = None,
+	promo_code: str | None = None,
+	billing_cycle: str | None = None,
+	on_date: str | None = None,
+	customer: str | None = None,
+	target_currency: str | None = None,
+	order_context: dict | None = None,
+):
 	"""
 	Calculates the total price for a product with optional configurable options, addons, and promo code.
 	config_options: list of dicts with {"option_name": "...", "qty": 1}
 	addons: list of addon names
+
+	The first four parameters keep the original signature and return shape.
+	Extra keyword parameters add versioned pricing, tax, FX, and snapshots.
 	"""
-	product = frappe.get_doc("Hosting Product", product_name)
-	base_price = float(product.price)
-	total = base_price
+	from beaverbill.beaverbill.pricing import calculate_price
 
-	# Add configurable options
-	if config_options:
-		for opt in config_options:
-			opt_doc = frappe.get_all("Hosting Configurable Option", filters={
-				"product": product_name,
-				"option_name": opt.get("option_name")
-			}, fields=["price_per_unit", "option_type"])
-			if opt_doc:
-				price_per_unit = float(opt_doc[0].price_per_unit or 0)
-				qty = float(opt.get("qty", 1)) if opt_doc[0].option_type == "Quantity" else 1
-				total += price_per_unit * qty
-
-	# Add addons
-	if addons:
-		for addon_name in addons:
-			addon_doc = frappe.get_all("Hosting Product Addon", filters={
-				"product": product_name,
-				"addon_name": addon_name
-			}, fields=["price"])
-			if addon_doc:
-				total += float(addon_doc[0].price or 0)
-
-	# Apply promo code
-	discount = 0.0
-	if promo_code:
-		promo = frappe.get_doc("Hosting Promo Code", promo_code)
-		promo.validate_promo(product_name)
-		if promo.discount_type == "Percentage":
-			discount = total * (float(promo.discount_value) / 100.0)
-		else:
-			discount = float(promo.discount_value)
-		
-		total = max(0.0, total - discount)
-
+	result = calculate_price(
+		product_name,
+		config_options=config_options,
+		addons=addons,
+		promo_code=promo_code,
+		billing_cycle=billing_cycle,
+		on_date=on_date,
+		customer=customer,
+		target_currency=target_currency,
+		order_context=order_context,
+	)
 	return {
-		"base_price": base_price,
-		"discount": discount,
-		"total_price": total,
-		"currency": product.currency
+		"base_price": result["base_price"],
+		"discount": result["discount"],
+		"total_price": result["subtotal"],
+		"currency": result["currency"],
+		"tax_total": result["tax_total"],
+		"grand_total": result["total_price"],
+		"billing_cycle": result["billing_cycle"],
+		"price_source": result["price_source"],
+		"snapshot": result["snapshot"],
 	}
