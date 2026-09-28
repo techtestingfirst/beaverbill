@@ -1,18 +1,21 @@
 {
-  "current_phase": "phase-0",
+  "current_phase": "phase-1",
   "phases": {
     "phase-0": {
       "id": "phase-0",
       "title": "Automatic Workflow Infrastructure and Baseline",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "71e3c94cb9c59f718cdc7e48891a1372c4aef88a",
+      "completed_at": "2026-09-28T15:13:03+00:00",
+      "evidence": [
+        "docs/phase-0-audit.md",
+        "docs/evidence/phase-0-baseline.json"
+      ]
     },
     "phase-1": {
       "id": "phase-1",
       "title": "Foundation and Infrastructure Compatibility Hardening",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
