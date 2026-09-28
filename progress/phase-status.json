@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-4",
+  "current_phase": "phase-5",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -48,15 +48,18 @@
     "phase-4": {
       "id": "phase-4",
       "title": "Billing, Invoices, Credits, and Financial Ledger",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "3c75d2c1857e6fc2000bac4ae5b4ffe079aa04a4",
+      "completed_at": "2026-09-28T16:11:40+00:00",
+      "evidence": [
+        "docs/phase-4-billing.md",
+        "docs/evidence/phase-4-baseline.json"
+      ]
     },
     "phase-5": {
       "id": "phase-5",
       "title": "Payment Gateway and Webhook Reliability",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
