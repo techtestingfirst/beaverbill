@@ -1,78 +1,757 @@
 # Beaver Bill Implementation Progress
 
-## Progress Tracking Matrix
+## 1. How This File Is Updated
 
-| Phase | Milestone / Feature | Status | Automated Tests | Browser Screenshot | Commit Hash |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | Base App Setup & Roles | Completed | Passed | Verified | e1a2b3c |
-| Phase 1 | IPAM & Infrastructure DocTypes | Completed | Passed | Verified | e1a2b3c |
-| **Phase 2** | Product Groups & Catalog DocTypes | Completed | Passed | Verified | f4956a0 |
-| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | f4956a0 |
-| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | f4956a0 |
-| **Phase 3** | Orders, Cart & Invoice Workflow | Completed | Passed | Verified | eafe457 |
-| Phase 3 | Payments Integration (`frappe/payments`) | Completed | Passed | Verified | eafe457 |
-| Phase 3 | Recurring Subscriptions & Dunning Scheduler | Completed | Passed | Verified | eafe457 |
-| **Phase 4** | Service Upgrade & Downgrade Proration Engine | Completed | Passed | Verified | 502b622 |
-| Phase 4 | Automated Modification & Resizing Actions | Completed | Passed | Verified | 502b622 |
-| **Phase 5** | Base Provisioning Driver Framework | Completed | Passed | Verified | d891011 |
-| Phase 5 | cPanel/WHM & DirectAdmin Adapters | Completed | Passed | Verified | d891011 |
-| Phase 5 | Hetzner Cloud & OVHcloud Adapters | Completed | Passed | Verified | d891011 |
-| Phase 5 | Proxmox VE Virtualization Adapter | Completed | Passed | Verified | d891011 |
-| Phase 5 | Dedicated Servers, Colocation & IPAM Drivers | Completed | Passed | Verified | d891011 |
-| **Phase 6** | `frappe-ui` Customer Portal Scaffolding | Pending | Pending | Pending | - |
-| Phase 6 | Service Dashboard, VNC & Power Controls | Pending | Pending | Pending | - |
-| Phase 6 | Customer Upgrade/Downgrade Self-Service UI | Pending | Pending | Pending | - |
-| Phase 6 | Checkout & Discount Application UI | Pending | Pending | Pending | - |
-| Phase 6 | Frappe Helpdesk Ticket Integration | Pending | Pending | Pending | - |
-| **Phase 7** | End-to-End Automated Test Suite | Pending | Pending | Pending | - |
-| Phase 7 | Security Audit & Final Release Sign-off | Pending | Pending | Pending | - |
+This file is the human-readable progress record for `plan.md`.
 
----
+Phase status must be updated automatically by the repository progress scripts. Do not manually change a phase to `Completed`.
 
-## Step-by-Step Execution Log
+Required automation files:
 
-### Step 1: Foundation & Infrastructure Architecture
-- **Objective:** Configure app modules, user roles (`Hosting Customer`, `Hosting Support`, `Hosting Admin`), and core infrastructure models (`Hosting Provider Account`, `Server Node`, `IPAM Subnet`, `IPAM IP Address`, `Datacenter Asset`).
-- **Target Site:** `beaverbill.localhost:8000`
-- **Verification Plan:**
-  - Run unit tests for IP allocation and infrastructure doc creation.
-  - Capture browser screenshots of desk forms and list views.
-  - Update `progress.md` and commit.
-- **Status:** Completed. Roles are successfully created via `after_install` hook, and the infrastructure DocTypes (`Hosting Provider Account`, `Server Node`, `IPAM Subnet`, `IPAM IP Address`, `Datacenter Asset`) are fully functional with automated IP generation and validation tests passing.
+```text
+AGENTS.md
+progress/phase-status.json
+scripts/beaverbill_phase_check.py
+scripts/mark_phase_complete.py
+scripts/run_phase_gate.sh
+.githooks/pre-commit
+```
 
-### Step 2: Product Catalog, Addons & Discount Engine
-- **Objective:** Implement product groups, products, configurable options, addons, and promo codes with a robust pricing calculation service.
-- **Target Site:** `beaverbill.localhost:8000`
-- **Verification Plan:**
-  - Run unit tests for pricing calculations, configurable options, addons, and promo code validation.
-  - Update `progress.md` and commit.
-- **Status:** Completed. Created `Hosting Product Group`, `Hosting Product`, `Hosting Configurable Option`, `Hosting Product Addon`, and `Hosting Promo Code` DocTypes. Implemented `calculate_total_price` service and comprehensive unit tests verifying base pricing, options, addons, and promo code restrictions/limits.
+The first development task is to create and test these files. Feature development must not begin until the automatic progress workflow exists.
 
-### Step 3: Order Management, Payments & Subscriptions
-- **Objective:** Implement orders, invoices, subscriptions, and customer credit transactions with automated renewal and dunning scheduler.
-- **Target Site:** `beaverbill.localhost:8000`
-- **Verification Plan:**
-  - Run unit tests for checkout, payment processing, subscription creation, auto-renewal via wallet balance, and dunning suspension.
-  - Update `progress.md` and commit.
-- **Status:** Completed. Created `Hosting Order`, `Hosting Order Item`, `Hosting Invoice`, `Hosting Subscription`, and `Customer Credit Transaction` DocTypes. Implemented payment processing, wallet balance tracking, and a daily renewal scheduler with dunning logic. All unit tests are passing.
+### Completion authority
 
-### Step 4: Upgrade, Downgrade & Proration Engine
-- **Objective:** Implement service modification requests with automated proration calculations, invoice generation for upgrades, and credit notes for downgrades.
-- **Target Site:** `beaverbill.localhost:8000`
-- **Verification Plan:**
-  - Run unit tests for upgrade proration, downgrade proration, invoice generation, credit note creation, and subscription updates.
-  - Update `progress.md` and commit.
-- **Status:** Completed. Created `Hosting Service Modification Request` DocType. Implemented proration mathematics, automated invoice/credit note generation, and subscription updates with simulated provisioning hooks. All unit tests are passing.
+A phase is completed only when the phase gate confirms all required checks:
 
-### Step 5: Provisioning Drivers & Upstream Adapters
-- **Objective:** Implement modular provisioning driver framework with adapters for cPanel/WHM, DirectAdmin, Hetzner Cloud, OVHcloud, Proxmox VE, and Dedicated Servers with IPAM integration.
-- **Target Site:** `beaverbill.localhost:8000`
-- **Verification Plan:**
-  - Run unit tests for driver factory, cPanel/WHM, Proxmox VE, and Dedicated Server IPAM allocation/release.
-  - Update `progress.md` and commit.
-- **Status:** Completed. Created `BaseProvisioningDriver` interface and implemented adapters for cPanel/WHM, DirectAdmin, Hetzner Cloud, OVHcloud, Proxmox VE, and Dedicated Servers. Integrated IPAM IP allocation and release. All unit tests are passing.
+- Tests.
+- Migration.
+- Security and permissions.
+- Browser verification where applicable.
+- Documentation.
+- Evidence paths.
+- Git commit.
 
+The phase gate must update this file and `progress/phase-status.json` only after all required checks pass.
 
----
+### Status values
 
-*Note: As each item is completed, this file will record test outcomes, screenshot reference paths, completion msg and git commit hashes.*
+- `Not Started`.
+- `In Progress`.
+- `Blocked`.
+- `Implemented`.
+- `Completed`.
+- `Deferred`.
+- `Deprecated`.
+
+## 2. Required Stack
+
+| Application | Purpose | Required | Version / Commit | Status |
+|---|---|---:|---|---|
+| Frappe Framework | Backend, ORM, authentication, DocTypes, queues, APIs | Yes | Pending | Pending |
+| `beaverbill` | Catalog, billing, subscriptions, services, IPAM, provisioning | Yes | Pending | Pending |
+| `frappe/payments` | Payment gateway integration | Yes | Pending | Pending |
+| `frappe/helpdesk` | Support tickets and customer support | Yes | Pending | Pending |
+| `frappe-ui` | Vue customer portal frontend | Yes | Pending | Pending |
+| ERPNext | Not used | No | Not installed | Must verify |
+
+## 3. Current Status Summary
+
+<!-- AUTO-PROGRESS-START -->
+<!-- This section is generated by scripts/mark_phase_complete.py. Do not edit manually. -->
+
+| Phase | Title | Status | Completed At | Commit | Evidence |
+|---|---|---|---|---|---|
+| Phase 0 | Automatic Workflow Infrastructure and Baseline | In Progress | — | — | — |
+| Phase 1 | Foundation and Infrastructure Compatibility Hardening | Not Started | — | — | — |
+| Phase 2 | Catalog, Pricing, Tax, and Discount Compatibility | Not Started | — | — | — |
+| Phase 3 | Customer Accounts and Hosting Service Model | Not Started | — | — | — |
+| Phase 4 | Billing, Invoices, Credits, and Financial Ledger | Not Started | — | — | — |
+| Phase 5 | Payment Gateway and Webhook Reliability | Not Started | — | — | — |
+| Phase 6 | Subscription, Renewal, Dunning, and Cancellation | Not Started | — | — | — |
+| Phase 7 | Upgrade, Downgrade, and Modification Reliability | Not Started | — | — | — |
+| Phase 8 | Provisioning Orchestration and Driver Reliability | Not Started | — | — | — |
+| Phase 9 | Domains, DNS, SSL, Backups, and Add-ons | Not Started | — | — | — |
+| Phase 10 | Customer Portal APIs | Not Started | — | — | — |
+| Phase 11 | `frappe-ui` Customer Portal | Not Started | — | — | — |
+| Phase 12 | Helpdesk Integration | Not Started | — | — | — |
+| Phase 13 | Security and Compliance | Not Started | — | — | — |
+| Phase 14 | Testing and Visual Verification | Not Started | — | — | — |
+| Phase 15 | Observability and Reconciliation | Not Started | — | — | — |
+| Phase 16 | Deployment, Backup, Disaster Recovery, and Release | Not Started | — | — | — |
+| Phase 17 | Business Policies and Documentation | Not Started | — | — | — |
+
+<!-- AUTO-PROGRESS-END -->
+
+## 4. Automatic Completion Log
+
+<!-- AUTO-COMPLETION-LOG-START -->
+<!-- This section is generated by scripts/mark_phase_complete.py. Do not edit manually. -->
+
+No phase has been completed by the automatic phase gate yet.
+
+<!-- AUTO-COMPLETION-LOG-END -->
+
+## 5. Existing Compatibility Baseline
+
+The following work was marked completed in the previous progress file. It must continue passing regression tests. Later phases may harden or extend it without rewriting it.
+
+| Phase | Milestone / Feature | Existing Status | Existing Tests | Existing Browser Status | Existing Commit | Required Follow-up |
+|---|---|---|---|---|---|---|
+| Phase 1 | Base App Setup & Roles | Completed | Passed | Verified | e1a2b3c | Record full SHA and evidence paths |
+| Phase 1 | IPAM & Infrastructure DocTypes | Completed | Passed | Verified | e1a2b3c | Add permission, concurrency, and reconciliation tests |
+| Phase 2 | Product Groups & Catalog DocTypes | Completed | Passed | Verified | f4956a0 | Add price versioning and snapshots |
+| Phase 2 | Configurable Options & Addons | Completed | Passed | Verified | f4956a0 | Add lifecycle and compatibility tests |
+| Phase 2 | Discount & Promo Code Engine | Completed | Passed | Verified | f4956a0 | Add usage ledger and concurrency protection |
+| Phase 3 | Orders, Cart & Invoice Workflow | Completed | Passed | Verified | eafe457 | Add immutable financial snapshots |
+| Phase 3 | Payments Integration (`frappe/payments`) | Completed | Passed | Verified | eafe457 | Add secure webhook event records and reconciliation |
+| Phase 3 | Recurring Subscriptions & Dunning Scheduler | Completed | Passed | Verified | eafe457 | Add state transitions and scheduler locks |
+| Phase 4 | Service Upgrade & Downgrade Proration Engine | Completed | Passed | Verified | 502b622 | Preserve calculations and add idempotency |
+| Phase 4 | Automated Modification & Resizing Actions | Completed | Passed | Verified | 502b622 | Add operation history and compensation |
+| Phase 5 | Base Provisioning Driver Framework | Completed | Passed | Verified | d891011 | Add orchestration and retry layer |
+| Phase 5 | cPanel/WHM & DirectAdmin Adapters | Completed | Passed | Verified | d891011 | Add provider integration and failure tests |
+| Phase 5 | Hetzner Cloud & OVHcloud Adapters | Completed | Passed | Verified | d891011 | Add sandbox tests and reconciliation |
+| Phase 5 | Proxmox VE Virtualization Adapter | Completed | Passed | Verified | d891011 | Add task polling, console security, and recovery |
+| Phase 5 | Dedicated Servers, Colocation & IPAM Drivers | Completed | Passed | Verified | d891011 | Add resource lifecycle and drift detection |
+
+The old abbreviated commits are retained for history. Replace them with full commit SHAs during Phase 0.
+
+## 6. Evidence Register
+
+| Evidence ID | Phase | Feature | Environment | Command or Journey | Result | Test Report | Screenshot / Trace | Commit SHA | Date | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|
+| E-0001 | Phase 0 | Automatic progress scripts | Development | Pending | Pending | Pending | Not applicable | Pending | Pending | Must work before feature development |
+| E-0002 | Phase 0 | Existing test suite without ERPNext | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Baseline |
+| E-0003 | Phase 0 | ERPNext dependency scan | Development | Pending | Pending | Pending | Not applicable | Pending | Pending | Confirm no hidden dependency |
+| E-0004 | Phase 0 | Backup and restore | Staging | Pending | Pending | Pending | Not applicable | Pending | Pending | Verify restore |
+| E-0005 | Phase 1 | Infrastructure permissions | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Customer/staff/admin cases |
+| E-0006 | Phase 3 | Hosting Service backfill | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Validate mapping counts |
+| E-0007 | Phase 5 | Payment webhook idempotency | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Test duplicate and replay |
+| E-0008 | Phase 8 | Provisioning orchestration | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Test timeout and retry |
+| E-0009 | Phase 10 | Portal API ownership checks | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Cross-customer denial |
+| E-0010 | Phase 12 | Helpdesk customer portal | Staging | Pending | Pending | Pending | Pending | Pending | Pending | Ticket visibility |
+
+Add rows as work is completed. Do not delete historical evidence.
+
+## 7. Phase 0 Progress — Automatic Workflow Infrastructure and Baseline
+
+### Objective
+
+Create the automatic progress system and document the current application without changing business logic.
+
+### Tasks
+
+- [ ] Create `AGENTS.md`.
+- [ ] Create `progress/phase-status.json`.
+- [ ] Create `scripts/beaverbill_phase_check.py`.
+- [ ] Create `scripts/mark_phase_complete.py`.
+- [ ] Create executable `scripts/run_phase_gate.sh`.
+- [ ] Create `.githooks/pre-commit`.
+- [ ] Add generated markers to this file.
+- [ ] Test automatic status update in a temporary or test copy.
+- [ ] Record Frappe, payments, Helpdesk, `frappe-ui`, Python, Node.js, database, Redis, and OS versions.
+- [ ] Record installed apps and full commit SHAs.
+- [ ] Confirm ERPNext is not installed or required.
+- [ ] Search the repository for ERPNext imports and references.
+- [ ] Document replacement tasks for any accidental ERPNext dependency.
+- [ ] Document existing DocTypes, fields, hooks, scheduled jobs, queues, APIs, roles, and driver interfaces.
+- [ ] Run the complete existing test suite without ERPNext.
+- [ ] Capture baseline browser screenshots.
+- [ ] Create a database and file backup.
+- [ ] Restore the backup successfully.
+- [ ] Create `docs/phase-0-audit.md`.
+- [ ] Record commands and evidence paths.
+- [ ] Run the automatic Phase 0 gate.
+
+### Phase 0 completion requirements
+
+- Progress scripts work.
+- `process.md` updates automatically.
+- `progress/phase-status.json` updates automatically.
+- Existing tests pass or baseline failures are documented.
+- Clean install works without ERPNext.
+- ERPNext scan is complete.
+- Backup and restore are verified.
+- Baseline evidence exists.
+- Full Git commit is recorded.
+
+## 8. Phase 1 Progress — Foundation and Infrastructure Hardening
+
+### Tasks
+
+- [ ] Add complete permission tests.
+- [ ] Add customer ownership and staff access tests.
+- [ ] Add datacenter, region, and availability-zone relationships where missing.
+- [ ] Add secure provider-account credential references.
+- [ ] Add server capacity and maintenance fields.
+- [ ] Add IPv4 and IPv6 metadata.
+- [ ] Add VLAN, gateway, and subnet metadata.
+- [ ] Add IP lifecycle states.
+- [ ] Add allocation audit history.
+- [ ] Check existing data before adding unique constraints.
+- [ ] Add indexes where required.
+- [ ] Add IP exhaustion and duplicate-allocation reports.
+- [ ] Create migration scripts.
+- [ ] Add browser evidence for changed screens.
+- [ ] Run the automatic Phase 1 gate.
+
+### Phase 1 completion requirements
+
+- Existing infrastructure tests pass.
+- Permission and ownership tests pass.
+- IP allocation and concurrency tests pass.
+- Migration passes.
+- Browser evidence exists.
+- Documentation and evidence exist.
+- Full Git commit is recorded.
+
+## 9. Phase 2 Progress — Catalog, Pricing, Tax, and Discounts
+
+### Tasks
+
+- [ ] Add versioned product prices.
+- [ ] Add effective dates.
+- [ ] Add price snapshots.
+- [ ] Add tax rules and customer tax profiles.
+- [ ] Add India GST fields where applicable.
+- [ ] Add currency precision and exchange-rate handling.
+- [ ] Add pricing calculation snapshots.
+- [ ] Add promotion usage ledger.
+- [ ] Add concurrency-safe promo redemption.
+- [ ] Add restriction rules.
+- [ ] Run pricing regression tests.
+- [ ] Add tax, currency, rounding, and restriction tests.
+- [ ] Add catalog browser evidence.
+- [ ] Run the automatic Phase 2 gate.
+
+## 10. Phase 3 Progress — Customer Accounts and Hosting Services
+
+### Tasks
+
+- [ ] Confirm or create the Beaver Bill customer source of truth.
+- [ ] Do not introduce ERPNext `Customer` references.
+- [ ] Define individual, company, billing-contact, and technical-contact behavior.
+- [ ] Create or extend `Hosting Customer`.
+- [ ] Create `Hosting Customer Contact` if required.
+- [ ] Create `Hosting Service`.
+- [ ] Link services to customers, orders, order items, products, subscriptions, and providers.
+- [ ] Add upstream resource IDs.
+- [ ] Add assigned IP and domain links.
+- [ ] Add provisioning, suspension, cancellation, termination, and reconciliation states.
+- [ ] Add service ownership and permission tests.
+- [ ] Add optional links from existing records.
+- [ ] Create a dry-run backfill.
+- [ ] Test duplicate, missing, and orphan mappings.
+- [ ] Execute staging backfill after approval.
+- [ ] Add customer and service browser evidence.
+- [ ] Run the automatic Phase 3 gate.
+
+## 11. Phase 4 Progress — Billing and Financial Ledger
+
+### Tasks
+
+- [ ] Define order and invoice state transitions.
+- [ ] Add immutable invoice-line snapshots.
+- [ ] Add partial payment allocation.
+- [ ] Add refunds, chargebacks, credit notes, debit notes, and write-offs.
+- [ ] Add invoice numbering and cancellation rules.
+- [ ] Add invoice PDF generation and storage.
+- [ ] Add ledger-backed customer credits.
+- [ ] Preserve the old wallet balance field as a compatibility field.
+- [ ] Add source-document and reversal references.
+- [ ] Add concurrency protection.
+- [ ] Add custom Beaver Bill financial reports.
+- [ ] Confirm no ERPNext accounting records are required.
+- [ ] Add invoice and payment browser evidence.
+- [ ] Run the automatic Phase 4 gate.
+
+## 12. Phase 5 Progress — Payment Gateway and Webhook Reliability
+
+### Tasks
+
+- [ ] Define supported gateways and currencies.
+- [ ] Map `frappe/payments` responses to Beaver Bill payment transactions.
+- [ ] Add payment event records.
+- [ ] Verify webhook signatures.
+- [ ] Validate webhook schemas.
+- [ ] Add event IDs and idempotency keys.
+- [ ] Handle duplicate and out-of-order events.
+- [ ] Separate capture, refund, and chargeback states.
+- [ ] Add failed-payment retry logic.
+- [ ] Store token references without raw payment data.
+- [ ] Add payment reconciliation.
+- [ ] Add administrator replay tools.
+- [ ] Test gateway outage behavior.
+- [ ] Add checkout and payment browser evidence.
+- [ ] Run the automatic Phase 5 gate.
+
+## 13. Phase 6 Progress — Subscriptions and Dunning
+
+### Tasks
+
+- [ ] Document subscription states.
+- [ ] Define renewal timing and billing timezone.
+- [ ] Define renewal invoice creation timing.
+- [ ] Add retry count and next-attempt fields.
+- [ ] Add retry backoff.
+- [ ] Configure grace periods.
+- [ ] Define service-specific suspension behavior.
+- [ ] Define immediate and end-of-period cancellation.
+- [ ] Define refund and unused-period credit behavior.
+- [ ] Add scheduler locking and idempotency.
+- [ ] Add manual retry and override actions.
+- [ ] Add reinstatement rules.
+- [ ] Add termination and data-purge scheduling.
+- [ ] Add state-transition notifications.
+- [ ] Test overlapping scheduler executions.
+- [ ] Confirm subscriptions use Beaver Bill records, not ERPNext.
+- [ ] Add renewal and dunning evidence.
+- [ ] Run the automatic Phase 6 gate.
+
+## 14. Phase 7 Progress — Upgrade, Downgrade, and Modifications
+
+### Tasks
+
+- [ ] Preserve existing modification and proration behavior.
+- [ ] Add compatibility tests.
+- [ ] Add product and configuration snapshots.
+- [ ] Define immediate and next-cycle effective times.
+- [ ] Add downgrade usage checks.
+- [ ] Add data-loss warnings and confirmation.
+- [ ] Add idempotency keys.
+- [ ] Add operation history.
+- [ ] Add concurrency control.
+- [ ] Add rollback or compensation for failed resize operations.
+- [ ] Add cancellation and refund policy checks.
+- [ ] Add modification browser evidence.
+- [ ] Run the automatic Phase 7 gate.
+
+## 15. Phase 8 Progress — Provisioning Orchestration
+
+### Preserve
+
+- Existing `BaseProvisioningDriver`.
+- Existing cPanel/WHM, DirectAdmin, Hetzner, OVHcloud, Proxmox, dedicated-server, colocation, and IPAM drivers.
+
+### Tasks
+
+- [ ] Create Provisioning Operation.
+- [ ] Create Provisioning Attempt.
+- [ ] Create Provider Request Log.
+- [ ] Create Reconciliation Result.
+- [ ] Create Resource Cleanup Task.
+- [ ] Define operation states.
+- [ ] Add idempotency keys.
+- [ ] Add queue routing and timeouts.
+- [ ] Add retry policies.
+- [ ] Add partial-failure compensation.
+- [ ] Add safe provider metadata and correlation IDs.
+- [ ] Add manual retry and reconciliation actions.
+- [ ] Add capacity checks.
+- [ ] Add provider rate-limit handling.
+- [ ] Add service-to-provider reconciliation.
+- [ ] Add orphan-resource detection.
+- [ ] Add driver contract tests.
+- [ ] Add provider sandbox tests where available.
+- [ ] Test duplicates, timeouts, outages, and destructive operations.
+- [ ] Add operation evidence.
+- [ ] Run the automatic Phase 8 gate.
+
+## 16. Phase 9 Progress — Domains, DNS, SSL, Backups, and Add-ons
+
+### Tasks
+
+- [ ] Add domain lifecycle and registrar mapping.
+- [ ] Add registration, transfer, renewal, nameserver, and DNS workflows.
+- [ ] Add domain expiry and auto-renewal alerts.
+- [ ] Add SSL certificate lifecycle.
+- [ ] Add validation, installation, renewal, and expiry handling.
+- [ ] Add backup policies and retention.
+- [ ] Add backup status and alerts.
+- [ ] Add restore requests and authorization.
+- [ ] Add storage usage and overage handling.
+- [ ] Ensure every addon has product, price, order, subscription, fulfillment, renewal, cancellation, and failure workflows.
+- [ ] Add customer-facing browser evidence.
+- [ ] Run the automatic Phase 9 gate.
+
+## 17. Phase 10 Progress — Customer Portal APIs
+
+### Tasks
+
+- [ ] Define Frappe authentication and sessions.
+- [ ] Define customer ownership checks.
+- [ ] Define API routes and schemas.
+- [ ] Add profile and contact APIs.
+- [ ] Add catalog and configuration APIs.
+- [ ] Add cart and checkout APIs.
+- [ ] Add coupon APIs.
+- [ ] Add invoice and PDF APIs.
+- [ ] Add payment initiation and status APIs.
+- [ ] Add service dashboard and detail APIs.
+- [ ] Add resource usage APIs.
+- [ ] Add power-control APIs.
+- [ ] Add expiring console authorization.
+- [ ] Add password reset API.
+- [ ] Add OS reinstall API with confirmation and idempotency.
+- [ ] Add upgrade and downgrade APIs.
+- [ ] Add domain, SSL, backup, and addon APIs.
+- [ ] Add Helpdesk ticket APIs.
+- [ ] Add notification APIs.
+- [ ] Add rate limits and audit events.
+- [ ] Test allowed and denied access.
+- [ ] Run the automatic Phase 10 gate.
+
+## 18. Phase 11 Progress — `frappe-ui` Customer Portal
+
+### Tasks
+
+- [ ] Create portal structure.
+- [ ] Implement authentication screens.
+- [ ] Implement dashboard, service list, and service detail.
+- [ ] Implement power controls and console access.
+- [ ] Implement resource usage.
+- [ ] Implement password reset and OS reinstall.
+- [ ] Implement catalog, cart, checkout, and coupons.
+- [ ] Implement invoices and payment center.
+- [ ] Implement payment-method management.
+- [ ] Implement upgrade and downgrade wizard.
+- [ ] Implement domain, SSL, backup, and addon screens.
+- [ ] Implement Helpdesk screens.
+- [ ] Implement profile and notification settings.
+- [ ] Add loading, empty, success, failure, and retry states.
+- [ ] Test desktop and mobile layouts.
+- [ ] Run accessibility checks.
+- [ ] Mask sensitive data in screenshots.
+- [ ] Confirm no ERPNext routes or DocTypes are used.
+- [ ] Run the automatic Phase 11 gate.
+
+## 19. Phase 12 Progress — Helpdesk Integration
+
+### Tasks
+
+- [ ] Decide same-site or separate-site Helpdesk deployment.
+- [ ] Define Beaver Bill customer and contact source of truth.
+- [ ] Synchronize customer and contact records.
+- [ ] Create and display portal tickets.
+- [ ] Link tickets to services, orders, invoices, and domains.
+- [ ] Map statuses, priorities, teams, agents, and SLAs.
+- [ ] Validate attachments.
+- [ ] Define internal-note visibility.
+- [ ] Configure inbound and outbound email.
+- [ ] Add synchronization retries and failure reports.
+- [ ] Add duplicate-event protection.
+- [ ] Test customer and staff permissions.
+- [ ] Add ticket browser evidence.
+- [ ] Run the automatic Phase 12 gate.
+
+## 20. Phase 13 Progress — Security and Compliance
+
+### Tasks
+
+- [ ] Complete role and permission matrix.
+- [ ] Add server-side API permission checks.
+- [ ] Add customer ownership checks.
+- [ ] Test cross-customer access denial.
+- [ ] Add staff privilege separation.
+- [ ] Add sensitive-action audit logs.
+- [ ] Add email verification and secure password reset.
+- [ ] Add administrator MFA and optional customer MFA.
+- [ ] Add session expiry and revocation.
+- [ ] Add scoped API tokens.
+- [ ] Encrypt provider credentials.
+- [ ] Define secret rotation.
+- [ ] Remove secrets from logs and evidence.
+- [ ] Verify CSRF, CORS, and Content Security Policy.
+- [ ] Add rate limiting and login throttling.
+- [ ] Validate uploads.
+- [ ] Add SSRF protection.
+- [ ] Prevent command injection.
+- [ ] Validate provider responses.
+- [ ] Secure console URLs.
+- [ ] Protect databases and backups.
+- [ ] Run applicable OWASP ASVS checks.
+- [ ] Record unresolved risks and approvals.
+- [ ] Confirm no ERPNext security helper is required.
+- [ ] Run the automatic Phase 13 gate.
+
+## 21. Phase 14 Progress — Testing and Visual Verification
+
+### Test layers
+
+- [ ] Unit tests.
+- [ ] Frappe integration tests.
+- [ ] Database migration tests.
+- [ ] Driver contract tests.
+- [ ] Provider sandbox tests.
+- [ ] Payment webhook tests.
+- [ ] Helpdesk synchronization tests.
+- [ ] API tests.
+- [ ] Browser end-to-end tests.
+- [ ] Accessibility tests.
+- [ ] Performance tests.
+- [ ] Resilience and recovery tests.
+- [ ] Security tests.
+- [ ] Clean installation tests without ERPNext.
+
+### Required journeys
+
+- [ ] Customer registration and verification.
+- [ ] Catalog browsing and product configuration.
+- [ ] Valid and invalid coupon application.
+- [ ] Tax and currency calculation.
+- [ ] Checkout and successful payment.
+- [ ] Payment failure and retry.
+- [ ] Duplicate webhook handling.
+- [ ] Successful provisioning.
+- [ ] Provisioning failure and recovery.
+- [ ] Service dashboard access.
+- [ ] Power operation.
+- [ ] Console access.
+- [ ] Upgrade and proration.
+- [ ] Downgrade and credit.
+- [ ] Renewal.
+- [ ] Dunning and suspension.
+- [ ] Reinstatement.
+- [ ] Cancellation and termination.
+- [ ] Domain and SSL renewal.
+- [ ] Ticket creation and response.
+- [ ] Unauthorized access attempts.
+
+### Browser evidence
+
+Record browser/version, viewport, test-data identifier, screenshot path, trace or video on failure, browser-console result, network/API assertions, accessibility result, and baseline comparison result.
+
+Run the automatic Phase 14 gate after all release-critical journeys pass.
+
+## 22. Phase 15 Progress — Observability and Reconciliation
+
+### Monitoring
+
+- [ ] Failed payments.
+- [ ] Unprocessed webhooks.
+- [ ] Renewal failures.
+- [ ] Provisioning failures.
+- [ ] Stuck jobs.
+- [ ] Provider API errors.
+- [ ] IP exhaustion.
+- [ ] Expiring domains.
+- [ ] Expiring certificates.
+- [ ] Backup failures.
+- [ ] Email delivery failures.
+- [ ] Helpdesk synchronization failures.
+- [ ] Orphaned provider resources.
+- [ ] Invoice and payment mismatches.
+
+### Reconciliation
+
+- [ ] Gateway transactions versus Beaver Bill payments.
+- [ ] Invoices versus payments.
+- [ ] Wallet ledger versus balance fields.
+- [ ] Local services versus provider resources.
+- [ ] IPAM assignments versus provider allocations.
+- [ ] Subscriptions versus renewal invoices.
+- [ ] Helpdesk customers versus Beaver Bill customers.
+- [ ] Domain and certificate records versus external providers.
+
+Run the automatic Phase 15 gate after monitoring and reconciliation are operational.
+
+## 23. Phase 16 Progress — Deployment, Backup, and Disaster Recovery
+
+### Tasks
+
+- [ ] Automate bench installation and deployment.
+- [ ] Test migrations in staging.
+- [ ] Define safe deployment.
+- [ ] Record app versions and commit SHAs.
+- [ ] Validate workers and scheduler.
+- [ ] Run post-release smoke tests.
+- [ ] Maintain rollback instructions.
+- [ ] Back up database, files, invoices, and documents.
+- [ ] Encrypt backups.
+- [ ] Define retention.
+- [ ] Test restoration.
+- [ ] Define recovery objectives.
+- [ ] Test restoration of queues, jobs, and credentials.
+- [ ] Confirm deployment does not install or require ERPNext.
+- [ ] Run the automatic Phase 16 gate.
+
+## 24. Phase 17 Progress — Policies and Documentation
+
+### Tasks
+
+- [ ] Document terms of service.
+- [ ] Document acceptable-use policy.
+- [ ] Document privacy and retention policy.
+- [ ] Document refund policy.
+- [ ] Document cancellation policy.
+- [ ] Document upgrade and downgrade policy.
+- [ ] Document suspension policy.
+- [ ] Document termination and data-purge policy.
+- [ ] Document backup and restore policy.
+- [ ] Document domain-renewal policy.
+- [ ] Document SSL policy.
+- [ ] Document resource overage policy.
+- [ ] Document maintenance policy.
+- [ ] Document SLA policy.
+- [ ] Document chargeback and abuse policy.
+- [ ] Document wallet-credit expiration policy.
+- [ ] Create customer guides.
+- [ ] Create administrator guides.
+- [ ] Create provider setup guides.
+- [ ] Create API documentation.
+- [ ] Create troubleshooting guides.
+- [ ] Create incident runbooks.
+- [ ] Document the no-ERPNext architecture.
+- [ ] Run the automatic Phase 17 gate.
+
+## 25. Migration and Compatibility Log
+
+Use this section for every change to previously completed functionality.
+
+| Migration ID | Existing Feature | Change | New Fields / DocTypes | Backfill | Feature Flag | Rollback Plan | Regression Result | Commit SHA | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| M-0001 | Pending | Pending | Pending | Pending | Pending | Pending | Pending | Pending | Not Started |
+
+### Migration rules
+
+1. Add optional fields or new DocTypes.
+2. Add compatibility wrappers.
+3. Support old and new records on reads.
+4. Backfill in small logged batches.
+5. Validate counts, links, totals, and permissions.
+6. Enable feature flags in staging.
+7. Run tests and the phase gate.
+8. Enable gradually in production.
+9. Keep the old path during rollback.
+10. Remove obsolete code only in a later cleanup phase.
+
+## 26. Defect and Risk Register
+
+| ID | Date | Area | Description | Severity | Impact | Workaround | Owner | Target Phase | Status | Evidence |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R-0001 | Pending | Automation | Progress scripts do not yet exist | High | Phases cannot update automatically | Implement Phase 0 first | Unassigned | Phase 0 | Open | Pending |
+| R-0002 | Pending | Dependency | Possible ERPNext references must be checked | High | App may fail without ERPNext | Run dependency scan and clean install | Unassigned | Phase 0 | Open | Pending |
+| R-0003 | Pending | Billing | No ERPNext accounting layer is available | High | Beaver Bill must own all billing records | Implement custom billing DocTypes and ledger | Unassigned | Phase 4 | Open | Pending |
+| R-0004 | Pending | Customer | Customer source of truth is not finalized | High | Portal and Helpdesk synchronization ambiguity | Decide custom Beaver Bill customer model | Unassigned | Phase 3 | Open | Pending |
+
+Track additional risks such as provider sandbox limitations, payment gateway uncertainty, tax decisions, portal authorization gaps, missing backup evidence, reconciliation gaps, and Helpdesk synchronization failures.
+
+## 27. Release Sign-Off Checklist
+
+### Automation and code
+
+- [ ] Progress scripts work.
+- [ ] Phase gate passes.
+- [ ] `process.md` was updated automatically.
+- [ ] `progress/phase-status.json` was updated automatically.
+- [ ] Code review completed.
+- [ ] Existing regression tests pass.
+- [ ] New tests pass.
+- [ ] Migration tested on a database copy.
+- [ ] Rollback documented or tested.
+- [ ] Full commit SHA recorded.
+
+### Dependencies and security
+
+- [ ] Beaver Bill installs without ERPNext.
+- [ ] No required ERPNext imports or DocTypes remain.
+- [ ] Permission tests pass.
+- [ ] Customer isolation tests pass.
+- [ ] Webhook signature tests pass.
+- [ ] Sensitive-action confirmation is implemented.
+- [ ] Secrets are not present in logs or evidence.
+- [ ] Applicable security checks pass.
+
+### Billing and payments
+
+- [ ] Invoice totals reconcile.
+- [ ] Payment allocations reconcile.
+- [ ] Wallet ledger reconciles.
+- [ ] Duplicate webhooks are harmless.
+- [ ] Refund and credit-note flows are tested.
+- [ ] Failed-payment flows are tested.
+- [ ] No ERPNext accounting records are required.
+
+### Provisioning
+
+- [ ] Provider credentials tested.
+- [ ] Driver contract tests pass.
+- [ ] Provisioning success tested.
+- [ ] Timeout and retry tested.
+- [ ] Partial failure tested.
+- [ ] Destructive operations tested safely.
+- [ ] Local/provider reconciliation completed.
+
+### Browser and operations
+
+- [ ] Release-critical browser journeys pass.
+- [ ] Screenshot evidence paths recorded.
+- [ ] No unexpected browser-console errors.
+- [ ] Monitoring and alerts enabled.
+- [ ] Backup completed.
+- [ ] Restore procedure verified.
+- [ ] Workers and scheduler healthy.
+- [ ] Smoke tests pass.
+- [ ] Release notes written.
+
+## 28. Current Next Action
+
+The only valid starting point is:
+
+```text
+Phase 0 — Automatic Workflow Infrastructure and Baseline
+```
+
+Do not ask Aider to implement Phase 1 yet.
+
+Use this initial Aider instruction:
+
+```text
+Read plan.md and process.md completely.
+
+Implement only Phase 0: Automatic Workflow Infrastructure and Baseline.
+
+Create:
+- AGENTS.md
+- progress/phase-status.json
+- scripts/beaverbill_phase_check.py
+- scripts/mark_phase_complete.py
+- scripts/run_phase_gate.sh
+- .githooks/pre-commit
+
+Add the generated progress markers to process.md.
+
+Important:
+- Do not modify existing Beaver Bill business logic.
+- Do not add ERPNext.
+- Do not rewrite completed features.
+- Do not mark Phase 0 complete manually.
+- Make the progress scripts safe, readable, executable, and tested.
+- The phase gate must update process.md and progress/phase-status.json only after all required checks pass.
+- Show the diff before unrelated changes.
+
+After implementation, explain how to run the phase gate and how the automatic completion message works.
+```
+
+After the automation infrastructure is implemented, run the Phase 0 audit and then execute the phase gate.
+
+## 29. Production Readiness
+
+Beaver Bill is production-ready only when:
+
+- It installs and runs without ERPNext.
+- Existing completed workflows pass regression tests.
+- State machines are enforced server-side.
+- Customer isolation and staff permissions are tested.
+- Payment webhooks are authenticated and idempotent.
+- Invoices, credits, refunds, and wallet balances reconcile.
+- Provisioning operations are auditable, retryable, and recoverable.
+- Provider resources reconcile with local records.
+- Destructive portal actions are authorized and confirmed.
+- Domains, SSL, backups, and addons have complete lifecycles or are explicitly excluded.
+- Helpdesk synchronization is recoverable.
+- Browser evidence and automated reports exist.
+- Monitoring, alerts, backups, restore tests, and runbooks are active.
+- Security findings are resolved or accepted.
+- Deployment and rollback are tested on staging.
+- Automatic progress status is accurate.
+- Final release sign-off includes versions, full commit SHA, migrations, test reports, and evidence paths.

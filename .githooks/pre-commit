@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+"""Pre-commit guard for Beaver Bill generated progress sections.
+
+Blocks commits that hand-edit the generated blocks of process.md. Those
+blocks are written only by scripts/mark_phase_complete.py through the
+phase gate (scripts/run_phase_gate.sh). Also validates
+progress/phase-status.json when it is staged.
+"""
+
+import json
+import subprocess
+import sys
+
+BLOCKS = (
+    ("<!-- AUTO-PROGRESS-START -->", "<!-- AUTO-PROGRESS-END -->"),
+    ("<!-- AUTO-COMPLETION-LOG-START -->", "<!-- AUTO-COMPLETION-LOG-END -->"),
+)
+
+VALID_STATUSES = {
+    "not_started",
+    "in_progress",
+    "blocked",
+    "implemented",
+    "completed",
+    "deferred",
+    "deprecated",
+}
+
+
+def staged_file(name):
+    out = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "--", name],
+        capture_output=True,
+        text=True,
+    )
+    return bool(out.stdout.strip())
+
+
+def staged_text(path):
+    out = subprocess.run(
+        ["git", "show", f":{path}"], capture_output=True, text=True
+    )
+    return out.stdout if out.returncode == 0 else None
+
+
+def head_text(path):
+    out = subprocess.run(
+        ["git", "show", f"HEAD:{path}"], capture_output=True, text=True
+    )
+    return out.stdout if out.returncode == 0 else ""
+
+
+def block_of(text, start, end):
+    _, sep, rest = text.partition(start)
+    if not sep:
+        return None
+    middle, sep, _ = rest.partition(end)
+    return middle if sep else None
+
+
+def main():
+    errors = []
+    if staged_file("process.md"):
+        staged = staged_text("process.md") or ""
+        head = head_text("process.md")
+        for start, end in BLOCKS:
+            if block_of(staged, start, end) != block_of(head, start, end):
+                errors.append(
+                    f"process.md block {start} changed by hand. "
+                    "Run the phase gate instead."
+                )
+    if staged_file("progress/phase-status.json"):
+        staged = staged_text("progress/phase-status.json") or ""
+        try:
+            status = json.loads(staged)
+        except ValueError:
+            errors.append("progress/phase-status.json is not valid JSON.")
+        else:
+            phases = status.get("phases", {})
+            if status.get("current_phase") not in phases:
+                errors.append("current_phase does not match a known phase.")
+            for pid, phase in phases.items():
+                if phase.get("status") not in VALID_STATUSES:
+                    errors.append(f"{pid} has an invalid status.")
+    for error in errors:
+        print(f"pre-commit: {error}", file=sys.stderr)
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
