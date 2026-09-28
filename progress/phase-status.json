@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-8",
+  "current_phase": "phase-11",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -92,31 +92,40 @@
     "phase-8": {
       "id": "phase-8",
       "title": "Provisioning Orchestration and Driver Reliability",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "55eff55074d0fb7a3fedc541d0b7d7af191d3b5d",
+      "completed_at": "2026-09-28T17:30:05+00:00",
+      "evidence": [
+        "docs/phase-8-provisioning.md",
+        "docs/evidence/phase-8-baseline.json"
+      ]
     },
     "phase-9": {
       "id": "phase-9",
       "title": "Domains, DNS, SSL, Backups, and Add-ons",
-      "status": "not_started",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "2d34b43a7691774b7ef1b0416760add1ed884c7a",
+      "completed_at": "2026-09-28T17:48:26+00:00",
+      "evidence": [
+        "docs/phase-9-domains.md",
+        "docs/evidence/phase-9-baseline.json"
+      ]
     },
     "phase-10": {
       "id": "phase-10",
       "title": "Customer Portal APIs",
-      "status": "not_started",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "01d25122fb74ba9253e827affcb0419b66bb8ad3",
+      "completed_at": "2026-09-28T18:26:31+00:00",
+      "evidence": [
+        "docs/phase-10-portal.md",
+        "docs/evidence/phase-10-baseline.json"
+      ]
     },
     "phase-11": {
       "id": "phase-11",
       "title": "frappe-ui Customer Portal",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
