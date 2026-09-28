@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-5",
+  "current_phase": "phase-6",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -59,15 +59,18 @@
     "phase-5": {
       "id": "phase-5",
       "title": "Payment Gateway and Webhook Reliability",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "1e0f1fb721a854f7e272c209305ad226813eb0e3",
+      "completed_at": "2026-09-28T16:26:46+00:00",
+      "evidence": [
+        "docs/phase-5-gateway.md",
+        "docs/evidence/phase-5-baseline.json"
+      ]
     },
     "phase-6": {
       "id": "phase-6",
       "title": "Subscription, Renewal, Dunning, and Cancellation",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
