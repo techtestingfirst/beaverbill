@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ip_address",
+  "action",
+  "reference_doctype",
+  "reference_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "ip_address",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "IP Address",
+   "options": "IPAM IP Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Action",
+   "options": "Allocated\nReleased\nReserved\nQuarantined",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Data",
+   "label": "Reference DocType"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Data",
+   "label": "Reference Name"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": ["ip_address"]
+  }
+ ],
+ "links": [],
+ "module": "BeaverBill",
+ "name": "IPAM Allocation Log",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Hosting Admin",
+   "share": 1
+  },
+  {
+   "read": 1,
+   "role": "Hosting Support"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

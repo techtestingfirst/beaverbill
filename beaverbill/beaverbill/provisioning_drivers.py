@@ -150,17 +150,20 @@ class ProxmoxVEDriver(BaseProvisioningDriver):
 
 class DedicatedServerIPAMDriver(BaseProvisioningDriver):
 	def provision(self, subscription_name, details=None):
-		# Allocate IP from IPAM
-		available_ip = frappe.get_all("IPAM IP Address", filters={"status": "Available"}, limit=1)
-		if available_ip:
-			ip_doc = frappe.get_doc("IPAM IP Address", available_ip[0].name)
-			ip_doc.status = "Allocated"
-			ip_doc.save(ignore_permissions=True)
-			frappe.logger().info(f"Dedicated Server: Allocated IP {ip_doc.ip_address} to subscription {subscription_name}")
-			return {"status": "Success", "ip": ip_doc.ip_address}
-		else:
+		# Allocate IP from IPAM, scoped to this subscription.
+		from beaverbill.beaverbill.doctype.ipam_ip_address.ipam_ip_address import allocate_ip
+
+		try:
+			ip_name = allocate_ip(
+				reference_doctype="Hosting Subscription",
+				reference_name=subscription_name,
+			)
+		except frappe.ValidationError:
 			frappe.logger().warning(f"Dedicated Server: No available IP addresses in IPAM for subscription {subscription_name}")
 			return {"status": "Success", "ip": None}
+		ip_address = frappe.db.get_value("IPAM IP Address", ip_name, "ip_address")
+		frappe.logger().info(f"Dedicated Server: Allocated IP {ip_address} to subscription {subscription_name}")
+		return {"status": "Success", "ip": ip_address}
 
 	def suspend(self, subscription_name):
 		frappe.logger().info(f"Dedicated Server: Disabled switch port for subscription {subscription_name}")
@@ -171,13 +174,21 @@ class DedicatedServerIPAMDriver(BaseProvisioningDriver):
 		return {"status": "Success"}
 
 	def terminate(self, subscription_name):
-		# Release IP back to IPAM
-		allocated_ips = frappe.get_all("IPAM IP Address", filters={"status": "Allocated"}, limit=1)
-		for ip in allocated_ips:
-			ip_doc = frappe.get_doc("IPAM IP Address", ip.name)
-			ip_doc.status = "Available"
-			ip_doc.save(ignore_permissions=True)
-			frappe.logger().info(f"Dedicated Server: Released IP {ip_doc.ip_address} back to IPAM")
+		# Release only IPs allocated to this subscription.
+		from beaverbill.beaverbill.doctype.ipam_ip_address.ipam_ip_address import release_ip
+
+		owned = frappe.get_all(
+			"IPAM IP Address",
+			filters={
+				"status": "Allocated",
+				"allocated_to_doctype": "Hosting Subscription",
+				"allocated_to_name": subscription_name,
+			},
+			pluck="name",
+		)
+		for ip_name in owned:
+			release_ip(ip_name)
+			frappe.logger().info(f"Dedicated Server: Released IP {ip_name} back to IPAM")
 		frappe.logger().info(f"Dedicated Server: Re-imaged server and cleared switch port for subscription {subscription_name}")
 		return {"status": "Success"}
 

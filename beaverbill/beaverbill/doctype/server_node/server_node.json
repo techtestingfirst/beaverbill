@@ -8,9 +8,14 @@
  "field_order": [
   "node_name",
   "provider_account",
+  "datacenter",
   "node_type",
   "ip_address",
-  "status"
+  "status",
+  "cpu_cores_total",
+  "ram_gb_total",
+  "maintenance_mode",
+  "maintenance_notes"
  ],
  "fields": [
   {
@@ -25,6 +30,12 @@
    "fieldtype": "Link",
    "label": "Provider Account",
    "options": "Hosting Provider Account"
+  },
+  {
+   "fieldname": "datacenter",
+   "fieldtype": "Link",
+   "label": "Datacenter",
+   "options": "Hosting Datacenter"
   },
   {
    "fieldname": "node_type",
@@ -44,9 +55,35 @@
    "label": "Status",
    "options": "Active\nMaintenance\nOffline",
    "default": "Active"
+  },
+  {
+   "fieldname": "cpu_cores_total",
+   "fieldtype": "Int",
+   "label": "Total CPU Cores"
+  },
+  {
+   "fieldname": "ram_gb_total",
+   "fieldtype": "Float",
+   "label": "Total RAM (GB)"
+  },
+  {
+   "fieldname": "maintenance_mode",
+   "fieldtype": "Check",
+   "label": "Maintenance Mode",
+   "default": 0
+  },
+  {
+   "fieldname": "maintenance_notes",
+   "fieldtype": "Small Text",
+   "label": "Maintenance Notes"
   }
  ],
  "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": ["status"]
+  }
+ ],
  "links": [],
  "modified": "2023-10-27 12:00:00.000000",
  "modified_by": "Administrator",

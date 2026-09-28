@@ -8,6 +8,7 @@
  "field_order": [
   "asset_name",
   "asset_type",
+  "datacenter",
   "rack_location",
   "u_position",
   "status"
@@ -28,6 +29,12 @@
    "label": "Asset Type",
    "options": "Rack\nPDU\nSwitch\nPatch Panel\nUPS",
    "reqd": 1
+  },
+  {
+   "fieldname": "datacenter",
+   "fieldtype": "Link",
+   "label": "Datacenter",
+   "options": "Hosting Datacenter"
   },
   {
    "fieldname": "rack_location",

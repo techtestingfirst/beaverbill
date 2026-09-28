@@ -8,9 +8,11 @@
  "field_order": [
   "ip_address",
   "subnet",
+  "ip_version",
   "status",
   "allocated_to_doctype",
-  "allocated_to_name"
+  "allocated_to_name",
+  "allocated_at"
  ],
  "fields": [
   {
@@ -28,10 +30,18 @@
    "reqd": 1
   },
   {
+   "fieldname": "ip_version",
+   "fieldtype": "Select",
+   "label": "IP Version",
+   "options": "IPv4\nIPv6",
+   "default": "IPv4",
+   "read_only": 1
+  },
+  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Available\nReserved\nAllocated",
+   "options": "Available\nReserved\nAllocated\nReleased\nQuarantined",
    "default": "Available",
    "reqd": 1
   },
@@ -44,9 +54,21 @@
    "fieldname": "allocated_to_name",
    "fieldtype": "Data",
    "label": "Allocated To Name"
+  },
+  {
+   "fieldname": "allocated_at",
+   "fieldtype": "Datetime",
+   "label": "Allocated At",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": ["status", "subnet"]
+  }
+ ],
+ "track_changes": 1,
  "links": [],
  "modified": "2023-10-27 12:00:00.000000",
  "modified_by": "Administrator",

@@ -251,8 +251,67 @@ def check_tests(root):
     return check
 
 
+def sized_doc(root, relpath, minimum=500, name=None):
+    check = Check(name or relpath)
+    path = repo_path(root, relpath)
+    try:
+        size = os.path.getsize(path)
+    except OSError:
+        check.detail = f"{relpath} is missing"
+        return check
+    if size < minimum:
+        check.detail = f"{relpath} is incomplete ({size} bytes)"
+        return check
+    check.passed = True
+    check.detail = f"{relpath} exists ({size} bytes)"
+    return check
+
+
+def check_phase1_reports(root):
+    check = Check("phase1_reports")
+    wanted = [
+        "beaverbill/beaverbill/report/ip_pool_exhaustion/ip_pool_exhaustion.json",
+        "beaverbill/beaverbill/report/duplicate_ip_allocation/duplicate_ip_allocation.json",
+    ]
+    missing = [r for r in wanted if not os.path.isfile(repo_path(root, r))]
+    check.passed = not missing
+    check.detail = "both IPAM reports present" if check.passed else f"missing: {', '.join(missing)}"
+    return check
+
+
+def check_phase1_patch(root):
+    check = Check("phase1_patch")
+    patches_file = repo_path(root, "beaverbill", "patches.txt")
+    try:
+        with open(patches_file, encoding="utf-8") as fh:
+            entries = [line.strip() for line in fh if line.strip().startswith("beaverbill.patches.")]
+    except OSError:
+        check.detail = "beaverbill/patches.txt unreadable"
+        return check
+    missing = [
+        e for e in entries if not os.path.isfile(repo_path(root, *e.split(".")) + ".py")
+    ]
+    if not entries:
+        check.detail = "no patch registered in beaverbill/patches.txt"
+    elif missing:
+        check.detail = f"patch file missing: {', '.join(missing)}"
+    else:
+        check.passed = True
+        check.detail = f"{len(entries)} registered patch(es) present"
+    return check
+
+
 PHASE_CHECKS = {
     "phase-0": ("progress_scripts", "erpnext_scan", "git_commit", "audit_doc", "existing_tests"),
+    "phase-1": (
+        "progress_scripts",
+        "erpnext_scan",
+        "git_commit",
+        "existing_tests",
+        "phase1_doc",
+        "phase1_reports",
+        "phase1_patch",
+    ),
 }
 
 ALL_CHECKS = {
@@ -262,6 +321,9 @@ ALL_CHECKS = {
     "audit_doc": check_audit_doc,
     "evidence": check_evidence,
     "existing_tests": check_tests,
+    "phase1_doc": lambda root: sized_doc(root, "docs/phase-1-hardening.md", name="phase1_doc"),
+    "phase1_reports": check_phase1_reports,
+    "phase1_patch": check_phase1_patch,
 }
 
 

@@ -8,8 +8,10 @@
  "field_order": [
   "subnet_name",
   "cidr",
+  "ip_version",
   "gateway",
-  "dns_servers"
+  "dns_servers",
+  "vlan_id"
  ],
  "fields": [
   {
@@ -28,6 +30,15 @@
    "reqd": 1
   },
   {
+   "fieldname": "ip_version",
+   "fieldtype": "Select",
+   "label": "IP Version",
+   "options": "IPv4\nIPv6",
+   "default": "IPv4",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
    "fieldname": "gateway",
    "fieldtype": "Data",
    "label": "Gateway"
@@ -36,9 +47,19 @@
    "fieldname": "dns_servers",
    "fieldtype": "Text",
    "label": "DNS Servers"
+  },
+  {
+   "fieldname": "vlan_id",
+   "fieldtype": "Int",
+   "label": "VLAN ID"
   }
  ],
  "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": ["cidr"]
+  }
+ ],
  "links": [],
  "modified": "2026-09-27 19:54:15.367900",
  "modified_by": "Administrator",
