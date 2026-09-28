@@ -1,0 +1,93 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "user",
+    "prefix",
+    "token_hash",
+    "scopes",
+    "expires_at",
+    "revoked",
+    "last_used_at"
+  ],
+  "fields": [
+    {
+      "fieldname": "user",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "User",
+      "options": "User",
+      "reqd": 1
+    },
+    {
+      "fieldname": "prefix",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Token Prefix",
+      "unique": 1
+    },
+    {
+      "fieldname": "token_hash",
+      "fieldtype": "Data",
+      "label": "Token Hash",
+      "unique": 1
+    },
+    {
+      "fieldname": "scopes",
+      "fieldtype": "Small Text",
+      "in_list_view": 1,
+      "label": "Scopes (comma separated)"
+    },
+    {
+      "fieldname": "expires_at",
+      "fieldtype": "Datetime",
+      "in_list_view": 1,
+      "label": "Expires At"
+    },
+    {
+      "default": "0",
+      "fieldname": "revoked",
+      "fieldtype": "Check",
+      "in_list_view": 1,
+      "label": "Revoked"
+    },
+    {
+      "fieldname": "last_used_at",
+      "fieldtype": "Datetime",
+      "label": "Last Used At"
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Scoped API Token",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

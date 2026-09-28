@@ -217,6 +217,8 @@ permission_query_conditions = {
 	"Service Action": "beaverbill.beaverbill.permissions.service_action_query_conditions",
 	"Service Storage Usage": "beaverbill.beaverbill.permissions.service_usage_query_conditions",
 	"Customer Notification": "beaverbill.beaverbill.permissions.customer_notification_query_conditions",
+	"Security Audit Log": "beaverbill.beaverbill.permissions.security_audit_log_query_conditions",
+	"Scoped API Token": "beaverbill.beaverbill.permissions.scoped_api_token_query_conditions",
 }
 
 has_permission = {
@@ -237,6 +239,8 @@ has_permission = {
 	"Hosting Payment Method": "beaverbill.beaverbill.permissions.check_payment_method_ownership",
 	"Hosting Subscription": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
 	"Customer Notification": "beaverbill.beaverbill.permissions.check_notification_ownership",
+	"Security Audit Log": "beaverbill.beaverbill.permissions.check_staff_only",
+	"Scoped API Token": "beaverbill.beaverbill.permissions.check_staff_only",
 }
 
 # Document Events

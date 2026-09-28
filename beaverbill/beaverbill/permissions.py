@@ -161,6 +161,24 @@ def customer_notification_query_conditions(user=None):
 	return "(" + " OR ".join(clauses) + ")"
 
 
+def _staff_only_query_conditions(user=None):
+	"""Security records are staff-visible only; customers see nothing."""
+	user = user or frappe.session.user
+	if set(frappe.get_roles(user)).intersection(set(STAFF_ROLES)):
+		return ""
+	return "1=0"
+
+
+security_audit_log_query_conditions = _staff_only_query_conditions
+scoped_api_token_query_conditions = _staff_only_query_conditions
+
+
+def check_staff_only(doc, ptype="read", user=None):
+	"""Staff pass; customers and guests are always denied."""
+	user = user or frappe.session.user
+	return bool(set(frappe.get_roles(user)).intersection(set(STAFF_ROLES)))
+
+
 def _owned_doc(doc, user, write=False, delete=False):
 	"""True when the doc's user/customer links belong to the caller."""
 	customer = customer_of_user(user)

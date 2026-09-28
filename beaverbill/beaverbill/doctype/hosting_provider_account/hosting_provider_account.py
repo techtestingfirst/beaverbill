@@ -17,6 +17,13 @@ class HostingProviderAccount(Document):
 		provider_type: DF.Literal["Hetzner Cloud", "OVHcloud", "cPanel/WHM", "DirectAdmin", "Proxmox VE", "Custom"]
 	# end: auto-generated types
 
+	def validate(self):
+		# SSRF guard: provider endpoints must be public http(s) URLs.
+		if self.endpoint_url:
+			from beaverbill.beaverbill.security import validate_outbound_url
+
+			validate_outbound_url(self.endpoint_url)
+
 	@frappe.whitelist()
 	def get_public_fields(self) -> dict:
 		"""Return account fields safe for desk display. Never includes secrets."""
