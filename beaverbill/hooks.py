@@ -268,6 +268,7 @@ scheduler_events = {
         "beaverbill.beaverbill.backups.run_due_backups",
         "beaverbill.beaverbill.backups.enforce_retention",
         "beaverbill.beaverbill.backups.process_storage_overage",
+        "beaverbill.beaverbill.helpdesk_sync.process_helpdesk_sync",
     ],
 }
 

@@ -1,108 +1,52 @@
 """Phase 10 portal: Helpdesk ticket bridge and customer notifications.
 
-Tickets ride on frappe/helpdesk HD Tickets with raised_by set to the
-caller and via_customer_portal flagged. Phase 12 owns the full
-customer/contact synchronization; here we bridge the minimum the
-portal needs without coupling Beaver Bill to helpdesk internals.
+Tickets ride on frappe/helpdesk HD Tickets through the Phase 12
+sync engine: customers and contacts are mirrored, statuses and
+priorities resolved, and links recorded as Ticket References.
 """
 
 import frappe
 
+from beaverbill.beaverbill import helpdesk_sync as bridge
 from beaverbill.beaverbill.portal.guard import is_staff, portal_customer, portal_endpoint
 
 
-def _require_helpdesk() -> None:
-	if not frappe.db.exists("DocType", "HD Ticket"):
-		frappe.throw("Helpdesk is not configured on this site", frappe.ValidationError)
-
-
-def _default_status() -> str:
-	name = frappe.db.get_value("HD Ticket Status", {"name": ("like", "Open%")}, "name")
-	if name:
-		return name
-	first = frappe.get_all("HD Ticket Status", pluck="name", limit=1, ignore_permissions=True)
-	if not first:
-		frappe.throw("No HD Ticket Status configured", frappe.ValidationError)
-	return first[0]
-
-
-def _own_ticket(name: str, user=None) -> dict:
-	"""Ownership-checked ticket header via the DB layer (role independent).
-
-	Beaver Bill does not take a dependency on helpdesk roles; the
-	portal filters by raised_by and Phase 12 formalizes the sync.
-	"""
+def _own_ticket(name: str, user=None) -> str:
+	"""Return the ticket's raiser after an ownership check (role independent)."""
 	user = user or frappe.session.user
-	header = frappe.db.get_value(
-		"HD Ticket", name, ["name", "subject", "status", "priority", "description", "raised_by"],
-		as_dict=True,
-	)
-	if not header:
+	raised_by = frappe.db.get_value("HD Ticket", name, "raised_by")
+	if raised_by is None:
 		frappe.throw(f"HD Ticket {name} not found", frappe.DoesNotExistError)
-	if not is_staff(user) and header.raised_by != user:
+	if not is_staff(user) and raised_by != user:
 		frappe.throw(f"Ticket {name} does not belong to this customer", frappe.PermissionError)
-	return header
-
-
-def _check_attachments(attachments: list, user: str) -> None:
-	"""Every attachment URL must be an existing File owned by the caller."""
-	for url in attachments or []:
-		row = frappe.db.get_value("File", {"file_url": url}, ["name", "owner"])
-		if not row:
-			frappe.throw(f"Attachment not found: {url}", frappe.ValidationError)
-		if row[1] != user:
-			frappe.throw(f"Attachment does not belong to this customer: {url}", frappe.PermissionError)
+	return raised_by
 
 
 @frappe.whitelist()
 @portal_endpoint("portal.create_ticket", limit=20)
 def create_ticket(subject: str, description: str, service: str | None = None,
-				 priority: str | None = None, attachments: str | None = None) -> dict:
-	"""Open a support ticket as the caller, optionally linked to a service."""
+				 order: str | None = None, invoice: str | None = None,
+				 domain: str | None = None, priority: str | None = None,
+				 team: str | None = None, attachments: str | None = None,
+				 idempotency_key: str | None = None) -> dict:
+	"""Open a support ticket as the caller, linked to owned records."""
 	import json as _json
 
-	_require_helpdesk()
+	bridge.require_helpdesk()
 	user = frappe.session.user
 	portal_customer()
-	footer = ""
-	if service:
-		from beaverbill.beaverbill.portal.guard import own_service_or_throw
-
-		svc = own_service_or_throw(service, user)
-		footer = f"\n\nLinked service: {svc.name} ({svc.product}, {svc.status})"
 	files = _json.loads(attachments) if attachments else []
-	_check_attachments(files, user)
-	# Helpdesk controllers (tags, SLA, communications) assume agent-side
-	# permissions. Attribution stays exact via raised_by; Phase 12 replaces
-	# this bridge with the HD Customer role and record sync.
-	previous_user = frappe.session.user
-	frappe.set_user("Administrator")
-	try:
-		doc = frappe.get_doc(
-			{
-				"doctype": "HD Ticket",
-				"subject": subject[:200],
-				"description": (description or "") + footer,
-				"raised_by": user,
-				"status": _default_status(),
-				"via_customer_portal": 1,
-			}
-		)
-		if priority and frappe.db.exists("HD Ticket Priority", priority):
-			doc.priority = priority
-		doc.insert(ignore_permissions=True)
-	finally:
-		frappe.set_user(previous_user)
-	if files:
-		frappe.db.set_value("HD Ticket", doc.name, "description",
-							(doc.description or "") + f"\nAttachments: {', '.join(files)}")
-	return {"ticket": doc.name, "status": doc.status}
+	return bridge.create_portal_ticket(
+		subject, description, service=service, order=order, invoice=invoice,
+		domain=domain, priority=priority, team=team, attachments=files,
+		idempotency_key=idempotency_key, user=user,
+	)
 
 
 @frappe.whitelist()
 @portal_endpoint("portal.my_tickets", limit=60)
 def my_tickets() -> dict:
-	"""Tickets raised by the caller."""
+	"""Tickets raised by the caller, with portal-facing statuses."""
 	user = frappe.session.user
 	portal_customer()
 	rows = frappe.get_all(
@@ -112,50 +56,57 @@ def my_tickets() -> dict:
 		order_by="modified desc",
 		ignore_permissions=True,
 	)
+	for row in rows:
+		row["portal_status"] = bridge.portal_status(row.status)
 	return {"tickets": rows}
 
 
 @frappe.whitelist()
 @portal_endpoint("portal.ticket_detail", limit=60)
 def ticket_detail(ticket: str) -> dict:
-	"""Ticket detail plus visible comments (ownership enforced)."""
-	header = _own_ticket(ticket)
-	comments = frappe.get_all(
-		"HD Ticket Comment",
-		filters={"reference_ticket": header.name},
-		fields=["name", "content", "commented_by", "creation"],
-		order_by="creation asc",
-		ignore_permissions=True,
+	"""Ticket detail: links, SLA, and the caller-visible conversation."""
+	user = frappe.session.user
+	_own_ticket(ticket, user)
+	header = frappe.db.get_value(
+		"HD Ticket", ticket,
+		["name", "subject", "status", "priority", "description", "agent_group"],
+		as_dict=True,
 	)
-	legacy = frappe.get_all(
-		"Comment",
-		filters={"reference_doctype": "HD Ticket", "reference_name": header.name},
-		fields=["name", "content", "owner", "creation"],
-		order_by="creation asc",
-		ignore_permissions=True,
-	)
+	comments = bridge.visible_comments(ticket, user)
+	links = bridge.ticket_links(ticket)
+	try:
+		sla = bridge.ticket_sla(ticket)
+	except (frappe.DoesNotExistError, frappe.PermissionError):
+		sla = {}
 	return {"ticket": header.name, "subject": header.subject, "status": header.status,
+			"portal_status": bridge.portal_status(header.status),
 			"priority": header.priority, "description": header.description,
-			"comments": comments + legacy}
+			"team": header.agent_group, "links": links, "sla": sla,
+			"comments": comments}
 
 
 @frappe.whitelist()
 @portal_endpoint("portal.ticket_reply", limit=30)
 def ticket_reply(ticket: str, message: str) -> dict:
-	"""Customer follow-up on their own ticket."""
+	"""Customer follow-up on their own ticket.
+
+	Replies are Frappe Comments: always customer-visible and never
+	mistaken for internal agent notes (see visible_comments).
+	"""
 	user = frappe.session.user
-	header = _own_ticket(ticket, user)
+	_own_ticket(ticket, user)
 	if not message or not message.strip():
 		frappe.throw("Message is required", frappe.ValidationError)
 	reply = frappe.get_doc(
 		{
-			"doctype": "HD Ticket Comment",
-			"reference_ticket": header.name,
+			"doctype": "Comment",
+			"comment_type": "Comment",
+			"reference_doctype": "HD Ticket",
+			"reference_name": ticket,
 			"content": message[:2000],
-			"commented_by": user,
 		}
 	).insert(ignore_permissions=True)
-	return {"ticket": header.name, "reply": reply.name}
+	return {"ticket": ticket, "reply": reply.name}
 
 
 @frappe.whitelist()

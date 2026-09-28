@@ -57,7 +57,15 @@ def signup(full_name: str, password: str, email: str) -> dict:
 			"send_welcome_email": 0,
 		}
 	).insert(ignore_permissions=True)
-	user.add_roles("Hosting Customer")
+	from beaverbill.beaverbill import helpdesk_sync as bridge
+
+	# Role assignment needs an empowered session; guests cannot edit User.
+	previous_user = frappe.session.user
+	frappe.set_user("Administrator")
+	try:
+		bridge.grant_portal_roles(mail)
+	finally:
+		frappe.set_user(previous_user)
 	customer = frappe.get_doc(
 		{
 			"doctype": "Hosting Customer",

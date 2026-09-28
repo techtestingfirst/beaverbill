@@ -11,9 +11,13 @@ interface Detail {
   ticket: string
   subject: string
   status: string
+  portal_status?: string
   priority?: string
   description: string
-  comments: Array<{ name: string; content: string; commented_by?: string; owner?: string; creation: string }>
+  team?: string
+  links?: { service?: string; order?: string; invoice?: string; domain?: string }
+  sla?: { sla?: string; response_by?: string; resolution_by?: string; agreement_status?: string }
+  comments: Array<{ name: string; content: string; commented_by?: string; owner?: string; creation: string; kind?: string }>
 }
 
 const route = useRoute()
@@ -60,9 +64,16 @@ onMounted(load)
       <template v-if="detail">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <h1 class="text-xl font-semibold text-ink-gray-9">{{ detail.subject }}</h1>
-          <StatusBadge :status="detail.status" />
+          <StatusBadge :status="detail.portal_status || detail.status" />
         </div>
         <p class="font-mono text-xs text-ink-gray-5">{{ detail.ticket }}</p>
+        <dl v-if="detail.links && (detail.links.service || detail.links.order || detail.links.invoice || detail.links.domain)" class="mt-3 flex flex-wrap gap-x-4 gap-y-1 rounded-lg border border-outline-gray-1 bg-surface-white p-3 text-sm" aria-label="Linked records">
+          <div v-if="detail.links.service"><dt class="inline text-xs text-ink-gray-5">Service </dt><dd class="inline font-mono">{{ detail.links.service }}</dd></div>
+          <div v-if="detail.links.order"><dt class="inline text-xs text-ink-gray-5">Order </dt><dd class="inline font-mono">{{ detail.links.order }}</dd></div>
+          <div v-if="detail.links.invoice"><dt class="inline text-xs text-ink-gray-5">Invoice </dt><dd class="inline font-mono">{{ detail.links.invoice }}</dd></div>
+          <div v-if="detail.links.domain"><dt class="inline text-xs text-ink-gray-5">Domain </dt><dd class="inline font-mono">{{ detail.links.domain }}</dd></div>
+        </dl>
+        <p v-if="detail.sla && detail.sla.sla" class="mt-2 text-xs text-ink-gray-5">SLA {{ detail.sla.sla }} · respond by {{ detail.sla.response_by || '—' }} · resolve by {{ detail.sla.resolution_by || '—' }}</p>
         <div class="prose mt-3 max-w-none rounded-lg border border-outline-gray-1 bg-surface-white p-4 text-sm" v-html="detail.description" />
 
         <section class="mt-4" aria-label="Conversation">
