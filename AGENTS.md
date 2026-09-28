@@ -27,3 +27,10 @@ When working on a phase:
 - `scripts/mark_phase_complete.py`: Atomically updates `progress/phase-status.json` and updates the generated sections in `process.md`.
 - `scripts/run_phase_gate.sh`: Runs the full gate pipeline and invokes `mark_phase_complete.py` only when all checks pass.
 - `.githooks/pre-commit`: Validates that markers in `process.md` have not been manually tampered with.
+
+## Web Browsing Rule
+- Do NOT call native `browser.tabs.*` tools.
+- Execute web actions via terminal using `agent-browser`:
+  - `agent-browser open <url>`
+  - `agent-browser snapshot -i`
+  - `agent-browser click @e1`
