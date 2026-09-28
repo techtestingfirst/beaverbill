@@ -85,7 +85,13 @@ class TestHostingOrder(unittest.TestCase):
 			"currency": "USD"
 		}).insert()
 
-		# Run renewals without wallet balance -> should suspend (dunning)
+		# Run renewals without wallet balance -> enters dunning (Phase 6:
+		# Payment Failed first, then Grace Period, then Suspended).
+		# Legacy rows without explicit dunning config suspend immediately.
+		frappe.db.set_value(
+			"Hosting Subscription", sub.name, {"max_retries": 0, "grace_period_days": 0},
+		)
+		sub.reload()
 		process_subscription_renewals()
 
 		sub.reload()

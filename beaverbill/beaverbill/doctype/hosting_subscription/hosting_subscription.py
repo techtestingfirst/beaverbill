@@ -2,6 +2,9 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import today, getdate, add_months
 
+from beaverbill.beaverbill import subscriptions as engine
+
+
 class HostingSubscription(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
@@ -13,71 +16,58 @@ class HostingSubscription(Document):
 
 		amount: DF.Currency
 		billing_cycle: DF.Literal["Monthly", "Quarterly", "Semi-Annually", "Annually", "Biennially", "Triennially"]
+		billing_timezone: DF.Data | None
+		cancel_at_period_end: DF.Check
+		cancellation_effective_at: DF.Date | None
+		cancellation_mode: DF.Literal["", "Immediate", "End of Period"]
+		cancellation_requested_at: DF.Datetime | None
 		currency: DF.Link | None
+		current_period_end: DF.Date | None
+		current_period_start: DF.Date | None
 		customer: DF.Link
+		data_purge_scheduled_at: DF.Date | None
+		grace_period_days: DF.Int
+		last_error: DF.SmallText | None
+		last_invoice: DF.Link | None
+		last_retry_at: DF.Datetime | None
+		locked_at: DF.Datetime | None
+		locked_by: DF.Data | None
+		max_retries: DF.Int
 		next_renewal_date: DF.Date
+		next_retry_at: DF.Datetime | None
 		order: DF.Link | None
 		product: DF.Link
-		status: DF.Literal["Active", "Suspended", "Terminated"]
+		reinstatement_count: DF.Int
+		renewal_lead_days: DF.Int
+		retry_backoff_minutes: DF.Int
+		retry_count: DF.Int
+		status: DF.Literal["Trial", "Active", "Renewal Pending", "Payment Failed", "Grace Period", "Suspended", "Cancellation Pending", "Terminated", "Archived"]
+		suspend_reason: DF.SmallText | None
+		terminated_at: DF.Datetime | None
+		termination_scheduled_at: DF.Date | None
+		trial_end_date: DF.Date | None
 	# end: auto-generated types
 
-	pass
+	def validate(self):
+		if self.is_new():
+			if self.status not in ("Trial", "Active"):
+				frappe.throw("New subscriptions must start as Trial or Active", frappe.ValidationError)
+			if not self.next_renewal_date:
+				frappe.throw("Next Renewal Date is required", frappe.ValidationError)
+			return
+		previous = self.get_db_value("status")
+		if previous and previous != self.status:
+			engine.validate_transition(previous, self.status)
+			if self.status == "Terminated" and not self.terminated_at:
+				self.terminated_at = frappe.utils.now_datetime()
+			if self.status == "Cancellation Pending" and not self.cancellation_requested_at:
+				self.cancellation_requested_at = frappe.utils.now_datetime()
 
-def process_subscription_renewals():
-	"""
-	Daily scheduler task to check for subscriptions due for renewal,
-	generate renewal invoices, and handle dunning/suspension.
-	"""
-	today_date = getdate(today())
-	active_subs = frappe.get_all("Hosting Subscription", filters={"status": "Active"}, fields=["name", "customer", "product", "billing_cycle", "amount", "currency", "next_renewal_date"])
 
-	for sub in active_subs:
-		renewal_date = getdate(sub.next_renewal_date)
-		if renewal_date <= today_date:
-			# Generate renewal invoice
-			invoice = frappe.get_doc({
-				"doctype": "Hosting Invoice",
-				"customer": sub.customer,
-				"invoice_date": today(),
-				"due_date": today(),
-				"status": "Unpaid",
-				"total_amount": sub.amount,
-				"currency": sub.currency
-			}).insert()
+def process_subscription_renewals(as_of=None):
+	"""Backward-compatible entry point; delegates to the Phase 6 engine."""
+	return engine.process_subscription_renewals(as_of=as_of)
 
-			# Attempt auto-charge from customer credit/wallet
-			wallet_balance = get_customer_wallet_balance(sub.customer)
-			if wallet_balance >= float(sub.amount):
-				# Deduct from wallet
-				frappe.get_doc({
-					"doctype": "Customer Credit Transaction",
-					"customer": sub.customer,
-					"transaction_date": today(),
-					"amount": -float(sub.amount),
-					"type": "Debit",
-					"description": f"Auto-renewal payment for subscription {sub.name}"
-				}).insert()
-
-				invoice.status = "Paid"
-				invoice.save()
-
-				# Update subscription renewal date
-				months_to_add = 1
-				if sub.billing_cycle == "Quarterly":
-					months_to_add = 3
-				elif sub.billing_cycle == "Semi-Annually":
-					months_to_add = 6
-				elif sub.billing_cycle == "Annually":
-					months_to_add = 12
-
-				sub_doc = frappe.get_doc("Hosting Subscription", sub.name)
-				sub_doc.next_renewal_date = add_months(sub.next_renewal_date, months_to_add)
-				sub_doc.save()
-			else:
-				# Dunning: If unpaid and past due, suspend subscription
-				sub_doc = frappe.get_doc("Hosting Subscription", sub.name)
-				sub_doc.status = "Suspended"
-				sub_doc.save()
 
 def get_customer_wallet_balance(customer):
 	txs = frappe.get_all("Customer Credit Transaction", filters={"customer": customer}, fields=["amount"])

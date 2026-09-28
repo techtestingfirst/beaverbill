@@ -227,9 +227,11 @@ has_permission = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-	
-# }
+scheduler_events = {
+    "daily": [
+        "beaverbill.beaverbill.doctype.hosting_subscription.hosting_subscription.process_subscription_renewals",
+    ],
+}
 
 # Testing
 # -------

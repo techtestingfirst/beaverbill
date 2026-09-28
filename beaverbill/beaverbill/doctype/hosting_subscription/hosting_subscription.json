@@ -1,103 +1,269 @@
 {
- "actions": [],
- "allow_rename": 1,
- "creation": "2025-01-01 00:00:00",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "customer",
-  "product",
-  "status",
-  "billing_cycle",
-  "next_renewal_date",
-  "amount",
-  "currency",
-  "order"
- ],
- "fields": [
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Customer",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "product",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Product",
-   "options": "Hosting Product",
-   "reqd": 1
-  },
-  {
-   "default": "Active",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Active\nSuspended\nTerminated",
-   "reqd": 1
-  },
-  {
-   "fieldname": "billing_cycle",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Billing Cycle",
-   "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
-   "reqd": 1
-  },
-  {
-   "fieldname": "next_renewal_date",
-   "fieldtype": "Date",
-   "label": "Next Renewal Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "amount",
-   "fieldtype": "Currency",
-   "label": "Amount",
-   "reqd": 1
-  },
-  {
-   "default": "USD",
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency"
-  },
-  {
-   "fieldname": "order",
-   "fieldtype": "Link",
-   "label": "Order",
-   "options": "Hosting Order"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-09-27 19:51:19.126055",
- "modified_by": "Administrator",
- "module": "BeaverBill",
- "name": "Hosting Subscription",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": []
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2025-01-01 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "customer",
+    "product",
+    "status",
+    "billing_cycle",
+    "amount",
+    "currency",
+    "order",
+    "current_period_start",
+    "current_period_end",
+    "next_renewal_date",
+    "trial_end_date",
+    "billing_timezone",
+    "renewal_lead_days",
+    "grace_period_days",
+    "retry_count",
+    "max_retries",
+    "retry_backoff_minutes",
+    "next_retry_at",
+    "last_retry_at",
+    "last_invoice",
+    "last_error",
+    "cancel_at_period_end",
+    "cancellation_mode",
+    "cancellation_requested_at",
+    "cancellation_effective_at",
+    "termination_scheduled_at",
+    "data_purge_scheduled_at",
+    "terminated_at",
+    "suspend_reason",
+    "reinstatement_count",
+    "locked_at",
+    "locked_by"
+  ],
+  "fields": [
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Customer",
+      "options": "User",
+      "reqd": 1
+    },
+    {
+      "fieldname": "product",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Product",
+      "options": "Hosting Product",
+      "reqd": 1
+    },
+    {
+      "default": "Active",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Trial\nActive\nRenewal Pending\nPayment Failed\nGrace Period\nSuspended\nCancellation Pending\nTerminated\nArchived",
+      "reqd": 1
+    },
+    {
+      "fieldname": "billing_cycle",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Billing Cycle",
+      "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
+      "reqd": 1
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "label": "Amount",
+      "reqd": 1
+    },
+    {
+      "default": "USD",
+      "fieldname": "currency",
+      "fieldtype": "Link",
+      "label": "Currency",
+      "options": "Currency"
+    },
+    {
+      "fieldname": "order",
+      "fieldtype": "Link",
+      "label": "Order",
+      "options": "Hosting Order"
+    },
+    {
+      "fieldname": "current_period_start",
+      "fieldtype": "Date",
+      "label": "Current Period Start"
+    },
+    {
+      "fieldname": "current_period_end",
+      "fieldtype": "Date",
+      "label": "Current Period End"
+    },
+    {
+      "fieldname": "next_renewal_date",
+      "fieldtype": "Date",
+      "label": "Next Renewal Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "trial_end_date",
+      "fieldtype": "Date",
+      "label": "Trial End Date"
+    },
+    {
+      "default": "UTC",
+      "fieldname": "billing_timezone",
+      "fieldtype": "Data",
+      "label": "Billing Timezone"
+    },
+    {
+      "default": "3",
+      "fieldname": "renewal_lead_days",
+      "fieldtype": "Int",
+      "label": "Renewal Lead Days"
+    },
+    {
+      "default": "7",
+      "fieldname": "grace_period_days",
+      "fieldtype": "Int",
+      "label": "Grace Period Days"
+    },
+    {
+      "default": "0",
+      "fieldname": "retry_count",
+      "fieldtype": "Int",
+      "label": "Retry Count"
+    },
+    {
+      "default": "4",
+      "fieldname": "max_retries",
+      "fieldtype": "Int",
+      "label": "Max Retries"
+    },
+    {
+      "default": "240",
+      "fieldname": "retry_backoff_minutes",
+      "fieldtype": "Int",
+      "label": "Retry Backoff Minutes"
+    },
+    {
+      "fieldname": "next_retry_at",
+      "fieldtype": "Datetime",
+      "label": "Next Retry At"
+    },
+    {
+      "fieldname": "last_retry_at",
+      "fieldtype": "Datetime",
+      "label": "Last Retry At"
+    },
+    {
+      "fieldname": "last_invoice",
+      "fieldtype": "Link",
+      "label": "Last Renewal Invoice",
+      "options": "Hosting Invoice"
+    },
+    {
+      "fieldname": "last_error",
+      "fieldtype": "Small Text",
+      "label": "Last Error"
+    },
+    {
+      "default": "0",
+      "fieldname": "cancel_at_period_end",
+      "fieldtype": "Check",
+      "label": "Cancel At Period End"
+    },
+    {
+      "fieldname": "cancellation_mode",
+      "fieldtype": "Select",
+      "label": "Cancellation Mode",
+      "options": "\nImmediate\nEnd of Period"
+    },
+    {
+      "fieldname": "cancellation_requested_at",
+      "fieldtype": "Datetime",
+      "label": "Cancellation Requested At",
+      "read_only": 1
+    },
+    {
+      "fieldname": "cancellation_effective_at",
+      "fieldtype": "Date",
+      "label": "Cancellation Effective Date"
+    },
+    {
+      "fieldname": "termination_scheduled_at",
+      "fieldtype": "Date",
+      "label": "Termination Scheduled At"
+    },
+    {
+      "fieldname": "data_purge_scheduled_at",
+      "fieldtype": "Date",
+      "label": "Data Purge Scheduled At"
+    },
+    {
+      "fieldname": "terminated_at",
+      "fieldtype": "Datetime",
+      "label": "Terminated At",
+      "read_only": 1
+    },
+    {
+      "fieldname": "suspend_reason",
+      "fieldtype": "Small Text",
+      "label": "Suspension Reason"
+    },
+    {
+      "default": "0",
+      "fieldname": "reinstatement_count",
+      "fieldtype": "Int",
+      "label": "Reinstatement Count"
+    },
+    {
+      "fieldname": "locked_at",
+      "fieldtype": "Datetime",
+      "label": "Scheduler Locked At",
+      "read_only": 1
+    },
+    {
+      "fieldname": "locked_by",
+      "fieldtype": "Data",
+      "label": "Scheduler Locked By",
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "indexes": [
+    {
+      "fields": ["status", "next_renewal_date"]
+    },
+    {
+      "fields": ["status", "next_retry_at"]
+    }
+  ],
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Hosting Subscription",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
 }
