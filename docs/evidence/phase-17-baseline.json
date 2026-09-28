@@ -1,0 +1,13 @@
+{
+  "browser_evidence": "not captured (no browser binary in environment)",
+  "commands": [
+    "bench --site beaverbill.localhost run-tests --app beaverbill --test test_business_policies",
+    "bench --site beaverbill.localhost run-tests --app beaverbill",
+    "python3 scripts/beaverbill_phase_check.py phase-17"
+  ],
+  "erpnext_scan": "pass",
+  "migration": "bench migrate OK on beaverbill.localhost; no schema changes in this phase (tests and docs only)",
+  "phase": "phase-17",
+  "provider_traffic": "no live provider traffic",
+  "test_results": "10 business-policy tests OK; full suite 221 integration plus 16 stub tests OK on beaverbill.localhost"
+}
