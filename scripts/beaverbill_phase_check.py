@@ -367,6 +367,37 @@ def check_phase4_models(root):
     return check
 
 
+def check_phase5_models(root):
+    check = Check("phase5_models")
+    wanted = [
+        "beaverbill/beaverbill/doctype/hosting_payment_gateway/hosting_payment_gateway.json",
+        "beaverbill/beaverbill/doctype/hosting_payment_method/hosting_payment_method.json",
+        "beaverbill/beaverbill/doctype/hosting_payment_event/hosting_payment_event.json",
+        "beaverbill/beaverbill/gateways.py",
+        "beaverbill/beaverbill/webhooks.py",
+        "beaverbill/beaverbill/tests/test_gateway_webhooks.py",
+        "beaverbill/beaverbill/report/gateway_reconciliation/gateway_reconciliation.json",
+        "beaverbill/beaverbill/report/unprocessed_webhooks/unprocessed_webhooks.json",
+    ]
+    missing = [r for r in wanted if not os.path.isfile(repo_path(root, r))]
+    problems = []
+    if missing:
+        problems.append(f"missing: {', '.join(missing)}")
+    try:
+        with open(repo_path(root, "beaverbill", "beaverbill", "doctype", "hosting_payment_method", "hosting_payment_method.json"), encoding="utf-8") as fh:
+            method = json.load(fh)
+        fields = {f.get("fieldname") for f in method.get("fields", [])}
+        if "token_reference" not in fields:
+            problems.append("Hosting Payment Method lacks token_reference")
+        if {"card_number", "pan", "cvv", "card_cvv"} & fields:
+            problems.append("Hosting Payment Method must not store card data")
+    except (OSError, ValueError) as exc:
+        problems.append(f"payment method schema unreadable: {exc}")
+    check.passed = not problems
+    check.detail = "gateway models and webhook pipeline present" if check.passed else "; ".join(problems)
+    return check
+
+
 def check_phase1_patch(root):
     check = Check("phase1_patch")
     patches_file = repo_path(root, "beaverbill", "patches.txt")
@@ -424,6 +455,14 @@ PHASE_CHECKS = {
         "phase4_doc",
         "phase4_models",
     ),
+    "phase-5": (
+        "progress_scripts",
+        "erpnext_scan",
+        "git_commit",
+        "existing_tests",
+        "phase5_doc",
+        "phase5_models",
+    ),
 }
 
 ALL_CHECKS = {
@@ -440,6 +479,8 @@ ALL_CHECKS = {
     "phase3_models": check_phase3_models,
     "phase4_doc": lambda root: sized_doc(root, "docs/phase-4-billing.md", name="phase4_doc"),
     "phase4_models": check_phase4_models,
+    "phase5_doc": lambda root: sized_doc(root, "docs/phase-5-gateway.md", name="phase5_doc"),
+    "phase5_models": check_phase5_models,
     "phase1_reports": check_phase1_reports,
     "phase1_patch": check_phase1_patch,
 }

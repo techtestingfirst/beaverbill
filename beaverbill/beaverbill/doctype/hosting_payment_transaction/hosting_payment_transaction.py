@@ -6,13 +6,39 @@ ALLOWED_TRANSITIONS = {
 	"Authorized": {"Captured", "Failed"},
 	"Captured": {"Refunded", "Partially Refunded", "Chargeback"},
 	"Partially Refunded": {"Refunded", "Chargeback"},
-	"Failed": set(),
+	# Phase 5 retry: a failed payment may start a new attempt.
+	"Failed": {"Created"},
 	"Refunded": set(),
 	"Chargeback": set(),
 }
 
 
 class HostingPaymentTransaction(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		amount: DF.Currency
+		currency: DF.Link | None
+		customer: DF.Link
+		gateway: DF.Data | None
+		gateway_event_id: DF.Data | None
+		gateway_reference: DF.Data | None
+		idempotency_key: DF.Data | None
+		last_error: DF.SmallText | None
+		next_retry_at: DF.Datetime | None
+		payment_date: DF.Date
+		payment_token_ref: DF.Data | None
+		remarks: DF.SmallText | None
+		retry_count: DF.Int | None
+		source_invoice: DF.Link | None
+		status: DF.Literal["Created", "Authorized", "Captured", "Failed", "Refunded", "Partially Refunded", "Chargeback"]
+	# end: auto-generated types
+
 	def validate(self):
 		if self.amount is not None and float(self.amount) <= 0:
 			frappe.throw("Payment amount must be positive", frappe.ValidationError)

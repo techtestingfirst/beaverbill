@@ -13,6 +13,11 @@
   "status",
   "gateway",
   "gateway_reference",
+   "gateway_event_id",
+   "payment_token_ref",
+   "retry_count",
+   "next_retry_at",
+   "last_error",
   "idempotency_key",
   "source_invoice",
   "remarks"
@@ -66,6 +71,32 @@
    "fieldtype": "Data",
    "label": "Gateway Reference",
    "unique": 1
+  },
+  {
+   "fieldname": "gateway_event_id",
+   "fieldtype": "Data",
+   "label": "Last Gateway Event ID"
+  },
+  {
+   "fieldname": "payment_token_ref",
+   "fieldtype": "Data",
+   "label": "Payment Token Reference (never store card numbers)"
+  },
+  {
+   "default": "0",
+   "fieldname": "retry_count",
+   "fieldtype": "Int",
+   "label": "Retry Count"
+  },
+  {
+   "fieldname": "next_retry_at",
+   "fieldtype": "Datetime",
+   "label": "Next Retry At"
+  },
+  {
+   "fieldname": "last_error",
+   "fieldtype": "Small Text",
+   "label": "Last Error"
   },
   {
    "fieldname": "idempotency_key",
