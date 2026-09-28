@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-16",
+  "current_phase": "phase-17",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -180,15 +180,20 @@
     "phase-16": {
       "id": "phase-16",
       "title": "Deployment, Backup, Disaster Recovery, and Release",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "4ba840b425d23bdf21b059ff5f0720fd2a6dcc4c",
+      "completed_at": "2026-09-28T20:29:43+00:00",
+      "evidence": [
+        "docs/phase-16-release.md",
+        "docs/evidence/phase-16-baseline.json",
+        "docs/evidence/phase-16-backup.json",
+        "docs/evidence/phase-16-versions.json"
+      ]
     },
     "phase-17": {
       "id": "phase-17",
       "title": "Business Policies and Documentation",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
