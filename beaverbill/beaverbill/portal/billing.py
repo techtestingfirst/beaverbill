@@ -113,3 +113,98 @@ def payment_status(payment: str) -> dict:
 	return {"payment": doc.name, "status": doc.status, "amount": float(doc.amount or 0),
 			"currency": doc.currency, "gateway": doc.gateway,
 			"gateway_reference": doc.gateway_reference, "invoice": doc.source_invoice}
+
+
+def _own_payment_method(name: str, user=None) -> object:
+	user = user or frappe.session.user
+	doc = frappe.get_doc("Hosting Payment Method", name)
+	if is_staff(user):
+		return doc
+	if doc.customer != user:
+		frappe.throw(f"Payment method {name} does not belong to this customer", frappe.PermissionError)
+	return doc
+
+
+@frappe.whitelist()
+@portal_endpoint("portal.list_payment_methods", limit=60)
+def list_payment_methods() -> dict:
+	"""Tokenized payment methods for the caller. Raw card data is never stored."""
+	user = frappe.session.user
+	portal_customer()
+	rows = frappe.get_all(
+		"Hosting Payment Method",
+		filters={"customer": user},
+		fields=["name", "gateway", "brand", "last4", "exp_month", "exp_year", "is_default"],
+		order_by="creation desc",
+	)
+	return {"methods": rows}
+
+
+@frappe.whitelist()
+@portal_endpoint("portal.add_payment_method", limit=10)
+def add_payment_method(gateway: str, token_reference: str, brand: str | None = None,
+					   last4: str | None = None, exp_month: str | None = None,
+					   exp_year: str | None = None, make_default: bool = False) -> dict:
+	"""Save a gateway-issued token reference. PANs and CVVs are always refused."""
+	user = frappe.session.user
+	portal_customer()
+	if not token_reference or len(token_reference.strip()) < 4:
+		frappe.throw("A gateway token reference is required", frappe.ValidationError)
+	joined = " ".join([token_reference, brand or "", last4 or ""]).lower()
+	if any(marker in joined for marker in ("4111", "4242", "cvv", "cvc")):
+		frappe.throw("Raw card data must never be sent to this API", frappe.ValidationError)
+	if last4 and (len(last4) != 4 or not last4.isdigit()):
+		frappe.throw("last4 must be exactly four digits", frappe.ValidationError)
+	doc = frappe.get_doc(
+		{
+			"doctype": "Hosting Payment Method",
+			"customer": user,
+			"gateway": gateway,
+			"token_reference": token_reference.strip(),
+			"brand": (brand or "")[:40],
+			"last4": (last4 or "")[:4],
+			"exp_month": (exp_month or "")[:2],
+			"exp_year": (exp_year or "")[:4],
+			"is_default": 1 if make_default else 0,
+		}
+	).insert()
+	if make_default:
+		for row in frappe.get_all("Hosting Payment Method",
+								  filters={"customer": user, "name": ("!=", doc.name)}, pluck="name"):
+			frappe.db.set_value("Hosting Payment Method", row, "is_default", 0)
+	return {"method": doc.name}
+
+
+@frappe.whitelist()
+@portal_endpoint("portal.remove_payment_method", limit=10)
+def remove_payment_method(name: str) -> dict:
+	"""Delete the caller's saved method (the gateway token itself is unaffected)."""
+	doc = _own_payment_method(name)
+	doc.delete()
+	return {"deleted": name}
+
+
+@frappe.whitelist()
+@portal_endpoint("portal.list_gateways", limit=60)
+def list_gateways(currency: str | None = None) -> dict:
+	"""Payment gateways the caller may pay through, optionally filtered by currency."""
+	user = frappe.session.user
+	portal_customer()
+	rows = frappe.get_all(
+		"Hosting Payment Gateway",
+		filters={"is_active": 1},
+		fields=["name", "provider", "supported_currencies", "default_currency"],
+		order_by="name asc",
+	)
+	items = []
+	for row in rows:
+		if is_staff(user):
+			items.append(row)
+			continue
+		currencies = [c.strip().upper() for c in (row.supported_currencies or "").split(",") if c.strip()]
+		if currency and currency.upper() not in currencies:
+			continue
+		items.append({"name": row.name, "provider": row.provider,
+					  "supported_currencies": row.supported_currencies,
+					  "default_currency": row.default_currency})
+	return {"gateways": items}

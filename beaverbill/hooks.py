@@ -234,6 +234,7 @@ has_permission = {
 	"Service Storage Usage": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
 	"Hosting Invoice": "beaverbill.beaverbill.permissions.check_invoice_ownership",
 	"Hosting Payment Transaction": "beaverbill.beaverbill.permissions.check_payment_ownership",
+	"Hosting Payment Method": "beaverbill.beaverbill.permissions.check_payment_method_ownership",
 	"Hosting Subscription": "beaverbill.beaverbill.permissions.check_portal_read_ownership",
 	"Customer Notification": "beaverbill.beaverbill.permissions.check_notification_ownership",
 }
