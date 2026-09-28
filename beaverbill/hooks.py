@@ -219,6 +219,7 @@ permission_query_conditions = {
 	"Customer Notification": "beaverbill.beaverbill.permissions.customer_notification_query_conditions",
 	"Security Audit Log": "beaverbill.beaverbill.permissions.security_audit_log_query_conditions",
 	"Scoped API Token": "beaverbill.beaverbill.permissions.scoped_api_token_query_conditions",
+	"Monitoring Alert": "beaverbill.beaverbill.permissions.security_audit_log_query_conditions",
 }
 
 has_permission = {
@@ -241,6 +242,7 @@ has_permission = {
 	"Customer Notification": "beaverbill.beaverbill.permissions.check_notification_ownership",
 	"Security Audit Log": "beaverbill.beaverbill.permissions.check_staff_only",
 	"Scoped API Token": "beaverbill.beaverbill.permissions.check_staff_only",
+	"Monitoring Alert": "beaverbill.beaverbill.permissions.check_staff_only",
 }
 
 # Document Events
@@ -273,6 +275,8 @@ scheduler_events = {
         "beaverbill.beaverbill.backups.enforce_retention",
         "beaverbill.beaverbill.backups.process_storage_overage",
         "beaverbill.beaverbill.helpdesk_sync.process_helpdesk_sync",
+        "beaverbill.beaverbill.monitoring.run_monitoring_cycle",
+        "beaverbill.beaverbill.reconciliation.run_reconciliation_cycle",
     ],
 }
 
