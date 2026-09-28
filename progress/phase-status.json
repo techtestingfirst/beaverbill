@@ -193,10 +193,15 @@
     "phase-17": {
       "id": "phase-17",
       "title": "Business Policies and Documentation",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "7a1828525a02c9aaaf1755d180b0ec52136b3a26",
+      "completed_at": "2026-09-28T20:39:58+00:00",
+      "evidence": [
+        "docs/policies.md",
+        "docs/guides.md",
+        "docs/architecture.md",
+        "docs/evidence/phase-17-baseline.json"
+      ]
     }
   }
 }
