@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-1",
+  "current_phase": "phase-2",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -15,15 +15,18 @@
     "phase-1": {
       "id": "phase-1",
       "title": "Foundation and Infrastructure Compatibility Hardening",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "835ad07e690b0b6897dda4327d9aa7097e943d28",
+      "completed_at": "2026-09-28T15:30:49+00:00",
+      "evidence": [
+        "docs/phase-1-hardening.md",
+        "docs/evidence/phase-1-baseline.json"
+      ]
     },
     "phase-2": {
       "id": "phase-2",
       "title": "Catalog, Pricing, Tax, and Discount Compatibility",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
