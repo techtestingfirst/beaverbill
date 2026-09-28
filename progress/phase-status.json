@@ -1,5 +1,5 @@
 {
-  "current_phase": "phase-6",
+  "current_phase": "phase-8",
   "phases": {
     "phase-0": {
       "id": "phase-0",
@@ -70,23 +70,29 @@
     "phase-6": {
       "id": "phase-6",
       "title": "Subscription, Renewal, Dunning, and Cancellation",
-      "status": "in_progress",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "97a78495e87fe1c00d6f24a24d1e0b152f82fc85",
+      "completed_at": "2026-09-28T16:55:39+00:00",
+      "evidence": [
+        "docs/phase-6-subscriptions.md",
+        "docs/evidence/phase-6-baseline.json"
+      ]
     },
     "phase-7": {
       "id": "phase-7",
       "title": "Upgrade, Downgrade, and Modification Reliability",
-      "status": "not_started",
-      "commit": null,
-      "completed_at": null,
-      "evidence": []
+      "status": "completed",
+      "commit": "220e2ebfec73e499053fa0b1837e410a22c2fcb2",
+      "completed_at": "2026-09-28T17:08:10+00:00",
+      "evidence": [
+        "docs/phase-7-modifications.md",
+        "docs/evidence/phase-7-baseline.json"
+      ]
     },
     "phase-8": {
       "id": "phase-8",
       "title": "Provisioning Orchestration and Driver Reliability",
-      "status": "not_started",
+      "status": "in_progress",
       "commit": null,
       "completed_at": null,
       "evidence": []
