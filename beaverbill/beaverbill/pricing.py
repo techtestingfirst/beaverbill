@@ -88,7 +88,11 @@ def convert(amount, from_currency, to_currency, on_date=None):
 	frappe.throw(f"No exchange rate from {from_currency} to {to_currency} on {day}")
 
 
-def get_tax_profile(user=None):
+def get_tax_profile(user=None, customer=None):
+	if customer:
+		name = frappe.db.get_value("Hosting Customer Tax Profile", {"customer": customer}, "name")
+		if name:
+			return frappe.get_doc("Hosting Customer Tax Profile", name)
 	name = frappe.db.get_value("Hosting Customer Tax Profile", {"user": user or frappe.session.user}, "name")
 	return frappe.get_doc("Hosting Customer Tax Profile", name) if name else None
 
@@ -199,7 +203,10 @@ def calculate_price(
 		total = max(0.0, money(total, currency) - discount)
 
 	subtotal = money(total, currency)
-	profile = get_tax_profile(customer)
+	if customer and frappe.db.exists("Hosting Customer", customer):
+		profile = get_tax_profile(customer=customer)
+	else:
+		profile = get_tax_profile(user=customer)
 	tax_breakdown, tax_total = compute_taxes(subtotal, product.product_group, profile, currency)
 	grand = money(subtotal + tax_total, currency)
 	result = {

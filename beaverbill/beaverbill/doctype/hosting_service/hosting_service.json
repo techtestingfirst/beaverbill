@@ -1,0 +1,210 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "status",
+  "product",
+  "billing_cycle",
+  "order",
+  "order_item",
+  "subscription",
+  "provider_account",
+  "server_node",
+  "ip_address",
+  "domain",
+  "upstream_service_id",
+  "upstream_metadata",
+  "provisioned_at",
+  "suspended_at",
+  "cancellation_requested_at",
+  "terminated_at",
+  "cancel_at_period_end",
+  "termination_reason",
+  "last_reconciled_at",
+  "reconciliation_status",
+  "reconciliation_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Hosting Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nProvisioning\nActive\nModification Pending\nSuspended\nCancellation Pending\nTerminated\nArchived",
+   "default": "Pending",
+   "reqd": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Hosting Product"
+  },
+  {
+   "fieldname": "billing_cycle",
+   "fieldtype": "Select",
+   "label": "Billing Cycle",
+   "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially"
+  },
+  {
+   "fieldname": "order",
+   "fieldtype": "Link",
+   "label": "Order",
+   "options": "Hosting Order"
+  },
+  {
+   "fieldname": "order_item",
+   "fieldtype": "Data",
+   "label": "Order Item Row"
+  },
+  {
+   "fieldname": "subscription",
+   "fieldtype": "Link",
+   "label": "Subscription",
+   "options": "Hosting Subscription"
+  },
+  {
+   "fieldname": "provider_account",
+   "fieldtype": "Link",
+   "label": "Provider Account",
+   "options": "Hosting Provider Account"
+  },
+  {
+   "fieldname": "server_node",
+   "fieldtype": "Link",
+   "label": "Server Node",
+   "options": "Server Node"
+  },
+  {
+   "fieldname": "ip_address",
+   "fieldtype": "Link",
+   "label": "IP Address",
+   "options": "IPAM IP Address"
+  },
+  {
+   "fieldname": "domain",
+   "fieldtype": "Data",
+   "label": "Domain (Phase 9 record link)"
+  },
+  {
+   "fieldname": "upstream_service_id",
+   "fieldtype": "Data",
+   "label": "Upstream Service ID"
+  },
+  {
+   "fieldname": "upstream_metadata",
+   "fieldtype": "Long Text",
+   "label": "Upstream Metadata (JSON)"
+  },
+  {
+   "fieldname": "provisioned_at",
+   "fieldtype": "Datetime",
+   "label": "Provisioned At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "suspended_at",
+   "fieldtype": "Datetime",
+   "label": "Suspended At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cancellation_requested_at",
+   "fieldtype": "Datetime",
+   "label": "Cancellation Requested At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "terminated_at",
+   "fieldtype": "Datetime",
+   "label": "Terminated At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cancel_at_period_end",
+   "fieldtype": "Check",
+   "label": "Cancel At Period End",
+   "default": 0
+  },
+  {
+   "fieldname": "termination_reason",
+   "fieldtype": "Small Text",
+   "label": "Termination Reason"
+  },
+  {
+   "fieldname": "last_reconciled_at",
+   "fieldtype": "Datetime",
+   "label": "Last Reconciled At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reconciliation_status",
+   "fieldtype": "Select",
+   "label": "Reconciliation Status",
+   "options": "Not Reconciled\nMatched\nMismatched",
+   "default": "Not Reconciled"
+  },
+  {
+   "fieldname": "reconciliation_notes",
+   "fieldtype": "Small Text",
+   "label": "Reconciliation Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": [
+    "customer",
+    "status"
+   ]
+  },
+  {
+   "fields": [
+    "subscription"
+   ]
+  }
+ ],
+ "links": [],
+ "module": "BeaverBill",
+ "name": "Hosting Service",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Hosting Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Hosting Support",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Hosting Customer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

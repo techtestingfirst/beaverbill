@@ -1,0 +1,161 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_name",
+  "customer_type",
+  "company_name",
+  "primary_user",
+  "customer_group",
+  "tax_profile",
+  "status",
+  "locale",
+  "timezone",
+  "email_verified",
+  "identity_verified",
+  "consent_terms",
+  "consent_marketing",
+  "consent_datetime",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Customer Type",
+   "options": "Individual\nCompany",
+   "default": "Individual",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company Name",
+   "depends_on": "eval:doc.customer_type==\"Company\""
+  },
+  {
+   "fieldname": "primary_user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Primary User (portal login)",
+   "options": "User"
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Hosting Customer Group"
+  },
+  {
+   "fieldname": "tax_profile",
+   "fieldtype": "Link",
+   "label": "Tax Profile",
+   "options": "Hosting Customer Tax Profile"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Prospective\nActive\nSuspended\nClosed",
+   "default": "Prospective",
+   "reqd": 1
+  },
+  {
+   "fieldname": "locale",
+   "fieldtype": "Data",
+   "label": "Locale",
+   "default": "en"
+  },
+  {
+   "fieldname": "timezone",
+   "fieldtype": "Data",
+   "label": "Timezone",
+   "default": "UTC"
+  },
+  {
+   "fieldname": "email_verified",
+   "fieldtype": "Check",
+   "label": "Email Verified",
+   "default": 0
+  },
+  {
+   "fieldname": "identity_verified",
+   "fieldtype": "Check",
+   "label": "Identity Verified",
+   "default": 0
+  },
+  {
+   "fieldname": "consent_terms",
+   "fieldtype": "Check",
+   "label": "Terms Accepted",
+   "default": 0
+  },
+  {
+   "fieldname": "consent_marketing",
+   "fieldtype": "Check",
+   "label": "Marketing Consent",
+   "default": 0
+  },
+  {
+   "fieldname": "consent_datetime",
+   "fieldtype": "Datetime",
+   "label": "Consent At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": [
+    "status"
+   ]
+  }
+ ],
+ "links": [],
+ "module": "BeaverBill",
+ "name": "Hosting Customer",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Hosting Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Hosting Support",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Hosting Customer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -279,6 +279,33 @@ def check_phase1_reports(root):
     return check
 
 
+def check_phase3_models(root):
+    check = Check("phase3_models")
+    wanted = [
+        "beaverbill/beaverbill/doctype/hosting_customer/hosting_customer.json",
+        "beaverbill/beaverbill/doctype/hosting_customer_contact/hosting_customer_contact.json",
+        "beaverbill/beaverbill/doctype/hosting_customer_group/hosting_customer_group.json",
+        "beaverbill/beaverbill/doctype/hosting_service/hosting_service.json",
+        "beaverbill/beaverbill/backfill_services.py",
+        "beaverbill/beaverbill/permissions.py",
+    ]
+    missing = [r for r in wanted if not os.path.isfile(repo_path(root, r))]
+    try:
+        with open(repo_path(root, "beaverbill", "hooks.py"), encoding="utf-8") as fh:
+            hooks = fh.read()
+        wired = "hosting_service_query_conditions" in hooks and "check_service_ownership" in hooks
+    except OSError:
+        wired = False
+    problems = []
+    if missing:
+        problems.append(f"missing: {', '.join(missing)}")
+    if not wired:
+        problems.append("ownership hooks not wired in hooks.py")
+    check.passed = not problems
+    check.detail = "customer/service models and hooks present" if check.passed else "; ".join(problems)
+    return check
+
+
 def check_phase2_models(root):
     check = Check("phase2_models")
     wanted = [
@@ -346,6 +373,14 @@ PHASE_CHECKS = {
         "phase2_doc",
         "phase2_models",
     ),
+    "phase-3": (
+        "progress_scripts",
+        "erpnext_scan",
+        "git_commit",
+        "existing_tests",
+        "phase3_doc",
+        "phase3_models",
+    ),
 }
 
 ALL_CHECKS = {
@@ -358,6 +393,8 @@ ALL_CHECKS = {
     "phase1_doc": lambda root: sized_doc(root, "docs/phase-1-hardening.md", name="phase1_doc"),
     "phase2_doc": lambda root: sized_doc(root, "docs/phase-2-catalog.md", name="phase2_doc"),
     "phase2_models": check_phase2_models,
+    "phase3_doc": lambda root: sized_doc(root, "docs/phase-3-customer.md", name="phase3_doc"),
+    "phase3_models": check_phase3_models,
     "phase1_reports": check_phase1_reports,
     "phase1_patch": check_phase1_patch,
 }

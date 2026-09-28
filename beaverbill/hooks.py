@@ -199,13 +199,15 @@ use_json_request_body = True
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
+permission_query_conditions = {
+	"Hosting Service": "beaverbill.beaverbill.permissions.hosting_service_query_conditions",
+	"Hosting Customer": "beaverbill.beaverbill.permissions.hosting_customer_query_conditions",
+}
+
+has_permission = {
+	"Hosting Service": "beaverbill.beaverbill.permissions.check_service_ownership",
+	"Hosting Customer": "beaverbill.beaverbill.permissions.check_customer_ownership",
+}
 
 # Document Events
 # ---------------

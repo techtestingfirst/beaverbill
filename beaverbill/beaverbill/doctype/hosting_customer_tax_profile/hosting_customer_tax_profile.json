@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "user",
+  "customer",
   "country",
   "state",
   "tax_exempt",
@@ -20,6 +21,12 @@
    "options": "User",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Hosting Customer"
   },
   {
    "fieldname": "country",
