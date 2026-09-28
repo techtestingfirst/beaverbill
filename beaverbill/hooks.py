@@ -231,6 +231,7 @@ scheduler_events = {
     "daily": [
         "beaverbill.beaverbill.doctype.hosting_subscription.hosting_subscription.process_subscription_renewals",
         "beaverbill.beaverbill.doctype.hosting_service_modification_request.hosting_service_modification_request.apply_due_modifications",
+        "beaverbill.beaverbill.doctype.provisioning_operation.provisioning_operation.process_queued_provisioning_operations",
     ],
 }
 

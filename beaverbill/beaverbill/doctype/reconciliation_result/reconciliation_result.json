@@ -1,0 +1,109 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "service",
+    "provider_account",
+    "operation",
+    "local_state",
+    "remote_state",
+    "verdict",
+    "details",
+    "checked_at"
+  ],
+  "fields": [
+    {
+      "fieldname": "service",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Service",
+      "options": "Hosting Service"
+    },
+    {
+      "fieldname": "provider_account",
+      "fieldtype": "Link",
+      "label": "Provider Account",
+      "options": "Hosting Provider Account"
+    },
+    {
+      "fieldname": "operation",
+      "fieldtype": "Link",
+      "label": "Provisioning Operation",
+      "options": "Provisioning Operation"
+    },
+    {
+      "fieldname": "local_state",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Local State"
+    },
+    {
+      "fieldname": "remote_state",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Remote State"
+    },
+    {
+      "default": "Unknown",
+      "fieldname": "verdict",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Verdict",
+      "options": "Matched\nMismatched\nOrphaned Local\nOrphaned Remote\nUnknown",
+      "reqd": 1
+    },
+    {
+      "fieldname": "details",
+      "fieldtype": "Small Text",
+      "label": "Details"
+    },
+    {
+      "fieldname": "checked_at",
+      "fieldtype": "Datetime",
+      "label": "Checked At"
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Reconciliation Result",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

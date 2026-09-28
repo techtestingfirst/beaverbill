@@ -1,0 +1,127 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "operation",
+    "attempt_no",
+    "status",
+    "started_at",
+    "finished_at",
+    "duration_ms",
+    "request_summary",
+    "response_summary",
+    "error_type",
+    "error"
+  ],
+  "fields": [
+    {
+      "fieldname": "operation",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Provisioning Operation",
+      "options": "Provisioning Operation",
+      "reqd": 1
+    },
+    {
+      "default": 1,
+      "fieldname": "attempt_no",
+      "fieldtype": "Int",
+      "in_list_view": 1,
+      "label": "Attempt No",
+      "reqd": 1
+    },
+    {
+      "default": "Running",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Running\nSucceeded\nFailed",
+      "reqd": 1
+    },
+    {
+      "fieldname": "started_at",
+      "fieldtype": "Datetime",
+      "label": "Started At"
+    },
+    {
+      "fieldname": "finished_at",
+      "fieldtype": "Datetime",
+      "label": "Finished At"
+    },
+    {
+      "default": 0,
+      "fieldname": "duration_ms",
+      "fieldtype": "Int",
+      "label": "Duration (ms)"
+    },
+    {
+      "fieldname": "request_summary",
+      "fieldtype": "Small Text",
+      "label": "Request Summary (secrets-free)"
+    },
+    {
+      "fieldname": "response_summary",
+      "fieldtype": "Small Text",
+      "label": "Response Summary (secrets-free)"
+    },
+    {
+      "fieldname": "error_type",
+      "fieldtype": "Select",
+      "label": "Error Type",
+      "options": "\ntransient\nrate_limited\ncapacity\npermanent\nunknown"
+    },
+    {
+      "fieldname": "error",
+      "fieldtype": "Small Text",
+      "label": "Error"
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Provisioning Attempt",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

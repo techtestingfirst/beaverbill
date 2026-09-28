@@ -1,0 +1,200 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "service",
+    "subscription",
+    "customer",
+    "operation_type",
+    "status",
+    "idempotency_key",
+    "correlation_id",
+    "provider_account",
+    "driver_type",
+    "new_product",
+    "timeout_seconds",
+    "max_retries",
+    "retry_count",
+    "next_retry_at",
+    "error_type",
+    "last_error",
+    "provider_metadata",
+    "started_at",
+    "finished_at",
+    "attempt_count"
+  ],
+  "fields": [
+    {
+      "fieldname": "service",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Service",
+      "options": "Hosting Service"
+    },
+    {
+      "fieldname": "subscription",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Subscription",
+      "options": "Hosting Subscription"
+    },
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "label": "Customer",
+      "options": "Hosting Customer"
+    },
+    {
+      "default": "Create",
+      "fieldname": "operation_type",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Operation Type",
+      "options": "Create\nResize\nSuspend\nUnsuspend\nTerminate\nReboot\nConsole",
+      "reqd": 1
+    },
+    {
+      "default": "Pending",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Pending\nQueued\nRunning\nSucceeded\nFailed\nRetrying\nManual Review\nCompensated\nCancelled",
+      "reqd": 1
+    },
+    {
+      "fieldname": "idempotency_key",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Idempotency Key",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "correlation_id",
+      "fieldtype": "Data",
+      "label": "Correlation ID"
+    },
+    {
+      "fieldname": "provider_account",
+      "fieldtype": "Link",
+      "label": "Provider Account",
+      "options": "Hosting Provider Account"
+    },
+    {
+      "fieldname": "driver_type",
+      "fieldtype": "Data",
+      "label": "Driver Type"
+    },
+    {
+      "fieldname": "new_product",
+      "fieldtype": "Link",
+      "label": "New Product (Resize)",
+      "options": "Hosting Product"
+    },
+    {
+      "default": 300,
+      "fieldname": "timeout_seconds",
+      "fieldtype": "Int",
+      "label": "Timeout (Seconds)"
+    },
+    {
+      "default": 3,
+      "fieldname": "max_retries",
+      "fieldtype": "Int",
+      "label": "Max Retries"
+    },
+    {
+      "default": 0,
+      "fieldname": "retry_count",
+      "fieldtype": "Int",
+      "label": "Retry Count"
+    },
+    {
+      "fieldname": "next_retry_at",
+      "fieldtype": "Datetime",
+      "label": "Next Retry At"
+    },
+    {
+      "fieldname": "error_type",
+      "fieldtype": "Select",
+      "label": "Last Error Type",
+      "options": "\ntransient\nrate_limited\ncapacity\npermanent\nunknown"
+    },
+    {
+      "fieldname": "last_error",
+      "fieldtype": "Small Text",
+      "label": "Last Error"
+    },
+    {
+      "fieldname": "provider_metadata",
+      "fieldtype": "Code",
+      "label": "Provider Metadata (JSON, secrets-free)",
+      "options": "JSON"
+    },
+    {
+      "fieldname": "started_at",
+      "fieldtype": "Datetime",
+      "label": "Started At"
+    },
+    {
+      "fieldname": "finished_at",
+      "fieldtype": "Datetime",
+      "label": "Finished At"
+    },
+    {
+      "default": 0,
+      "fieldname": "attempt_count",
+      "fieldtype": "Int",
+      "label": "Attempt Count",
+      "read_only": 1
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Provisioning Operation",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}
