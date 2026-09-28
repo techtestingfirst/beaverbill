@@ -9,3 +9,141 @@
       "completed_at": null,
       "evidence": []
     },
+    "phase-1": {
+      "id": "phase-1",
+      "title": "Foundation and Infrastructure Compatibility Hardening",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-2": {
+      "id": "phase-2",
+      "title": "Catalog, Pricing, Tax, and Discount Compatibility",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-3": {
+      "id": "phase-3",
+      "title": "Customer Accounts and Hosting Service Model",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-4": {
+      "id": "phase-4",
+      "title": "Billing, Invoices, Credits, and Financial Ledger",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-5": {
+      "id": "phase-5",
+      "title": "Payment Gateway and Webhook Reliability",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-6": {
+      "id": "phase-6",
+      "title": "Subscription, Renewal, Dunning, and Cancellation",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-7": {
+      "id": "phase-7",
+      "title": "Upgrade, Downgrade, and Modification Reliability",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-8": {
+      "id": "phase-8",
+      "title": "Provisioning Orchestration and Driver Reliability",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-9": {
+      "id": "phase-9",
+      "title": "Domains, DNS, SSL, Backups, and Add-ons",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-10": {
+      "id": "phase-10",
+      "title": "Customer Portal APIs",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-11": {
+      "id": "phase-11",
+      "title": "frappe-ui Customer Portal",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-12": {
+      "id": "phase-12",
+      "title": "Helpdesk Integration",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-13": {
+      "id": "phase-13",
+      "title": "Security and Compliance",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-14": {
+      "id": "phase-14",
+      "title": "Testing and Visual Verification",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-15": {
+      "id": "phase-15",
+      "title": "Observability and Reconciliation",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-16": {
+      "id": "phase-16",
+      "title": "Deployment, Backup, Disaster Recovery, and Release",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    },
+    "phase-17": {
+      "id": "phase-17",
+      "title": "Business Policies and Documentation",
+      "status": "not_started",
+      "commit": null,
+      "completed_at": null,
+      "evidence": []
+    }
+  }
+}
