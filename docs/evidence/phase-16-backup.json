@@ -1,0 +1,27 @@
+{
+  "backup_at": "2026-09-29T01:45:09+00:00",
+  "site": "beaverbill.localhost",
+  "database_gz": "20260929_014507-beaverbill_localhost-database.sql.gz",
+  "files_tgz": "20260929_014507-beaverbill_localhost-files.tgz",
+  "private_files_tgz": "20260929_014507-beaverbill_localhost-private-files.tgz",
+  "tables": 348,
+  "sha256": {
+    "database_gz": "1b4f003a67eecb9b2fd3a9231fb6e2afad144a736f0ded33ef29813798a89f74",
+    "database_gz_enc": "7b35536d1800480064761e7b3aeb83f16b0ee29bc9de0f3a073cc81f300117ab",
+    "files_tgz": "2fffdb03e8421ad58851dcc49fbe244e3ebcc7281bc9ed686f7f3b02441cf760",
+    "private_files_tgz": "d00dc027014db5d04297c82b15331288fede5b171c1705fb721111a22c5651dc"
+  },
+  "integrity": "gzip -t ok; 348 CREATE TABLE; both file tars list ok",
+  "encryption": {
+    "cipher": "aes-256-cbc with salt and pbkdf2",
+    "key_path": "sites/beaverbill.localhost/private/backups/backup.key (0600)",
+    "roundtrip": "verified (decrypted sha256 matches original)"
+  },
+  "restore": {
+    "status": "not_executed",
+    "reason": "bench restore prompts for the MariaDB root password, which is unavailable in this environment; the site was verified byte-identical (canary counts) after the refused restore",
+    "procedure": "docs/phase-16-release.md section 6"
+  },
+  "retention_days": 30,
+  "location": "sites/beaverbill.localhost/private/backups/"
+}

@@ -1,0 +1,40 @@
+{
+  "bench": "/home/praveenkumar/frappe/frappe-bench",
+  "python": "3.14.7",
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "database": "mysql from 11.8.6-MariaDB, client 15.2 for debian-linux-gnu (x86_64) using  EditLine wrapper",
+  "redis": "8.0.5",
+  "apps": [
+    "beaverbill",
+    "frappe",
+    "helpdesk",
+    "payments",
+    "telephony"
+  ],
+  "app_commits": [
+    {
+      "app": "beaverbill",
+      "commit": "ea497f615e1d2ac6a2000159941008fb6c2cc5b6"
+    },
+    {
+      "app": "frappe",
+      "commit": "988e54f3c4c291e2077a83809663f123731abe76"
+    },
+    {
+      "app": "helpdesk",
+      "commit": "1c3361cc0019deec6f84035a9352270b4e4eb5cb"
+    },
+    {
+      "app": "payments",
+      "commit": "86fefa9faf8ad825fe6f08c4753acfe44817900b"
+    },
+    {
+      "app": "telephony",
+      "commit": "039cf39f245d6818ead03cf94eea6ce7f9c1e1f7"
+    }
+  ],
+  "frappe": "16.33.1",
+  "beaverbill": "ea497f615e1d2ac6a2000159941008fb6c2cc5b6",
+  "beaverbill_version": "0.0.1"
+}

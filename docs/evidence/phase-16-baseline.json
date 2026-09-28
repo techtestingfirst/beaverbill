@@ -1,0 +1,16 @@
+{
+  "browser_evidence": "not captured (no browser binary in environment)",
+  "commands": [
+    "bench --site beaverbill.localhost backup --with-files --compress",
+    "bench --site beaverbill.localhost run-tests --app beaverbill --test test_deployment_release",
+    "bench --site beaverbill.localhost run-tests --app beaverbill",
+    "python3 scripts/beaverbill_snapshot_versions.py --root /home/praveenkumar/frappe/frappe-bench",
+    "python3 scripts/beaverbill_phase_check.py phase-16"
+  ],
+  "erpnext_scan": "pass",
+  "migration": "bench migrate OK on beaverbill.localhost; no schema changes in this phase (checks, scripts, tests, docs only)",
+  "phase": "phase-16",
+  "provider_traffic": "no live provider traffic",
+  "restore_drill": "backup plus encryption verified; same-site restore refused for lack of MariaDB root password, site verified unchanged; see docs/evidence/phase-16-backup.json",
+  "test_results": "7 deployment/release tests OK; full suite 211 integration plus 16 stub tests OK on beaverbill.localhost"
+}
