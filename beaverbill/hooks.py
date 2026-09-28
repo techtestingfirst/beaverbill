@@ -232,6 +232,12 @@ scheduler_events = {
         "beaverbill.beaverbill.doctype.hosting_subscription.hosting_subscription.process_subscription_renewals",
         "beaverbill.beaverbill.doctype.hosting_service_modification_request.hosting_service_modification_request.apply_due_modifications",
         "beaverbill.beaverbill.doctype.provisioning_operation.provisioning_operation.process_queued_provisioning_operations",
+        "beaverbill.beaverbill.doctype.hosting_domain.hosting_domain.process_domain_renewals",
+        "beaverbill.beaverbill.doctype.ssl_certificate.ssl_certificate.monitor_certificates",
+        "beaverbill.beaverbill.doctype.service_addon.service_addon.process_addon_renewals",
+        "beaverbill.beaverbill.backups.run_due_backups",
+        "beaverbill.beaverbill.backups.enforce_retention",
+        "beaverbill.beaverbill.backups.process_storage_overage",
     ],
 }
 

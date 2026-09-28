@@ -1,0 +1,115 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "domain",
+    "record_type",
+    "host",
+    "value",
+    "ttl",
+    "priority",
+    "status"
+  ],
+  "fields": [
+    {
+      "fieldname": "domain",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Domain",
+      "options": "Hosting Domain",
+      "reqd": 1
+    },
+    {
+      "default": "A",
+      "fieldname": "record_type",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Type",
+      "options": "A\nAAAA\nCNAME\nMX\nTXT\nSRV\nNS\nCAA",
+      "reqd": 1
+    },
+    {
+      "default": "@",
+      "fieldname": "host",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Host",
+      "reqd": 1
+    },
+    {
+      "fieldname": "value",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Value",
+      "reqd": 1
+    },
+    {
+      "default": 3600,
+      "fieldname": "ttl",
+      "fieldtype": "Int",
+      "label": "TTL (seconds)"
+    },
+    {
+      "default": 0,
+      "fieldname": "priority",
+      "fieldtype": "Int",
+      "label": "Priority (MX/SRV)"
+    },
+    {
+      "default": "Active",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Active\nInactive",
+      "reqd": 1
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Hosting DNS Record",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

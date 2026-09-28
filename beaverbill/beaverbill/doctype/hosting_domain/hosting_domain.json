@@ -1,0 +1,179 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "domain_name",
+    "customer",
+    "service",
+    "registrar_account",
+    "status",
+    "transfer_status",
+    "registration_date",
+    "expiry_date",
+    "auto_renew",
+    "nameservers",
+    "auth_code",
+    "idempotency_key",
+    "renewal_idempotency_key",
+    "renewal_invoice",
+    "last_reminder_at",
+    "last_reminder_stage",
+    "failure_reason",
+    "cancelled_at"
+  ],
+  "fields": [
+    {
+      "fieldname": "domain_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Domain Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Customer",
+      "options": "Hosting Customer",
+      "reqd": 1
+    },
+    {
+      "fieldname": "service",
+      "fieldtype": "Link",
+      "label": "Service",
+      "options": "Hosting Service"
+    },
+    {
+      "fieldname": "registrar_account",
+      "fieldtype": "Link",
+      "label": "Registrar Account",
+      "options": "Domain Registrar Account"
+    },
+    {
+      "default": "Pending Registration",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Pending Registration\nActive\nTransfer Pending\nExpired\nGrace Period\nRedemption\nCancelled\nTerminated",
+      "reqd": 1
+    },
+    {
+      "fieldname": "transfer_status",
+      "fieldtype": "Select",
+      "label": "Transfer Status",
+      "options": "\nRequested\nApproved\nCompleted\nFailed"
+    },
+    {
+      "fieldname": "registration_date",
+      "fieldtype": "Date",
+      "label": "Registration Date"
+    },
+    {
+      "fieldname": "expiry_date",
+      "fieldtype": "Date",
+      "label": "Expiry Date"
+    },
+    {
+      "default": 1,
+      "fieldname": "auto_renew",
+      "fieldtype": "Check",
+      "label": "Auto Renew"
+    },
+    {
+      "fieldname": "nameservers",
+      "fieldtype": "Small Text",
+      "label": "Nameservers (one per line)"
+    },
+    {
+      "fieldname": "auth_code",
+      "fieldtype": "Password",
+      "label": "Auth Code"
+    },
+    {
+      "fieldname": "idempotency_key",
+      "fieldtype": "Data",
+      "label": "Registration Idempotency Key",
+      "unique": 1
+    },
+    {
+      "fieldname": "renewal_idempotency_key",
+      "fieldtype": "Data",
+      "label": "Renewal Idempotency Key"
+    },
+    {
+      "fieldname": "renewal_invoice",
+      "fieldtype": "Link",
+      "label": "Renewal Invoice",
+      "options": "Hosting Invoice"
+    },
+    {
+      "fieldname": "last_reminder_at",
+      "fieldtype": "Datetime",
+      "label": "Last Reminder At"
+    },
+    {
+      "fieldname": "last_reminder_stage",
+      "fieldtype": "Data",
+      "label": "Last Reminder Stage"
+    },
+    {
+      "fieldname": "failure_reason",
+      "fieldtype": "Small Text",
+      "label": "Failure Reason"
+    },
+    {
+      "fieldname": "cancelled_at",
+      "fieldtype": "Datetime",
+      "label": "Cancelled At"
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Hosting Domain",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

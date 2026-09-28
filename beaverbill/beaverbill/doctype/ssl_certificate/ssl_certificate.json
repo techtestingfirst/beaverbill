@@ -1,0 +1,141 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "domain",
+    "customer",
+    "service",
+    "status",
+    "validation_method",
+    "validation_token",
+    "issued_at",
+    "expires_at",
+    "auto_renew",
+    "renewal_idempotency_key",
+    "last_checked_at",
+    "failure_reason"
+  ],
+  "fields": [
+    {
+      "fieldname": "domain",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Domain",
+      "options": "Hosting Domain",
+      "reqd": 1
+    },
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Customer",
+      "options": "Hosting Customer",
+      "reqd": 1
+    },
+    {
+      "fieldname": "service",
+      "fieldtype": "Link",
+      "label": "Installation Target (Service)",
+      "options": "Hosting Service"
+    },
+    {
+      "default": "Pending Validation",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Pending Validation\nActive\nRenewal Pending\nExpired\nFailed\nRevoked\nCancelled",
+      "reqd": 1
+    },
+    {
+      "default": "DNS",
+      "fieldname": "validation_method",
+      "fieldtype": "Select",
+      "label": "Validation Method",
+      "options": "DNS\nHTTP"
+    },
+    {
+      "fieldname": "validation_token",
+      "fieldtype": "Data",
+      "label": "Validation Token"
+    },
+    {
+      "fieldname": "issued_at",
+      "fieldtype": "Datetime",
+      "label": "Issued At"
+    },
+    {
+      "fieldname": "expires_at",
+      "fieldtype": "Date",
+      "label": "Expires At"
+    },
+    {
+      "default": 1,
+      "fieldname": "auto_renew",
+      "fieldtype": "Check",
+      "label": "Auto Renew"
+    },
+    {
+      "fieldname": "renewal_idempotency_key",
+      "fieldtype": "Data",
+      "label": "Renewal Idempotency Key"
+    },
+    {
+      "fieldname": "last_checked_at",
+      "fieldtype": "Datetime",
+      "label": "Last Checked At"
+    },
+    {
+      "fieldname": "failure_reason",
+      "fieldtype": "Small Text",
+      "label": "Failure Reason"
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "SSL Certificate",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

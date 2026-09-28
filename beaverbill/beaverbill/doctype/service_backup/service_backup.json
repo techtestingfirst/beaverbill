@@ -1,0 +1,127 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "policy",
+    "service",
+    "customer",
+    "status",
+    "started_at",
+    "finished_at",
+    "size_mb",
+    "storage_location",
+    "retain_until",
+    "failure_reason"
+  ],
+  "fields": [
+    {
+      "fieldname": "policy",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Backup Policy",
+      "options": "Backup Policy",
+      "reqd": 1
+    },
+    {
+      "fieldname": "service",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Service",
+      "options": "Hosting Service",
+      "reqd": 1
+    },
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "label": "Customer",
+      "options": "Hosting Customer"
+    },
+    {
+      "default": "Pending",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Pending\nIn Progress\nCompleted\nFailed\nExpired\nDeleted",
+      "reqd": 1
+    },
+    {
+      "fieldname": "started_at",
+      "fieldtype": "Datetime",
+      "label": "Started At"
+    },
+    {
+      "fieldname": "finished_at",
+      "fieldtype": "Datetime",
+      "label": "Finished At"
+    },
+    {
+      "default": 0,
+      "fieldname": "size_mb",
+      "fieldtype": "Float",
+      "label": "Size (MB)"
+    },
+    {
+      "fieldname": "storage_location",
+      "fieldtype": "Data",
+      "label": "Storage Location"
+    },
+    {
+      "fieldname": "retain_until",
+      "fieldtype": "Date",
+      "label": "Retain Until"
+    },
+    {
+      "fieldname": "failure_reason",
+      "fieldtype": "Small Text",
+      "label": "Failure Reason"
+    }
+  ],
+  "istable": 0,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Service Backup",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Hosting Admin",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Hosting Support"
+    },
+    {
+      "read": 1,
+      "role": "Hosting Customer"
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}
