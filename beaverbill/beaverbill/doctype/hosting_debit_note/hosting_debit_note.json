@@ -1,22 +1,20 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:DN-{####}",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "customer",
-  "hosting_customer",
-  "transaction_date",
+  "invoice",
+  "debit_date",
   "amount",
   "currency",
-  "type",
-  "balance_after",
-  "description",
-  "source_type",
-  "source_name",
-  "reversal_of",
-  "idempotency_key"
+  "status",
+  "reason",
+  "idempotency_key",
+  "reversal_of"
  ],
  "fields": [
   {
@@ -28,16 +26,17 @@
    "reqd": 1
   },
   {
-   "fieldname": "hosting_customer",
+   "fieldname": "invoice",
    "fieldtype": "Link",
-   "label": "Hosting Customer",
-   "options": "Hosting Customer"
+   "in_list_view": 1,
+   "label": "Invoice",
+   "options": "Hosting Invoice"
   },
   {
-   "fieldname": "transaction_date",
+   "fieldname": "debit_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Transaction Date",
+   "label": "Debit Date",
    "reqd": 1
   },
   {
@@ -48,59 +47,43 @@
    "reqd": 1
   },
   {
-   "default": "USD",
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
-   "options": "Currency"
+   "options": "Currency",
+   "default": "USD"
   },
   {
-   "fieldname": "type",
+   "default": "Draft",
+   "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Type",
-   "options": "Credit\nDebit",
+   "label": "Status",
+   "options": "Draft\nIssued\nApplied\nCancelled",
    "reqd": 1
   },
   {
-   "fieldname": "balance_after",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Balance After (ledger)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Text",
-   "label": "Description"
-  },
-  {
-   "fieldname": "source_type",
-   "fieldtype": "Data",
-   "label": "Source DocType"
-  },
-  {
-   "fieldname": "source_name",
-   "fieldtype": "Data",
-   "label": "Source Name"
-  },
-  {
-   "fieldname": "reversal_of",
-   "fieldtype": "Link",
-   "label": "Reversal Of",
-   "options": "Customer Credit Transaction"
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Reason"
   },
   {
    "fieldname": "idempotency_key",
    "fieldtype": "Data",
    "label": "Idempotency Key",
    "unique": 1
+  },
+  {
+   "fieldname": "reversal_of",
+   "fieldtype": "Link",
+   "label": "Reversal Of",
+   "options": "Hosting Debit Note"
   }
  ],
  "index_web_pages_for_search": 1,
  "indexes": [
   {
-   "fields": ["customer"]
+   "fields": ["invoice"]
   },
   {
    "fields": ["idempotency_key"]
@@ -108,7 +91,8 @@
  ],
  "links": [],
  "module": "BeaverBill",
- "name": "Customer Credit Transaction",
+ "name": "Hosting Debit Note",
+ "naming_rule": "Expression",
  "permissions": [
   {
    "create": 1,
@@ -139,8 +123,7 @@
    "role": "Hosting Support"
   }
  ],
- "row_format": "Dynamic",
- "sort_field": "creation",
+ "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
  "track_changes": 1

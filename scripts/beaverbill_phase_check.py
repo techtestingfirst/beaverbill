@@ -332,6 +332,41 @@ def check_phase2_models(root):
     return check
 
 
+def check_phase4_models(root):
+    check = Check("phase4_models")
+    wanted = [
+        "beaverbill/beaverbill/doctype/hosting_invoice_item/hosting_invoice_item.json",
+        "beaverbill/beaverbill/doctype/hosting_payment_transaction/hosting_payment_transaction.json",
+        "beaverbill/beaverbill/doctype/hosting_payment_allocation/hosting_payment_allocation.json",
+        "beaverbill/beaverbill/doctype/hosting_refund/hosting_refund.json",
+        "beaverbill/beaverbill/doctype/hosting_credit_note/hosting_credit_note.json",
+        "beaverbill/beaverbill/doctype/hosting_debit_note/hosting_debit_note.json",
+        "beaverbill/beaverbill/billing.py",
+        "beaverbill/beaverbill/tests/test_billing_ledger.py",
+        "beaverbill/beaverbill/report/invoice_outstanding/invoice_outstanding.json",
+        "beaverbill/beaverbill/report/credit_ledger_mismatch/credit_ledger_mismatch.json",
+    ]
+    missing = [r for r in wanted if not os.path.isfile(repo_path(root, r))]
+    problems = []
+    if missing:
+        problems.append(f"missing: {', '.join(missing)}")
+    try:
+        with open(repo_path(root, "beaverbill", "beaverbill", "doctype", "hosting_invoice", "hosting_invoice.json"), encoding="utf-8") as fh:
+            invoice = json.load(fh)
+        fields = {f.get("fieldname") for f in invoice.get("fields", [])}
+        options = next((f.get("options", "") for f in invoice.get("fields", []) if f.get("fieldname") == "status"), "")
+        if "items" not in fields or "paid_amount" not in fields:
+            problems.append("Hosting Invoice lacks ledger fields")
+        for state in ("Issued", "Partially Paid", "Written Off"):
+            if state not in options:
+                problems.append(f"Hosting Invoice status lacks {state}")
+    except (OSError, ValueError) as exc:
+        problems.append(f"invoice schema unreadable: {exc}")
+    check.passed = not problems
+    check.detail = "billing models and invoice ledger present" if check.passed else "; ".join(problems)
+    return check
+
+
 def check_phase1_patch(root):
     check = Check("phase1_patch")
     patches_file = repo_path(root, "beaverbill", "patches.txt")
@@ -381,6 +416,14 @@ PHASE_CHECKS = {
         "phase3_doc",
         "phase3_models",
     ),
+    "phase-4": (
+        "progress_scripts",
+        "erpnext_scan",
+        "git_commit",
+        "existing_tests",
+        "phase4_doc",
+        "phase4_models",
+    ),
 }
 
 ALL_CHECKS = {
@@ -395,6 +438,8 @@ ALL_CHECKS = {
     "phase2_models": check_phase2_models,
     "phase3_doc": lambda root: sized_doc(root, "docs/phase-3-customer.md", name="phase3_doc"),
     "phase3_models": check_phase3_models,
+    "phase4_doc": lambda root: sized_doc(root, "docs/phase-4-billing.md", name="phase4_doc"),
+    "phase4_models": check_phase4_models,
     "phase1_reports": check_phase1_reports,
     "phase1_patch": check_phase1_patch,
 }

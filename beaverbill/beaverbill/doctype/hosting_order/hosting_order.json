@@ -1,18 +1,20 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-01-01 00:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "customer",
+  "hosting_customer",
   "order_date",
   "status",
   "promo_code",
   "currency",
   "total_amount",
-  "items"
+  "items",
+  "idempotency_key",
+  "cancellation_reason"
  ],
  "fields": [
   {
@@ -22,6 +24,12 @@
    "label": "Customer",
    "options": "User",
    "reqd": 1
+  },
+  {
+   "fieldname": "hosting_customer",
+   "fieldtype": "Link",
+   "label": "Hosting Customer",
+   "options": "Hosting Customer"
   },
   {
    "fieldname": "order_date",
@@ -36,7 +44,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Pending\nPaid\nCancelled",
+   "options": "Draft\nConfirmed\nPayment Pending\nPending\nPaid\nProcessing\nCompleted\nCancelled",
    "reqd": 1
   },
   {
@@ -65,15 +73,31 @@
    "label": "Items",
    "options": "Hosting Order Item",
    "reqd": 1
+  },
+  {
+   "fieldname": "idempotency_key",
+   "fieldtype": "Data",
+   "label": "Idempotency Key",
+   "unique": 1
+  },
+  {
+   "fieldname": "cancellation_reason",
+   "fieldtype": "Small Text",
+   "label": "Cancellation Reason"
   }
  ],
  "index_web_pages_for_search": 1,
+ "indexes": [
+  {
+   "fields": ["status"]
+  },
+  {
+   "fields": ["idempotency_key"]
+  }
+ ],
  "links": [],
- "modified": "2026-09-27 19:48:40.994276",
- "modified_by": "Administrator",
  "module": "BeaverBill",
  "name": "Hosting Order",
- "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
@@ -91,5 +115,6 @@
  "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }
