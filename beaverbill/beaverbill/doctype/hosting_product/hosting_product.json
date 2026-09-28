@@ -12,7 +12,11 @@
   "billing_cycle",
   "price",
   "currency",
-  "description"
+  "description",
+  "cpu_cores",
+  "ram_mb",
+  "disk_gb",
+  "bandwidth_gb"
  ],
  "fields": [
   {
@@ -57,6 +61,30 @@
    "fieldname": "description",
    "fieldtype": "Text",
    "label": "Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "cpu_cores",
+   "fieldtype": "Int",
+   "label": "CPU Cores (0 = unspecified)"
+  },
+  {
+   "default": "0",
+   "fieldname": "ram_mb",
+   "fieldtype": "Int",
+   "label": "RAM (MB, 0 = unspecified)"
+  },
+  {
+   "default": "0",
+   "fieldname": "disk_gb",
+   "fieldtype": "Int",
+   "label": "Disk (GB, 0 = unspecified)"
+  },
+  {
+   "default": "0",
+   "fieldname": "bandwidth_gb",
+   "fieldtype": "Int",
+   "label": "Bandwidth (GB, 0 = unspecified)"
   }
  ],
  "index_web_pages_for_search": 1,

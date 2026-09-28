@@ -1,0 +1,51 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-09-28 00:00:00",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "timestamp",
+    "action",
+    "actor",
+    "detail"
+  ],
+  "fields": [
+    {
+      "fieldname": "timestamp",
+      "fieldtype": "Datetime",
+      "label": "Timestamp",
+      "reqd": 1
+    },
+    {
+      "fieldname": "action",
+      "fieldtype": "Select",
+      "label": "Action",
+      "options": "Created\nSnapshots Frozen\nProration Calculated\nApproved\nApply Started\nResize Succeeded\nResize Failed\nRolled Back\nCompensated\nCompleted\nRejected",
+      "reqd": 1
+    },
+    {
+      "fieldname": "actor",
+      "fieldtype": "Data",
+      "label": "Actor"
+    },
+    {
+      "fieldname": "detail",
+      "fieldtype": "Small Text",
+      "label": "Detail"
+    }
+  ],
+  "istable": 1,
+  "links": [],
+  "modified": "2026-09-28 00:00:00",
+  "modified_by": "Administrator",
+  "module": "BeaverBill",
+  "name": "Hosting Modification Event",
+  "owner": "Administrator",
+  "permissions": [],
+  "row_format": "Dynamic",
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}
