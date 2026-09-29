@@ -53,7 +53,7 @@ async function submit() {
     </form>
     <p class="mt-4 text-sm text-ink-gray-5">
       Already have an account?
-      <RouterLink to="/login" class="text-ink-blue-3 hover:underline">Log in</RouterLink>
+      <RouterLink to="/login" class="portal-link">Log in</RouterLink>
     </p>
   </div>
 </template>

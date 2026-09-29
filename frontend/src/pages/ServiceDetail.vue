@@ -206,7 +206,7 @@ onMounted(load)
               <StatusBadge :status="a.status" />
             </li>
           </ul>
-          <p v-else class="mt-2 text-sm text-ink-gray-5">No add-ons. <RouterLink to="/addons" class="text-ink-blue-3 hover:underline">Order one</RouterLink>.</p>
+          <p v-else class="mt-2 text-sm text-ink-gray-5">No add-ons. <RouterLink to="/addons" class="portal-link">Order one</RouterLink>.</p>
         </section>
 
         <section class="mt-4 rounded-lg border border-outline-gray-1 bg-surface-white p-4" aria-label="Recent operations">
@@ -232,7 +232,7 @@ onMounted(load)
 
     <Dialog v-model="showReinstall" title="Reinstall OS">
       <div class="space-y-3 text-sm">
-        <p role="alert" class="rounded bg-surface-red-1 p-3 text-ink-red-2">Reinstalling wipes <strong>all data</strong> on this service. This cannot be undone.</p>
+        <p role="alert" class="rounded bg-surface-red-1 p-3 portal-danger">Reinstalling wipes <strong>all data</strong> on this service. This cannot be undone.</p>
         <label class="flex items-start gap-2">
           <input v-model="ackLoss" type="checkbox" class="mt-1" aria-label="I understand all data will be wiped" />
           <span>I understand all data will be wiped.</span>
@@ -279,7 +279,7 @@ onMounted(load)
         <p>Ticket: <code class="font-mono">{{ maskSecret(consoleTicket.ticket, 6) }}</code></p>
         <div class="flex gap-2">
           <Button @click="copyTicket">Copy ticket</Button>
-          <a :href="consoleTicket.url" target="_blank" rel="noopener" class="rounded-md bg-surface-blue-2 px-4 py-1.5 text-sm font-medium text-ink-blue-2">Open console</a>
+          <a :href="consoleTicket.url" target="_blank" rel="noopener" class="portal-tint rounded-md px-4 py-1.5 text-sm font-medium">Open console</a>
         </div>
       </div>
     </Dialog>

@@ -146,7 +146,7 @@ onMounted(load)
             <ul v-if="d.records?.length" class="mt-1 divide-y font-mono text-xs">
               <li v-for="r in d.records" :key="r.name" class="flex items-center justify-between gap-2 py-1.5">
                 <span>{{ r.record_type }} {{ r.host }} → {{ r.value }} (TTL {{ r.ttl }})</span>
-                <button class="text-ink-red-2 hover:underline" :aria-label="`Remove ${r.record_type} record ${r.host}`" @click="removeDns(d.name, r.name)">Remove</button>
+                <button class="portal-danger hover:underline" :aria-label="`Remove ${r.record_type} record ${r.host}`" @click="removeDns(d.name, r.name)">Remove</button>
               </li>
             </ul>
             <p v-else class="mt-1 text-ink-gray-5">No active records.</p>

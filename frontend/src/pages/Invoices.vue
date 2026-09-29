@@ -59,7 +59,7 @@ onMounted(load)
       <div class="flex gap-2 text-sm" role="group" aria-label="Invoice filter">
         <button :class="filter === 'open' ? 'font-medium underline' : ''" @click="filter = 'open'">Open</button>
         <button :class="filter === 'all' ? 'font-medium underline' : ''" @click="filter = 'all'">All</button>
-        <RouterLink to="/payment-methods" class="text-ink-blue-3 hover:underline">Payment methods</RouterLink>
+        <RouterLink to="/payment-methods" class="portal-link">Payment methods</RouterLink>
       </div>
     </div>
     <AsyncState
@@ -69,7 +69,7 @@ onMounted(load)
       <ul class="mt-4 divide-y rounded-lg border border-outline-gray-1 bg-surface-white" aria-label="Invoices">
         <li v-for="i in visible" :key="i.name" class="flex flex-wrap items-center justify-between gap-2 p-4">
           <div>
-            <RouterLink :to="`/invoices/${i.name}`" class="font-medium text-ink-blue-3 hover:underline">{{ i.name }}</RouterLink>
+            <RouterLink :to="`/invoices/${i.name}`" class="font-medium portal-link">{{ i.name }}</RouterLink>
             <p class="text-xs text-ink-gray-5">Due {{ i.due_date }} · {{ money(i.total_amount, i.currency) }}</p>
           </div>
           <div class="flex items-center gap-3">

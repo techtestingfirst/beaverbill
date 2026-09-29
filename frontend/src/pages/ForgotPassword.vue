@@ -42,7 +42,7 @@ async function submit() {
       <Button type="submit" variant="solid" theme="blue" class="w-full" :loading="loading">Send reset link</Button>
     </form>
     <p class="mt-4 text-sm">
-      <RouterLink to="/login" class="text-ink-blue-3 hover:underline">Back to login</RouterLink>
+      <RouterLink to="/login" class="portal-link">Back to login</RouterLink>
     </p>
   </div>
 </template>

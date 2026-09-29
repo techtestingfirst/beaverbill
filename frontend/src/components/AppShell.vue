@@ -86,7 +86,7 @@ onMounted(() => {
           <span>{{ link.label }}</span>
           <span
             v-if="link.to === '/profile' && unread > 0"
-            class="rounded-full bg-surface-blue-2 px-2 text-xs font-medium text-ink-blue-3"
+            class="rounded-full portal-tint px-2 text-xs font-medium"
             :aria-label="`${unread} unread notifications`"
           >{{ unread }}</span>
         </RouterLink>

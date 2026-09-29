@@ -74,7 +74,7 @@ onMounted(load)
       <ul class="mt-4 divide-y rounded-lg border border-outline-gray-1 bg-surface-white" aria-label="Tickets">
         <li v-for="t in tickets" :key="t.name" class="flex flex-wrap items-center justify-between gap-2 p-4">
           <div>
-            <RouterLink :to="`/tickets/${t.name}`" class="font-medium text-ink-blue-3 hover:underline">{{ t.subject }}</RouterLink>
+            <RouterLink :to="`/tickets/${t.name}`" class="font-medium portal-link">{{ t.subject }}</RouterLink>
             <p class="font-mono text-xs text-ink-gray-5">{{ t.name }} · updated {{ t.modified }}</p>
           </div>
           <StatusBadge :status="t.status" />

@@ -1,12 +1,47 @@
 @import 'frappe-ui/style.css';
 
+/* Portal accent colors readable in both themes. frappe-ui ink *-2/*-3
+   steps are pale tints built for dark backgrounds, so raw utilities
+   like text-ink-blue-3 wash out on light surfaces. These classes pick
+   a deep step in light mode and a mid step in dark mode. */
+.portal-link {
+  color: var(--ink-blue-6);
+}
+.portal-link:hover {
+  text-decoration: underline;
+}
+[data-theme='dark'] .portal-link {
+  color: var(--ink-blue-4);
+}
+
+.portal-tint {
+  background-color: var(--surface-blue-2);
+  color: var(--ink-blue-6);
+}
+[data-theme='dark'] .portal-tint {
+  color: var(--ink-blue-4);
+}
+
+.portal-danger {
+  color: var(--ink-red-6);
+}
+[data-theme='dark'] .portal-danger {
+  color: var(--ink-red-4);
+}
+
 /* Visible keyboard focus everywhere (frappe-ui preset covers most cases). */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--ink-blue-3, #2563eb);
   outline-offset: 2px;
 }
 
-/* Respect users who prefer reduced motion. */
+/* Public routes render outside AppShell, so paint the page root itself.
+   Without this dark mode keeps a white body while text flips light. */
+html,
+body {
+  background-color: var(--surface-base);
+  color: var(--ink-gray-8);
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

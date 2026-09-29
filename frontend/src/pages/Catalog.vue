@@ -67,7 +67,7 @@ onMounted(load)
       <ul class="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3" aria-label="Products">
         <li v-for="p in visible" :key="p.name" class="flex flex-col rounded-lg border border-outline-gray-1 bg-surface-white p-4">
           <p class="text-xs text-ink-gray-5">{{ p.product_group }} · {{ p.billing_cycle }}</p>
-          <RouterLink :to="`/catalog/${p.name}`" class="mt-1 font-medium text-ink-blue-3 hover:underline">{{ p.product_name }}</RouterLink>
+          <RouterLink :to="`/catalog/${p.name}`" class="mt-1 font-medium portal-link">{{ p.product_name }}</RouterLink>
           <p v-if="p.description" class="mt-1 line-clamp-2 text-sm text-ink-gray-6">{{ p.description }}</p>
           <p class="mt-auto pt-3 text-lg font-semibold">{{ money(p.price, p.currency) }}</p>
         </li>

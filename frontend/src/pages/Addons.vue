@@ -124,7 +124,7 @@ onMounted(load)
           <div>
             <p class="font-medium">{{ a.addon }}</p>
             <p class="text-xs text-ink-gray-5">
-              <RouterLink :to="`/services/${a.service}`" class="text-ink-blue-3 hover:underline">{{ a.service }}</RouterLink>
+              <RouterLink :to="`/services/${a.service}`" class="portal-link">{{ a.service }}</RouterLink>
               · {{ money(a.price) }}{{ a.billing_cycle ? `/${a.billing_cycle}` : '' }} · until {{ a.current_period_end || '—' }}
             </p>
           </div>

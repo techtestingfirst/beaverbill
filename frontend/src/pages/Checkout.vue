@@ -55,12 +55,12 @@ onMounted(load)
         <h2 class="font-medium">Order {{ order.order }} confirmed</h2>
         <p class="mt-1 text-sm">Total {{ money(order.total, order.currency) }}. Invoice {{ order.invoice }} is ready in the payment center.</p>
         <div class="mt-4 flex flex-wrap gap-2">
-          <RouterLink :to="`/invoices/${order.invoice}`" class="rounded-md bg-surface-blue-2 px-4 py-2 text-sm font-medium text-ink-blue-2">Pay now</RouterLink>
+          <RouterLink :to="`/invoices/${order.invoice}`" class="portal-tint rounded-md px-4 py-2 text-sm font-medium">Pay now</RouterLink>
           <RouterLink to="/services" class="rounded-md border border-outline-gray-2 px-4 py-2 text-sm">View services</RouterLink>
         </div>
       </div>
       <div v-else-if="cartEmpty" class="mt-4 rounded-lg border border-dashed border-outline-gray-2 p-6 text-center text-sm text-ink-gray-5">
-        Your cart is empty. <RouterLink to="/catalog" class="text-ink-blue-3 hover:underline">Browse the catalog</RouterLink>.
+        Your cart is empty. <RouterLink to="/catalog" class="portal-link">Browse the catalog</RouterLink>.
       </div>
       <div v-else class="mt-4 max-w-lg rounded-lg border border-outline-gray-1 bg-surface-white p-5">
         <h2 class="font-medium">Review and place your order</h2>

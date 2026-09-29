@@ -76,7 +76,7 @@ onMounted(load)
       empty-title="Your cart is empty" empty-text="Add a product from the catalog to get started." @retry="load"
     >
       <template #empty-action>
-        <RouterLink to="/catalog" class="rounded-md bg-surface-blue-2 px-4 py-2 text-sm font-medium text-ink-blue-2">Browse catalog</RouterLink>
+        <RouterLink to="/catalog" class="portal-tint rounded-md px-4 py-2 text-sm font-medium">Browse catalog</RouterLink>
       </template>
       <ul class="mt-4 divide-y rounded-lg border border-outline-gray-1 bg-surface-white" aria-label="Cart items">
         <li v-for="(line, i) in cart.items" :key="i" class="flex items-center justify-between gap-3 p-4">

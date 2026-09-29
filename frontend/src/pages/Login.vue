@@ -48,8 +48,8 @@ async function submit() {
       <Button type="submit" variant="solid" theme="blue" class="w-full" :loading="loading">Log in</Button>
     </form>
     <div class="mt-4 flex items-center justify-between text-sm">
-      <RouterLink to="/signup" class="text-ink-blue-3 hover:underline">Create an account</RouterLink>
-      <RouterLink to="/forgot-password" class="text-ink-blue-3 hover:underline">Forgot password?</RouterLink>
+      <RouterLink to="/signup" class="portal-link">Create an account</RouterLink>
+      <RouterLink to="/forgot-password" class="portal-link">Forgot password?</RouterLink>
     </div>
   </div>
 </template>
