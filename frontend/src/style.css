@@ -17,9 +17,24 @@
 .portal-tint {
   background-color: var(--surface-blue-2);
   color: var(--ink-blue-6);
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+.portal-tint:hover {
+  background-color: var(--surface-blue-3);
+  color: var(--ink-blue-7, var(--ink-blue-6));
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
+}
+.portal-tint:active {
+  background-color: var(--surface-blue-4);
+  transform: translateY(1px);
+  box-shadow: none;
 }
 [data-theme='dark'] .portal-tint {
   color: var(--ink-blue-4);
+}
+[data-theme='dark'] .portal-tint:hover {
+  background-color: var(--surface-blue-3);
+  color: var(--ink-blue-5, var(--ink-blue-4));
 }
 
 .portal-danger {

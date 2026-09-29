@@ -116,12 +116,12 @@ onMounted(() => {
           :key="link.to"
           :to="link.to"
           class="rounded-md px-3 py-2 text-sm"
-          :class="isActive(link.to) ? 'bg-surface-gray-2 font-medium' : 'text-ink-gray-6'"
+          :class="isActive(link.to) ? 'bg-surface-gray-2 font-medium' : 'text-ink-gray-6 hover:bg-surface-gray-1'"
           @click="mobileOpen = false"
         >
           {{ link.label }}{{ link.to === '/profile' && unread > 0 ? ` (${unread})` : '' }}
         </RouterLink>
-        <button class="rounded-md px-3 py-2 text-left text-sm text-ink-gray-6" @click="signOut">Log out</button>
+        <button class="rounded-md px-3 py-2 text-left text-sm text-ink-gray-6 hover:bg-surface-gray-1" @click="signOut">Log out</button>
       </nav>
     </header>
 
