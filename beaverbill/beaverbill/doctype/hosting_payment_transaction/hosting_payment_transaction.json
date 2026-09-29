@@ -1,172 +1,177 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "format:PAY-{####}",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "customer",
-  "payment_date",
-  "amount",
-  "currency",
-  "status",
-  "gateway",
-  "gateway_reference",
-   "gateway_event_id",
-   "payment_token_ref",
-   "retry_count",
-   "next_retry_at",
-   "last_error",
-  "idempotency_key",
-  "source_invoice",
-  "remarks"
- ],
- "fields": [
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Customer",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "payment_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Payment Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Amount",
-   "reqd": 1
-  },
-  {
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency",
-   "default": "USD"
-  },
-  {
-   "default": "Created",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Created\nAuthorized\nCaptured\nFailed\nRefunded\nPartially Refunded\nChargeback",
-   "reqd": 1
-  },
-  {
-   "fieldname": "gateway",
-   "fieldtype": "Data",
-   "label": "Gateway"
-  },
-  {
-   "fieldname": "gateway_reference",
-   "fieldtype": "Data",
-   "label": "Gateway Reference",
-   "unique": 1
-  },
-  {
-   "fieldname": "gateway_event_id",
-   "fieldtype": "Data",
-   "label": "Last Gateway Event ID"
-  },
-  {
-   "fieldname": "payment_token_ref",
-   "fieldtype": "Data",
-   "label": "Payment Token Reference (never store card numbers)"
-  },
-  {
-   "default": "0",
-   "fieldname": "retry_count",
-   "fieldtype": "Int",
-   "label": "Retry Count"
-  },
-  {
-   "fieldname": "next_retry_at",
-   "fieldtype": "Datetime",
-   "label": "Next Retry At"
-  },
-  {
-   "fieldname": "last_error",
-   "fieldtype": "Small Text",
-   "label": "Last Error"
-  },
-  {
-   "fieldname": "idempotency_key",
-   "fieldtype": "Data",
-   "label": "Idempotency Key",
-   "unique": 1
-  },
-  {
-   "fieldname": "source_invoice",
-   "fieldtype": "Link",
-   "label": "Source Invoice",
-   "options": "Hosting Invoice"
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Small Text",
-   "label": "Remarks"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["customer", "status"]
-  },
-  {
-   "fields": ["idempotency_key"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Payment Transaction",
- "naming_rule": "Expression",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support"
-  },
-  {
-   "create": 1,
-   "read": 1,
-   "role": "Hosting Customer",
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:PAY-{####}",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "customer",
+        "payment_date",
+        "amount",
+        "currency",
+        "status",
+        "gateway",
+        "gateway_reference",
+        "gateway_event_id",
+        "payment_token_ref",
+        "retry_count",
+        "next_retry_at",
+        "last_error",
+        "idempotency_key",
+        "source_invoice",
+        "remarks"
+    ],
+    "fields": [
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "payment_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Payment Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amount",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Amount",
+            "reqd": 1
+        },
+        {
+            "fieldname": "currency",
+            "fieldtype": "Link",
+            "label": "Currency",
+            "options": "Currency",
+            "default": "USD"
+        },
+        {
+            "default": "Created",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Created\nAuthorized\nCaptured\nFailed\nRefunded\nPartially Refunded\nChargeback",
+            "reqd": 1
+        },
+        {
+            "fieldname": "gateway",
+            "fieldtype": "Data",
+            "label": "Gateway"
+        },
+        {
+            "fieldname": "gateway_reference",
+            "fieldtype": "Data",
+            "label": "Gateway Reference",
+            "unique": 1
+        },
+        {
+            "fieldname": "gateway_event_id",
+            "fieldtype": "Data",
+            "label": "Last Gateway Event ID"
+        },
+        {
+            "fieldname": "payment_token_ref",
+            "fieldtype": "Data",
+            "label": "Payment Token Reference (never store card numbers)"
+        },
+        {
+            "default": "0",
+            "fieldname": "retry_count",
+            "fieldtype": "Int",
+            "label": "Retry Count"
+        },
+        {
+            "fieldname": "next_retry_at",
+            "fieldtype": "Datetime",
+            "label": "Next Retry At"
+        },
+        {
+            "fieldname": "last_error",
+            "fieldtype": "Small Text",
+            "label": "Last Error"
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "label": "Idempotency Key",
+            "unique": 1
+        },
+        {
+            "fieldname": "source_invoice",
+            "fieldtype": "Link",
+            "label": "Source Invoice",
+            "options": "Hosting Invoice"
+        },
+        {
+            "fieldname": "remarks",
+            "fieldtype": "Small Text",
+            "label": "Remarks"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "customer",
+                "status"
+            ]
+        },
+        {
+            "fields": [
+                "idempotency_key"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Payment Transaction",
+    "naming_rule": "Expression",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Hosting Customer",
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

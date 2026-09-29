@@ -58,8 +58,7 @@ def ensure_hosting_customer(user):
     if name:
         return name
     return frappe.get_doc(
-        {"doctype": "Hosting Customer", "customer_name": "Phase7 Buyer",
-         "primary_user": user, "status": "Active"}
+        {"doctype": "Hosting Customer", "customer_name": "Phase7 Buyer", "primary_user": user, "status": "Active"}
     ).insert().name
 
 
@@ -82,8 +81,7 @@ def make_sub(customer, product="Phase7 Small", amount=10.0, **over):
 
 def make_service(customer_name, sub):
     svc = frappe.get_doc(
-        {"doctype": "Hosting Service", "customer": customer_name,
-         "status": "Pending", "product": sub.product, "subscription": sub.name}
+        {"doctype": "Hosting Service", "customer": customer_name, "status": "Pending", "product": sub.product, "subscription": sub.name}
     ).insert()
     frappe.db.set_value("Hosting Service", svc.name, "status", "Active", update_modified=False)
     return frappe.get_doc("Hosting Service", svc.name)
@@ -95,8 +93,7 @@ def legacy_proration(sub, new_price):
     )
 
     probe = HostingServiceModificationRequest(
-        {"doctype": "Hosting Service Modification Request",
-         "subscription": sub.name, "new_product": "Phase7 Large"}
+        {"doctype": "Hosting Service Modification Request", "subscription": sub.name, "new_product": "Phase7 Large"}
     )
     probe.calculate_proration()
     return float(probe.proration_amount)

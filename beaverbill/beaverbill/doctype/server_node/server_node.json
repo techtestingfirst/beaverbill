@@ -1,114 +1,116 @@
 {
- "actions": [],
- "allow_rename": 1,
- "creation": "2023-10-27 12:00:00.000000",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "node_name",
-  "provider_account",
-  "datacenter",
-  "node_type",
-  "ip_address",
-  "status",
-  "cpu_cores_total",
-  "ram_gb_total",
-  "maintenance_mode",
-  "maintenance_notes"
- ],
- "fields": [
-  {
-   "fieldname": "node_name",
-   "fieldtype": "Data",
-   "label": "Node Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "provider_account",
-   "fieldtype": "Link",
-   "label": "Provider Account",
-   "options": "Hosting Provider Account"
-  },
-  {
-   "fieldname": "datacenter",
-   "fieldtype": "Link",
-   "label": "Datacenter",
-   "options": "Hosting Datacenter"
-  },
-  {
-   "fieldname": "node_type",
-   "fieldtype": "Select",
-   "label": "Node Type",
-   "options": "Hypervisor\nShared Server\nController\nStorage",
-   "reqd": 1
-  },
-  {
-   "fieldname": "ip_address",
-   "fieldtype": "Data",
-   "label": "IP Address"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Active\nMaintenance\nOffline",
-   "default": "Active"
-  },
-  {
-   "fieldname": "cpu_cores_total",
-   "fieldtype": "Int",
-   "label": "Total CPU Cores"
-  },
-  {
-   "fieldname": "ram_gb_total",
-   "fieldtype": "Float",
-   "label": "Total RAM (GB)"
-  },
-  {
-   "fieldname": "maintenance_mode",
-   "fieldtype": "Check",
-   "label": "Maintenance Mode",
-   "default": 0
-  },
-  {
-   "fieldname": "maintenance_notes",
-   "fieldtype": "Small Text",
-   "label": "Maintenance Notes"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["status"]
-  }
- ],
- "links": [],
- "modified": "2023-10-27 12:00:00.000000",
- "modified_by": "Administrator",
- "module": "BeaverBill",
- "name": "Server Node",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Hosting Support"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2023-10-27 12:00:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "node_name",
+        "provider_account",
+        "datacenter",
+        "node_type",
+        "ip_address",
+        "status",
+        "cpu_cores_total",
+        "ram_gb_total",
+        "maintenance_mode",
+        "maintenance_notes"
+    ],
+    "fields": [
+        {
+            "fieldname": "node_name",
+            "fieldtype": "Data",
+            "label": "Node Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "provider_account",
+            "fieldtype": "Link",
+            "label": "Provider Account",
+            "options": "Hosting Provider Account"
+        },
+        {
+            "fieldname": "datacenter",
+            "fieldtype": "Link",
+            "label": "Datacenter",
+            "options": "Hosting Datacenter"
+        },
+        {
+            "fieldname": "node_type",
+            "fieldtype": "Select",
+            "label": "Node Type",
+            "options": "Hypervisor\nShared Server\nController\nStorage",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ip_address",
+            "fieldtype": "Data",
+            "label": "IP Address"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Active\nMaintenance\nOffline",
+            "default": "Active"
+        },
+        {
+            "fieldname": "cpu_cores_total",
+            "fieldtype": "Int",
+            "label": "Total CPU Cores"
+        },
+        {
+            "fieldname": "ram_gb_total",
+            "fieldtype": "Float",
+            "label": "Total RAM (GB)"
+        },
+        {
+            "fieldname": "maintenance_mode",
+            "fieldtype": "Check",
+            "label": "Maintenance Mode",
+            "default": 0
+        },
+        {
+            "fieldname": "maintenance_notes",
+            "fieldtype": "Small Text",
+            "label": "Maintenance Notes"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "status"
+            ]
+        }
+    ],
+    "links": [],
+    "modified": "2023-10-27 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Server Node",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

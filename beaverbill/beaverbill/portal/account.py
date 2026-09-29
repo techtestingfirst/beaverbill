@@ -38,8 +38,7 @@ def get_profile() -> dict:
 
 @frappe.whitelist()
 @portal_endpoint("portal.update_profile", limit=30)
-def update_profile(customer_name: str | None = None, locale: str | None = None,
-				   timezone: str | None = None, consent_marketing: int | None = None) -> dict:
+def update_profile(customer_name: str | None = None, locale: str | None = None, timezone: str | None = None, consent_marketing: int | None = None) -> dict:
 	"""Update safe profile fields on the caller's own record only."""
 	customer = portal_customer()
 	doc = frappe.get_doc("Hosting Customer", customer)
@@ -98,8 +97,7 @@ def add_contact(contact_type: str, full_name: str, email: str, phone: str | None
 
 @frappe.whitelist()
 @portal_endpoint("portal.update_contact", limit=30)
-def update_contact(name: str, full_name: str | None = None, email: str | None = None,
-				   phone: str | None = None) -> dict:
+def update_contact(name: str, full_name: str | None = None, email: str | None = None, phone: str | None = None) -> dict:
 	"""Edit the caller's own contact."""
 	doc = _own_contact(name)
 	if full_name:

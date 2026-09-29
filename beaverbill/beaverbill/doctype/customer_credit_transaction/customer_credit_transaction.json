@@ -1,147 +1,151 @@
 {
- "actions": [],
- "allow_rename": 1,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "customer",
-  "hosting_customer",
-  "transaction_date",
-  "amount",
-  "currency",
-  "type",
-  "balance_after",
-  "description",
-  "source_type",
-  "source_name",
-  "reversal_of",
-  "idempotency_key"
- ],
- "fields": [
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Customer",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "hosting_customer",
-   "fieldtype": "Link",
-   "label": "Hosting Customer",
-   "options": "Hosting Customer"
-  },
-  {
-   "fieldname": "transaction_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Transaction Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Amount",
-   "reqd": 1
-  },
-  {
-   "default": "USD",
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency"
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Type",
-   "options": "Credit\nDebit",
-   "reqd": 1
-  },
-  {
-   "fieldname": "balance_after",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Balance After (ledger)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Text",
-   "label": "Description"
-  },
-  {
-   "fieldname": "source_type",
-   "fieldtype": "Data",
-   "label": "Source DocType"
-  },
-  {
-   "fieldname": "source_name",
-   "fieldtype": "Data",
-   "label": "Source Name"
-  },
-  {
-   "fieldname": "reversal_of",
-   "fieldtype": "Link",
-   "label": "Reversal Of",
-   "options": "Customer Credit Transaction"
-  },
-  {
-   "fieldname": "idempotency_key",
-   "fieldtype": "Data",
-   "label": "Idempotency Key",
-   "unique": 1
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["customer"]
-  },
-  {
-   "fields": ["idempotency_key"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Customer Credit Transaction",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support"
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "customer",
+        "hosting_customer",
+        "transaction_date",
+        "amount",
+        "currency",
+        "type",
+        "balance_after",
+        "description",
+        "source_type",
+        "source_name",
+        "reversal_of",
+        "idempotency_key"
+    ],
+    "fields": [
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "hosting_customer",
+            "fieldtype": "Link",
+            "label": "Hosting Customer",
+            "options": "Hosting Customer"
+        },
+        {
+            "fieldname": "transaction_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Transaction Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amount",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Amount",
+            "reqd": 1
+        },
+        {
+            "default": "USD",
+            "fieldname": "currency",
+            "fieldtype": "Link",
+            "label": "Currency",
+            "options": "Currency"
+        },
+        {
+            "fieldname": "type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Type",
+            "options": "Credit\nDebit",
+            "reqd": 1
+        },
+        {
+            "fieldname": "balance_after",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Balance After (ledger)",
+            "read_only": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text",
+            "label": "Description"
+        },
+        {
+            "fieldname": "source_type",
+            "fieldtype": "Data",
+            "label": "Source DocType"
+        },
+        {
+            "fieldname": "source_name",
+            "fieldtype": "Data",
+            "label": "Source Name"
+        },
+        {
+            "fieldname": "reversal_of",
+            "fieldtype": "Link",
+            "label": "Reversal Of",
+            "options": "Customer Credit Transaction"
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "label": "Idempotency Key",
+            "unique": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "customer"
+            ]
+        },
+        {
+            "fields": [
+                "idempotency_key"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Customer Credit Transaction",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

@@ -53,8 +53,7 @@ def ensure_customer(user):
 	if name:
 		return name
 	return frappe.get_doc(
-		{"doctype": "Hosting Customer", "customer_name": "Phase9 Buyer",
-		 "primary_user": user, "status": "Active"}
+		{"doctype": "Hosting Customer", "customer_name": "Phase9 Buyer", "primary_user": user, "status": "Active"}
 	).insert().name
 
 

@@ -82,15 +82,13 @@ def _fulfil(name: str) -> dict:
 				"details": f"Addon fulfilment failed: {ADDON_FAULTS['fulfill']}"[:500],
 			}
 		).insert(ignore_permissions=True)
-		notify(row.customer, "Addon fulfilment failed",
-			   f"{ADDON_FAULTS['fulfill']} Staff can retry.", "Service Addon", row.name)
+		notify(row.customer, "Addon fulfilment failed", f"{ADDON_FAULTS['fulfill']} Staff can retry.", "Service Addon", row.name)
 		return {"addon": row.name, "status": row.status, "error": ADDON_FAULTS["fulfill"]}
 	row.status = "Active"
 	row.fulfilment_detail = f"Fulfilled at {now_datetime()} against snapshot {row.addon}"
 	row.failure_reason = None
 	row.save()
-	notify(row.customer, "Addon active", f"Addon {row.addon} is active on service {row.service}.",
-		   "Service Addon", row.name)
+	notify(row.customer, "Addon active", f"Addon {row.addon} is active on service {row.service}.", "Service Addon", row.name)
 	return {"addon": row.name, "status": row.status}
 
 
@@ -139,15 +137,13 @@ def process_addon_renewals(as_of=None) -> dict:
 	"""Daily job: invoice due addons, extend paid ones, close end-of-period cancels."""
 	day = getdate(as_of) if as_of else getdate(today())
 	ran = {"invoiced": 0, "extended": 0, "cancelled": 0}
-	for row in frappe.get_all("Service Addon", filters={"status": ("in", ["Active", "Cancellation Pending"])},
-							  fields=["name", "status", "current_period_end"]):
+	for row in frappe.get_all("Service Addon", filters={"status": ("in", ["Active", "Cancellation Pending"])}, fields=["name", "status", "current_period_end"]):
 		doc = frappe.get_doc("Service Addon", row.name)
 		if doc.status == "Cancellation Pending" and getdate(doc.current_period_end or day) <= day:
 			doc.status = "Cancelled"
 			doc.save(ignore_permissions=True)
 			ran["cancelled"] += 1
-			notify(doc.customer, "Addon cancelled", f"Addon {doc.addon} is cancelled.",
-				   "Service Addon", doc.name)
+			notify(doc.customer, "Addon cancelled", f"Addon {doc.addon} is cancelled.", "Service Addon", doc.name)
 		elif doc.status == "Active" and doc.current_period_end and getdate(doc.current_period_end) <= day:
 			out = renew_addon(doc.name)
 			ran["invoiced"] += 1

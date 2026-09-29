@@ -1,113 +1,119 @@
 {
- "actions": [],
- "allow_rename": 1,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "payment",
-  "invoice",
-  "allocated_amount",
-  "allocation_date",
-  "idempotency_key",
-  "reversed_against",
-  "remarks"
- ],
- "fields": [
-  {
-   "fieldname": "payment",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Payment",
-   "options": "Hosting Payment Transaction",
-   "reqd": 1
-  },
-  {
-   "fieldname": "invoice",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Invoice",
-   "options": "Hosting Invoice",
-   "reqd": 1
-  },
-  {
-   "fieldname": "allocated_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Allocated Amount",
-   "reqd": 1
-  },
-  {
-   "fieldname": "allocation_date",
-   "fieldtype": "Date",
-   "label": "Allocation Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "idempotency_key",
-   "fieldtype": "Data",
-   "label": "Idempotency Key",
-   "unique": 1
-  },
-  {
-   "fieldname": "reversed_against",
-   "fieldtype": "Link",
-   "label": "Reversed Against",
-   "options": "Hosting Payment Allocation"
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Small Text",
-   "label": "Remarks"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["invoice"]
-  },
-  {
-   "fields": ["payment"]
-  },
-  {
-   "fields": ["idempotency_key"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Payment Allocation",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "payment",
+        "invoice",
+        "allocated_amount",
+        "allocation_date",
+        "idempotency_key",
+        "reversed_against",
+        "remarks"
+    ],
+    "fields": [
+        {
+            "fieldname": "payment",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Payment",
+            "options": "Hosting Payment Transaction",
+            "reqd": 1
+        },
+        {
+            "fieldname": "invoice",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Invoice",
+            "options": "Hosting Invoice",
+            "reqd": 1
+        },
+        {
+            "fieldname": "allocated_amount",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Allocated Amount",
+            "reqd": 1
+        },
+        {
+            "fieldname": "allocation_date",
+            "fieldtype": "Date",
+            "label": "Allocation Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "label": "Idempotency Key",
+            "unique": 1
+        },
+        {
+            "fieldname": "reversed_against",
+            "fieldtype": "Link",
+            "label": "Reversed Against",
+            "options": "Hosting Payment Allocation"
+        },
+        {
+            "fieldname": "remarks",
+            "fieldtype": "Small Text",
+            "label": "Remarks"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "invoice"
+            ]
+        },
+        {
+            "fields": [
+                "payment"
+            ]
+        },
+        {
+            "fields": [
+                "idempotency_key"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Payment Allocation",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

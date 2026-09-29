@@ -1,92 +1,92 @@
 {
- "actions": [],
- "allow_rename": 1,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "product",
-  "description",
-  "qty",
-  "unit_price",
-  "discount_amount",
-  "tax_amount",
-  "line_total",
-  "billing_cycle",
-  "price_snapshot"
- ],
- "fields": [
-  {
-   "fieldname": "product",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Product",
-   "options": "Hosting Product"
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Description",
-   "reqd": 1
-  },
-  {
-   "default": "1",
-   "fieldname": "qty",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Qty",
-   "reqd": 1
-  },
-  {
-   "fieldname": "unit_price",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Unit Price",
-   "reqd": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Discount Amount",
-   "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "tax_amount",
-   "fieldtype": "Currency",
-   "label": "Tax Amount",
-   "read_only": 1
-  },
-  {
-   "fieldname": "line_total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Line Total",
-   "reqd": 1
-  },
-  {
-   "fieldname": "billing_cycle",
-   "fieldtype": "Select",
-   "label": "Billing Cycle Snapshot",
-   "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
-   "read_only": 1
-  },
-  {
-   "fieldname": "price_snapshot",
-   "fieldtype": "Long Text",
-   "label": "Price Snapshot (JSON)",
-   "read_only": 1
-  }
- ],
- "istable": 1,
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Invoice Item",
- "permissions": [],
- "row_format": "Dynamic",
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "product",
+        "description",
+        "qty",
+        "unit_price",
+        "discount_amount",
+        "tax_amount",
+        "line_total",
+        "billing_cycle",
+        "price_snapshot"
+    ],
+    "fields": [
+        {
+            "fieldname": "product",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Product",
+            "options": "Hosting Product"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Description",
+            "reqd": 1
+        },
+        {
+            "default": "1",
+            "fieldname": "qty",
+            "fieldtype": "Float",
+            "in_list_view": 1,
+            "label": "Qty",
+            "reqd": 1
+        },
+        {
+            "fieldname": "unit_price",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Unit Price",
+            "reqd": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "discount_amount",
+            "fieldtype": "Currency",
+            "label": "Discount Amount",
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "tax_amount",
+            "fieldtype": "Currency",
+            "label": "Tax Amount",
+            "read_only": 1
+        },
+        {
+            "fieldname": "line_total",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Line Total",
+            "reqd": 1
+        },
+        {
+            "fieldname": "billing_cycle",
+            "fieldtype": "Select",
+            "label": "Billing Cycle Snapshot",
+            "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
+            "read_only": 1
+        },
+        {
+            "fieldname": "price_snapshot",
+            "fieldtype": "Long Text",
+            "label": "Price Snapshot (JSON)",
+            "read_only": 1
+        }
+    ],
+    "istable": 1,
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Invoice Item",
+    "permissions": [],
+    "row_format": "Dynamic",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

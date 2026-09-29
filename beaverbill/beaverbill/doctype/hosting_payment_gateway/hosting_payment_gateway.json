@@ -1,117 +1,117 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "field:gateway_name",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "gateway_name",
-  "provider",
-  "supported_currencies",
-  "default_currency",
-  "webhook_secret",
-  "is_active",
-  "maintenance_mode",
-  "max_retries",
-  "retry_backoff_minutes"
- ],
- "fields": [
-  {
-   "fieldname": "gateway_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Gateway Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "provider",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Provider",
-   "options": "Test Gateway\nRazorpay\nStripe",
-   "reqd": 1
-  },
-  {
-   "default": "USD,INR",
-   "fieldname": "supported_currencies",
-   "fieldtype": "Small Text",
-   "label": "Supported Currencies (comma separated)"
-  },
-  {
-   "default": "USD",
-   "fieldname": "default_currency",
-   "fieldtype": "Link",
-   "label": "Default Currency",
-   "options": "Currency"
-  },
-  {
-   "fieldname": "webhook_secret",
-   "fieldtype": "Password",
-   "label": "Webhook Secret"
-  },
-  {
-   "default": "1",
-   "fieldname": "is_active",
-   "fieldtype": "Check",
-   "label": "Is Active"
-  },
-  {
-   "default": "0",
-   "fieldname": "maintenance_mode",
-   "fieldtype": "Check",
-   "label": "Maintenance Mode (simulate outage)"
-  },
-  {
-   "default": "5",
-   "fieldname": "max_retries",
-   "fieldtype": "Int",
-   "label": "Max Retries"
-  },
-  {
-   "default": "30",
-   "fieldname": "retry_backoff_minutes",
-   "fieldtype": "Int",
-   "label": "Retry Backoff Minutes"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Payment Gateway",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:gateway_name",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "gateway_name",
+        "provider",
+        "supported_currencies",
+        "default_currency",
+        "webhook_secret",
+        "is_active",
+        "maintenance_mode",
+        "max_retries",
+        "retry_backoff_minutes"
+    ],
+    "fields": [
+        {
+            "fieldname": "gateway_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Gateway Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "provider",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Provider",
+            "options": "Test Gateway\nRazorpay\nStripe",
+            "reqd": 1
+        },
+        {
+            "default": "USD,INR",
+            "fieldname": "supported_currencies",
+            "fieldtype": "Small Text",
+            "label": "Supported Currencies (comma separated)"
+        },
+        {
+            "default": "USD",
+            "fieldname": "default_currency",
+            "fieldtype": "Link",
+            "label": "Default Currency",
+            "options": "Currency"
+        },
+        {
+            "fieldname": "webhook_secret",
+            "fieldtype": "Password",
+            "label": "Webhook Secret"
+        },
+        {
+            "default": "1",
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "label": "Is Active"
+        },
+        {
+            "default": "0",
+            "fieldname": "maintenance_mode",
+            "fieldtype": "Check",
+            "label": "Maintenance Mode (simulate outage)"
+        },
+        {
+            "default": "5",
+            "fieldname": "max_retries",
+            "fieldtype": "Int",
+            "label": "Max Retries"
+        },
+        {
+            "default": "30",
+            "fieldname": "retry_backoff_minutes",
+            "fieldtype": "Int",
+            "label": "Retry Backoff Minutes"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Payment Gateway",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

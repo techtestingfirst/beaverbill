@@ -1,71 +1,75 @@
 {
- "actions": [],
- "allow_rename": 1,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "from_currency",
-  "to_currency",
-  "rate",
-  "effective_date"
- ],
- "fields": [
-  {
-   "fieldname": "from_currency",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "From Currency",
-   "options": "Currency",
-   "reqd": 1
-  },
-  {
-   "fieldname": "to_currency",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "To Currency",
-   "options": "Currency",
-   "reqd": 1
-  },
-  {
-   "fieldname": "rate",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Rate (multiply)",
-   "reqd": 1
-  },
-  {
-   "fieldname": "effective_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Effective Date",
-   "reqd": 1
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["from_currency", "to_currency", "effective_date"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Currency Exchange Rate",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "effective_date",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "from_currency",
+        "to_currency",
+        "rate",
+        "effective_date"
+    ],
+    "fields": [
+        {
+            "fieldname": "from_currency",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "From Currency",
+            "options": "Currency",
+            "reqd": 1
+        },
+        {
+            "fieldname": "to_currency",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "To Currency",
+            "options": "Currency",
+            "reqd": 1
+        },
+        {
+            "fieldname": "rate",
+            "fieldtype": "Float",
+            "in_list_view": 1,
+            "label": "Rate (multiply)",
+            "reqd": 1
+        },
+        {
+            "fieldname": "effective_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Effective Date",
+            "reqd": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "from_currency",
+                "to_currency",
+                "effective_date"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Currency Exchange Rate",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "effective_date",
+    "sort_order": "DESC",
+    "states": []
 }

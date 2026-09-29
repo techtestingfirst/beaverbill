@@ -178,8 +178,7 @@ def register_domain(customer: str, domain_name: str, registrar_account: str | No
 		doc.status = "Cancelled"
 		doc.failure_reason = f"Registration failed ({exc.error_type}): {exc}"[:1000]
 		doc.save(ignore_permissions=True)
-		notify(customer, f"Domain {name} registration failed",
-			   f"{exc} Your domain was not charged.", "Hosting Domain", doc.name)
+		notify(customer, f"Domain {name} registration failed", f"{exc} Your domain was not charged.", "Hosting Domain", doc.name)
 		return {"domain": doc.name, "status": doc.status, "error": str(exc)}
 	doc.registration_date = today()
 	doc.expiry_date = getdate(result.get("expiry")) if result.get("expiry") else add_years(getdate(today()), years)
@@ -187,8 +186,7 @@ def register_domain(customer: str, domain_name: str, registrar_account: str | No
 	doc.nameservers = "\n".join((result.get("nameservers") or ["ns1.example.net", "ns2.example.net"]))
 	doc.failure_reason = None
 	doc.save(ignore_permissions=True)
-	notify(customer, f"Domain {name} registered", f"Your domain is active until {doc.expiry_date}.",
-		   "Hosting Domain", doc.name)
+	notify(customer, f"Domain {name} registered", f"Your domain is active until {doc.expiry_date}.", "Hosting Domain", doc.name)
 	return {"domain": doc.name, "status": doc.status}
 
 
@@ -243,26 +241,21 @@ def renew_domain(name: str, years: int = 1) -> dict:
 	doc.renewal_idempotency_key = invoice.idempotency_key
 	doc.save(ignore_permissions=True)
 	if invoice.status != "Paid":
-		notify(doc.customer, f"Domain {doc.domain_name} renewal invoiced",
-			   f"Invoice {invoice.name} is {invoice.status}; the registrar renews on payment.",
-			   "Hosting Domain", doc.name)
+		notify(doc.customer, f"Domain {doc.domain_name} renewal invoiced", f"Invoice {invoice.name} is {invoice.status}; the registrar renews on payment.", "Hosting Domain", doc.name)
 		return {"domain": doc.name, "status": doc.status, "invoice": invoice.name, "renewed": False}
 	try:
 		result = get_registrar_driver(doc.registrar_account).renew(doc.domain_name, years=years)
 	except ProvisioningError as exc:
 		doc.failure_reason = f"Renewal failed ({exc.error_type}): {exc}"[:1000]
 		doc.save(ignore_permissions=True)
-		notify(doc.customer, f"Domain {doc.domain_name} renewal failed",
-			   f"Payment is recorded but the registrar returned an error: {exc}. Staff will retry.",
-			   "Hosting Domain", doc.name)
+		notify(doc.customer, f"Domain {doc.domain_name} renewal failed", f"Payment is recorded but the registrar returned an error: {exc}. Staff will retry.", "Hosting Domain", doc.name)
 		return {"domain": doc.name, "status": doc.status, "invoice": invoice.name, "renewed": False, "error": str(exc)}
 	doc.expiry_date = getdate(result.get("expiry"))
 	doc.status = "Active"
 	doc.failure_reason = None
 	doc.renewal_invoice = None
 	doc.save(ignore_permissions=True)
-	notify(doc.customer, f"Domain {doc.domain_name} renewed", f"Your domain is active until {doc.expiry_date}.",
-		   "Hosting Domain", doc.name)
+	notify(doc.customer, f"Domain {doc.domain_name} renewed", f"Your domain is active until {doc.expiry_date}.", "Hosting Domain", doc.name)
 	return {"domain": doc.name, "status": doc.status, "renewed": True}
 
 
@@ -289,8 +282,7 @@ def transfer_domain(name: str, auth_code: str) -> dict:
 	doc.expiry_date = getdate(result.get("expiry"))
 	doc.failure_reason = None
 	doc.save(ignore_permissions=True)
-	notify(doc.customer, f"Domain {doc.domain_name} transferred", "The transfer completed.",
-		   "Hosting Domain", doc.name)
+	notify(doc.customer, f"Domain {doc.domain_name} transferred", "The transfer completed.", "Hosting Domain", doc.name)
 	return {"domain": doc.name, "status": doc.status}
 
 
@@ -346,9 +338,7 @@ def remove_dns_record(name: str) -> dict:
 
 
 def _send_reminder(doc, stage: int) -> None:
-	notify(doc.customer, f"Domain {doc.domain_name} expires in {stage} day(s)",
-		   f"Your domain expires on {doc.expiry_date}. Renew to avoid suspension.",
-		   "Hosting Domain", doc.name)
+	notify(doc.customer, f"Domain {doc.domain_name} expires in {stage} day(s)", f"Your domain expires on {doc.expiry_date}. Renew to avoid suspension.", "Hosting Domain", doc.name)
 	frappe.db.set_value(
 		"Hosting Domain", doc.name,
 		{"last_reminder_at": now_datetime(), "last_reminder_stage": str(stage)},
@@ -359,8 +349,7 @@ def process_domain_renewals(as_of=None) -> dict:
 	"""Daily job: reminders, auto-renewal invoices, and expiry progression."""
 	day = getdate(as_of) if as_of else getdate(today())
 	ran = {"reminded": 0, "renewal_invoices": 0, "renewed": 0, "expired": 0, "progressed": 0}
-	for row in frappe.get_all("Hosting Domain", filters={"status": ("in", ["Active", "Transfer Pending"])},
-							  fields=["name"]):
+	for row in frappe.get_all("Hosting Domain", filters={"status": ("in", ["Active", "Transfer Pending"])}, fields=["name"]):
 		doc = frappe.get_doc("Hosting Domain", row.name)
 		if not doc.expiry_date:
 			continue
@@ -385,12 +374,9 @@ def process_domain_renewals(as_of=None) -> dict:
 			doc.status = "Expired"
 			doc.save(ignore_permissions=True)
 			ran["expired"] += 1
-			notify(doc.customer, f"Domain {doc.domain_name} expired",
-				   "Your domain is expired. Renew within the grace period to restore it.",
-				   "Hosting Domain", doc.name)
+			notify(doc.customer, f"Domain {doc.domain_name} expired", "Your domain is expired. Renew within the grace period to restore it.", "Hosting Domain", doc.name)
 		frappe.db.commit()
-	for row in frappe.get_all("Hosting Domain", filters={"status": ("in", ["Expired", "Grace Period", "Redemption"])},
-							  fields=["name", "status", "expiry_date"]):
+	for row in frappe.get_all("Hosting Domain", filters={"status": ("in", ["Expired", "Grace Period", "Redemption"])}, fields=["name", "status", "expiry_date"]):
 		doc = frappe.get_doc("Hosting Domain", row.name)
 		overdue = date_diff(day, getdate(doc.expiry_date)) if doc.expiry_date else 0
 		nxt = None
@@ -404,8 +390,6 @@ def process_domain_renewals(as_of=None) -> dict:
 			doc.status = nxt
 			doc.save(ignore_permissions=True)
 			ran["progressed"] += 1
-			notify(doc.customer, f"Domain {doc.domain_name} is now {nxt}",
-				   "Renew now to recover the domain." if nxt != "Terminated" else "The domain was terminated.",
-				   "Hosting Domain", doc.name)
+			notify(doc.customer, f"Domain {doc.domain_name} is now {nxt}", "Renew now to recover the domain." if nxt != "Terminated" else "The domain was terminated.", "Hosting Domain", doc.name)
 		frappe.db.commit()
 	return ran

@@ -47,9 +47,7 @@ def run_backup(policy_name: str) -> dict:
 		backup.failure_reason = BACKUP_FAULTS["run"][:1000]
 		backup.finished_at = now_datetime()
 		backup.save()
-		notify(policy.customer, f"Backup failed for service {policy.service}",
-			   f"{BACKUP_FAULTS['run']} The next scheduled run will retry.",
-			   "Service Backup", backup.name)
+		notify(policy.customer, f"Backup failed for service {policy.service}", f"{BACKUP_FAULTS['run']} The next scheduled run will retry.", "Service Backup", backup.name)
 		return {"backup": backup.name, "status": backup.status, "error": BACKUP_FAULTS["run"]}
 	# Simulated snapshot size; real drivers report actual bytes in later phases.
 	backup.size_mb = 512.0
@@ -135,8 +133,7 @@ def request_restore(backup_name: str, service: str) -> dict:
 			"status": "Pending",
 		}
 	).insert()
-	notify(backup.customer, "Restore requested", f"Restore of {service} is pending staff approval.",
-		   "Restore Request", req.name)
+	notify(backup.customer, "Restore requested", f"Restore of {service} is pending staff approval.", "Restore Request", req.name)
 	return {"restore": req.name, "status": req.status}
 
 
@@ -177,14 +174,12 @@ def execute_restore(name: str) -> dict:
 		req.status = "Failed"
 		req.failure_reason = BACKUP_FAULTS["restore"][:1000]
 		req.save()
-		notify(req.customer, "Restore failed", f"{BACKUP_FAULTS['restore']} Staff can re-approve to retry.",
-			   "Restore Request", req.name)
+		notify(req.customer, "Restore failed", f"{BACKUP_FAULTS['restore']} Staff can re-approve to retry.", "Restore Request", req.name)
 		return {"restore": req.name, "status": req.status, "error": BACKUP_FAULTS["restore"]}
 	req.status = "Completed"
 	req.completed_at = now_datetime()
 	req.save()
-	notify(req.customer, "Restore completed", f"Service {req.service} was restored from backup {req.backup}.",
-		   "Restore Request", req.name)
+	notify(req.customer, "Restore completed", f"Service {req.service} was restored from backup {req.backup}.", "Restore Request", req.name)
 	return {"restore": req.name, "status": req.status}
 
 
@@ -200,9 +195,7 @@ def record_storage_usage(service: str, used_gb: float, quota_gb: float, overage_
 		}
 	).insert()
 	if snap.overage_gb > 0:
-		notify(snap.customer, f"Storage overage on {service}",
-			   f"Usage {used_gb} GB exceeds quota {quota_gb} GB by {snap.overage_gb} GB.",
-			   "Service Storage Usage", snap.name)
+		notify(snap.customer, f"Storage overage on {service}", f"Usage {used_gb} GB exceeds quota {quota_gb} GB by {snap.overage_gb} GB.", "Service Storage Usage", snap.name)
 		frappe.db.set_value("Service Storage Usage", snap.name, "notified", 1)
 	return snap
 
@@ -236,8 +229,6 @@ def process_storage_overage() -> dict:
 			{"overage_invoice": invoice.name, "notified": 1},
 		)
 		ran["invoiced"] += 1
-		notify(row.customer, f"Storage overage invoiced for {row.service}",
-			   f"Invoice {invoice.name} covers {row.overage_gb} GB of overage.",
-			   "Service Storage Usage", row.name)
+		notify(row.customer, f"Storage overage invoiced for {row.service}", f"Invoice {invoice.name} covers {row.overage_gb} GB of overage.", "Service Storage Usage", row.name)
 		frappe.db.commit()
 	return ran

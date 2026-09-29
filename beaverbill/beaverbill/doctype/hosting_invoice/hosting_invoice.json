@@ -1,231 +1,235 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "format:INV-{####}",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "customer",
-  "hosting_customer",
-  "invoice_date",
-  "due_date",
-  "status",
-  "subtotal",
-  "discount_amount",
-  "tax_amount",
-  "total_amount",
-  "paid_amount",
-  "outstanding_amount",
-  "currency",
-  "order",
-  "items",
-  "pricing_snapshot",
-  "idempotency_key",
-  "source_type",
-  "source_name",
-  "reversal_of",
-  "reversal_reason",
-  "cancellation_reason",
-  "invoice_pdf"
- ],
- "fields": [
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Customer",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "hosting_customer",
-   "fieldtype": "Link",
-   "label": "Hosting Customer",
-   "options": "Hosting Customer"
-  },
-  {
-   "fieldname": "invoice_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Invoice Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "due_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Due Date",
-   "reqd": 1
-  },
-  {
-   "default": "Draft",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Draft\nIssued\nPartially Paid\nPaid\nOverdue\nCancelled\nWritten Off\nUnpaid",
-   "reqd": 1
-  },
-  {
-   "fieldname": "subtotal",
-   "fieldtype": "Currency",
-   "label": "Subtotal",
-   "read_only": 1
-  },
-  {
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Discount Amount",
-   "read_only": 1
-  },
-  {
-   "fieldname": "tax_amount",
-   "fieldtype": "Currency",
-   "label": "Tax Amount",
-   "read_only": 1
-  },
-  {
-   "fieldname": "total_amount",
-   "fieldtype": "Currency",
-   "label": "Total Amount",
-   "reqd": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "paid_amount",
-   "fieldtype": "Currency",
-   "label": "Paid Amount",
-   "read_only": 1
-  },
-  {
-   "fieldname": "outstanding_amount",
-   "fieldtype": "Currency",
-   "label": "Outstanding Amount",
-   "read_only": 1
-  },
-  {
-   "default": "USD",
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency"
-  },
-  {
-   "fieldname": "order",
-   "fieldtype": "Link",
-   "label": "Order",
-   "options": "Hosting Order"
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "label": "Items",
-   "options": "Hosting Invoice Item"
-  },
-  {
-   "fieldname": "pricing_snapshot",
-   "fieldtype": "Long Text",
-   "label": "Pricing Snapshot (JSON)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "idempotency_key",
-   "fieldtype": "Data",
-   "label": "Idempotency Key",
-   "unique": 1
-  },
-  {
-   "fieldname": "source_type",
-   "fieldtype": "Data",
-   "label": "Source DocType"
-  },
-  {
-   "fieldname": "source_name",
-   "fieldtype": "Data",
-   "label": "Source Name"
-  },
-  {
-   "fieldname": "reversal_of",
-   "fieldtype": "Link",
-   "label": "Reversal Of",
-   "options": "Hosting Invoice"
-  },
-  {
-   "fieldname": "reversal_reason",
-   "fieldtype": "Small Text",
-   "label": "Reversal Reason"
-  },
-  {
-   "fieldname": "cancellation_reason",
-   "fieldtype": "Small Text",
-   "label": "Cancellation Reason"
-  },
-  {
-   "fieldname": "invoice_pdf",
-   "fieldtype": "Attach",
-   "label": "Invoice PDF",
-   "read_only": 1
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["status"]
-  },
-  {
-   "fields": ["idempotency_key"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Invoice",
- "naming_rule": "Expression",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support",
-   "write": 1
-  },
-  {
-   "create": 1,
-   "read": 1,
-   "role": "Hosting Customer",
-   "write": 1
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:INV-{####}",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "customer",
+        "hosting_customer",
+        "invoice_date",
+        "due_date",
+        "status",
+        "subtotal",
+        "discount_amount",
+        "tax_amount",
+        "total_amount",
+        "paid_amount",
+        "outstanding_amount",
+        "currency",
+        "order",
+        "items",
+        "pricing_snapshot",
+        "idempotency_key",
+        "source_type",
+        "source_name",
+        "reversal_of",
+        "reversal_reason",
+        "cancellation_reason",
+        "invoice_pdf"
+    ],
+    "fields": [
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "hosting_customer",
+            "fieldtype": "Link",
+            "label": "Hosting Customer",
+            "options": "Hosting Customer"
+        },
+        {
+            "fieldname": "invoice_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Invoice Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "due_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Due Date",
+            "reqd": 1
+        },
+        {
+            "default": "Draft",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Draft\nIssued\nPartially Paid\nPaid\nOverdue\nCancelled\nWritten Off\nUnpaid",
+            "reqd": 1
+        },
+        {
+            "fieldname": "subtotal",
+            "fieldtype": "Currency",
+            "label": "Subtotal",
+            "read_only": 1
+        },
+        {
+            "fieldname": "discount_amount",
+            "fieldtype": "Currency",
+            "label": "Discount Amount",
+            "read_only": 1
+        },
+        {
+            "fieldname": "tax_amount",
+            "fieldtype": "Currency",
+            "label": "Tax Amount",
+            "read_only": 1
+        },
+        {
+            "fieldname": "total_amount",
+            "fieldtype": "Currency",
+            "label": "Total Amount",
+            "reqd": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "paid_amount",
+            "fieldtype": "Currency",
+            "label": "Paid Amount",
+            "read_only": 1
+        },
+        {
+            "fieldname": "outstanding_amount",
+            "fieldtype": "Currency",
+            "label": "Outstanding Amount",
+            "read_only": 1
+        },
+        {
+            "default": "USD",
+            "fieldname": "currency",
+            "fieldtype": "Link",
+            "label": "Currency",
+            "options": "Currency"
+        },
+        {
+            "fieldname": "order",
+            "fieldtype": "Link",
+            "label": "Order",
+            "options": "Hosting Order"
+        },
+        {
+            "fieldname": "items",
+            "fieldtype": "Table",
+            "label": "Items",
+            "options": "Hosting Invoice Item"
+        },
+        {
+            "fieldname": "pricing_snapshot",
+            "fieldtype": "Long Text",
+            "label": "Pricing Snapshot (JSON)",
+            "read_only": 1
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "label": "Idempotency Key",
+            "unique": 1
+        },
+        {
+            "fieldname": "source_type",
+            "fieldtype": "Data",
+            "label": "Source DocType"
+        },
+        {
+            "fieldname": "source_name",
+            "fieldtype": "Data",
+            "label": "Source Name"
+        },
+        {
+            "fieldname": "reversal_of",
+            "fieldtype": "Link",
+            "label": "Reversal Of",
+            "options": "Hosting Invoice"
+        },
+        {
+            "fieldname": "reversal_reason",
+            "fieldtype": "Small Text",
+            "label": "Reversal Reason"
+        },
+        {
+            "fieldname": "cancellation_reason",
+            "fieldtype": "Small Text",
+            "label": "Cancellation Reason"
+        },
+        {
+            "fieldname": "invoice_pdf",
+            "fieldtype": "Attach",
+            "label": "Invoice PDF",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "status"
+            ]
+        },
+        {
+            "fields": [
+                "idempotency_key"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Invoice",
+    "naming_rule": "Expression",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Hosting Customer",
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

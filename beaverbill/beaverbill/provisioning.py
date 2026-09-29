@@ -177,9 +177,7 @@ def _record_attempt(op: object, status: str, error_type: str | None = None, erro
 	return attempt
 
 
-def _log_request(op: object, action: str, driver_type: str | None, request_summary: str,
-				 response_summary: str = "", response_code: str = "",
-				 error_type: str | None = None, latency_ms: int = 0) -> None:
+def _log_request(op: object, action: str, driver_type: str | None, request_summary: str, response_summary: str = "", response_code: str = "", error_type: str | None = None, latency_ms: int = 0) -> None:
 	frappe.get_doc(
 		{
 			"doctype": "Provider Request Log",
@@ -329,8 +327,7 @@ def run_operation(name: str) -> object:
 	blocked = _capacity_check(op)
 	if blocked:
 		_record_attempt(op, "Failed", "capacity", blocked, request_summary="capacity-check")
-		_log_request(op, action, op.driver_type, "capacity-check", response_summary=blocked,
-					 response_code="blocked", error_type="capacity")
+		_log_request(op, action, op.driver_type, "capacity-check", response_summary=blocked, response_code="blocked", error_type="capacity")
 		return _fail_operation(op, "capacity", blocked, True)
 
 	op.status = "Running"
@@ -344,8 +341,7 @@ def run_operation(name: str) -> object:
 		op.driver_type = driver_type
 	except ProvisioningError as exc:
 		_record_attempt(op, "Failed", exc.error_type, str(exc), request_summary="driver-resolve")
-		_log_request(op, action, op.driver_type, "driver-resolve", response_code="unresolved",
-					 error_type=exc.error_type)
+		_log_request(op, action, op.driver_type, "driver-resolve", response_code="unresolved", error_type=exc.error_type)
 		return _fail_operation(op, exc.error_type, str(exc), exc.retryable)
 
 	subject = op.subscription or op.service or op.name
@@ -360,14 +356,12 @@ def run_operation(name: str) -> object:
 			result, elapsed_ms = call_driver_action(driver, action, *args[0], **args[1])
 	except ProvisioningError as exc:
 		_record_attempt(op, "Failed", exc.error_type, str(exc), request_summary=request_summary)
-		_log_request(op, action, driver_type, request_summary, response_code="error",
-					 error_type=exc.error_type, latency_ms=0)
+		_log_request(op, action, driver_type, request_summary, response_code="error", error_type=exc.error_type, latency_ms=0)
 		return _fail_operation(op, exc.error_type, str(exc), exc.retryable)
 
 	_record_attempt(op, "Succeeded", request_summary=request_summary,
 					response_summary=safe_summary(result), duration_ms=elapsed_ms)
-	_log_request(op, action, driver_type, request_summary, response_summary=safe_summary(result),
-				 response_code="ok", latency_ms=elapsed_ms)
+	_log_request(op, action, driver_type, request_summary, response_summary=safe_summary(result), response_code="ok", latency_ms=elapsed_ms)
 	try:
 		op.provider_metadata = json.dumps(
 			{"result": result, "correlation_id": op.correlation_id, "driver_type": driver_type},
@@ -433,8 +427,7 @@ def retry_operation(name: str) -> dict:
 	require_staff()
 	op = frappe.get_doc("Provisioning Operation", name)
 	if op.status not in ("Failed", "Manual Review", "Retrying"):
-		frappe.throw(f"Only Failed or Manual Review operations can be retried, not {op.status}",
-					 frappe.ValidationError)
+		frappe.throw(f"Only Failed or Manual Review operations can be retried, not {op.status}", frappe.ValidationError)
 	op.status = "Queued"
 	op.next_retry_at = None
 	op.last_error = None
@@ -522,8 +515,7 @@ def reconcile_service(service_name: str, remote_state: object = None, operation:
 					remote, _elapsed = call_driver_action(
 						driver, "describe", svc.subscription or service_name)
 				except ProvisioningError as exc:
-					return _store_verdict(svc, None, "Unknown",
-										  f"describe failed ({exc.error_type}): {exc}", operation)
+					return _store_verdict(svc, None, "Unknown", f"describe failed ({exc.error_type}): {exc}", operation)
 			except (ValueError, ProvisioningError) as exc:
 				return _store_verdict(svc, None, "Unknown", f"driver unavailable: {exc}", operation)
 		else:
@@ -542,8 +534,7 @@ def reconcile_service(service_name: str, remote_state: object = None, operation:
 	return _store_verdict(svc, remote_norm, verdict, details, operation)
 
 
-def _store_verdict(svc: object, remote_norm: str | None, verdict: str, details: str,
-				   operation: str | None = None) -> object:
+def _store_verdict(svc: object, remote_norm: str | None, verdict: str, details: str, operation: str | None = None) -> object:
 	result = frappe.get_doc(
 		{
 			"doctype": "Reconciliation Result",
@@ -584,9 +575,7 @@ def orphaned_resources(provider_account: str | None = None) -> list:
 	filters = {"verdict": ("in", ["Orphaned Local", "Orphaned Remote", "Mismatched"])}
 	if provider_account:
 		filters["provider_account"] = provider_account
-	names = frappe.get_all("Reconciliation Result", filters=filters,
-						   fields=["service", "verdict", "details", "checked_at"],
-						   order_by="checked_at desc")
+	names = frappe.get_all("Reconciliation Result", filters=filters, fields=["service", "verdict", "details", "checked_at"], order_by="checked_at desc")
 	seen = {}
 	for row in names:
 		seen.setdefault(row.service, row)

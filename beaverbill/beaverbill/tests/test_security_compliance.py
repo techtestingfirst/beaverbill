@@ -12,8 +12,7 @@ from beaverbill.beaverbill.portal import guard
 def ensure_user(email, first="Phase13"):
 	if not frappe.db.exists("User", email):
 		frappe.get_doc(
-			{"doctype": "User", "email": email, "first_name": first,
-			 "send_welcome_email": 0}
+			{"doctype": "User", "email": email, "first_name": first, "send_welcome_email": 0}
 		).insert(ignore_permissions=True)
 	return email
 
@@ -23,8 +22,7 @@ def ensure_customer(user, name="Buyer13"):
 	if existing:
 		return existing
 	return frappe.get_doc(
-		{"doctype": "Hosting Customer", "customer_name": name,
-		 "primary_user": user, "status": "Active"}
+		{"doctype": "Hosting Customer", "customer_name": name, "primary_user": user, "status": "Active"}
 	).insert().name
 
 

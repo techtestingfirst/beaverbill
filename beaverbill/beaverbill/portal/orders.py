@@ -65,15 +65,13 @@ def _priced_cart(user=None) -> dict:
 		line_total = float(quote["total_price"]) * float(item.get("qty") or 1)
 		total += line_total
 		currency = currency or quote["currency"]
-		lines.append({"product": item["product"], "qty": item.get("qty") or 1,
-					  "unit_total": quote["total_price"], "line_total": round(line_total, 2)})
+		lines.append({"product": item["product"], "qty": item.get("qty") or 1, "unit_total": quote["total_price"], "line_total": round(line_total, 2)})
 	return {"items": lines, "coupon": cart.get("coupon"), "total": round(total, 2), "currency": currency or "USD"}
 
 
 @frappe.whitelist()
 @portal_endpoint("portal.cart_add", limit=60)
-def cart_add(product: str, qty: int = 1, billing_cycle: str | None = None,
-			 options: str | None = None, addons: str | None = None) -> dict:
+def cart_add(product: str, qty: int = 1, billing_cycle: str | None = None, options: str | None = None, addons: str | None = None) -> dict:
 	"""Add a configured product to the cart (catalog must exist)."""
 	frappe.get_doc("Hosting Product", product)
 	qty = max(int(qty or 1), 1)
@@ -186,9 +184,7 @@ def checkout(idempotency_key: str) -> dict:
 		}
 	).insert()
 	if promo:
-		pricing.redeem_promo(promo, order_context={"is_first_order": is_first},
-							 customer=billable_customer(customer), order=order.name,
-							 discount_given=sum(float(line["discount_amount"] or 0) for line in lines))
+		pricing.redeem_promo(promo, order_context={"is_first_order": is_first}, customer=billable_customer(customer), order=order.name, discount_given=sum(float(line["discount_amount"] or 0) for line in lines))
 	order.status = "Confirmed"
 	order.save()
 	order.status = "Payment Pending"
@@ -245,8 +241,7 @@ def get_order(name: str) -> dict:
 		"total_amount": float(doc.total_amount or 0),
 		"currency": doc.currency,
 		"items": [
-			{"product": r.product, "qty": r.qty, "price": float(r.price or 0),
-			 "total": float(r.total or 0), "billing_cycle": r.billing_cycle}
+			{"product": r.product, "qty": r.qty, "price": float(r.price or 0), "total": float(r.total or 0), "billing_cycle": r.billing_cycle}
 			for r in doc.items
 		],
 	}

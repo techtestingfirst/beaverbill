@@ -1,136 +1,140 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "format:REF-{####}",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "customer",
-  "payment",
-  "invoice",
-  "refund_date",
-  "amount",
-  "currency",
-  "status",
-  "reason",
-  "idempotency_key",
-  "reversal_of"
- ],
- "fields": [
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Customer",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "payment",
-   "fieldtype": "Link",
-   "label": "Payment",
-   "options": "Hosting Payment Transaction"
-  },
-  {
-   "fieldname": "invoice",
-   "fieldtype": "Link",
-   "label": "Invoice",
-   "options": "Hosting Invoice"
-  },
-  {
-   "fieldname": "refund_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Refund Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Amount",
-   "reqd": 1
-  },
-  {
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency",
-   "default": "USD"
-  },
-  {
-   "default": "Created",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Created\nProcessed\nFailed\nChargeback",
-   "reqd": 1
-  },
-  {
-   "fieldname": "reason",
-   "fieldtype": "Small Text",
-   "label": "Reason"
-  },
-  {
-   "fieldname": "idempotency_key",
-   "fieldtype": "Data",
-   "label": "Idempotency Key",
-   "unique": 1
-  },
-  {
-   "fieldname": "reversal_of",
-   "fieldtype": "Link",
-   "label": "Reversal Of Allocation",
-   "options": "Hosting Payment Allocation"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["invoice"]
-  },
-  {
-   "fields": ["idempotency_key"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Refund",
- "naming_rule": "Expression",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:REF-{####}",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "customer",
+        "payment",
+        "invoice",
+        "refund_date",
+        "amount",
+        "currency",
+        "status",
+        "reason",
+        "idempotency_key",
+        "reversal_of"
+    ],
+    "fields": [
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "payment",
+            "fieldtype": "Link",
+            "label": "Payment",
+            "options": "Hosting Payment Transaction"
+        },
+        {
+            "fieldname": "invoice",
+            "fieldtype": "Link",
+            "label": "Invoice",
+            "options": "Hosting Invoice"
+        },
+        {
+            "fieldname": "refund_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Refund Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amount",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Amount",
+            "reqd": 1
+        },
+        {
+            "fieldname": "currency",
+            "fieldtype": "Link",
+            "label": "Currency",
+            "options": "Currency",
+            "default": "USD"
+        },
+        {
+            "default": "Created",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Created\nProcessed\nFailed\nChargeback",
+            "reqd": 1
+        },
+        {
+            "fieldname": "reason",
+            "fieldtype": "Small Text",
+            "label": "Reason"
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "label": "Idempotency Key",
+            "unique": 1
+        },
+        {
+            "fieldname": "reversal_of",
+            "fieldtype": "Link",
+            "label": "Reversal Of Allocation",
+            "options": "Hosting Payment Allocation"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "invoice"
+            ]
+        },
+        {
+            "fields": [
+                "idempotency_key"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Refund",
+    "naming_rule": "Expression",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

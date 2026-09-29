@@ -111,8 +111,7 @@ def ensure_customer(user):
 	if name:
 		return name
 	return frappe.get_doc(
-		{"doctype": "Hosting Customer", "customer_name": "Phase8 Buyer",
-		 "primary_user": user, "status": "Active"}
+		{"doctype": "Hosting Customer", "customer_name": "Phase8 Buyer", "primary_user": user, "status": "Active"}
 	).insert().name
 
 
@@ -239,8 +238,7 @@ class TestOrchestration(IntegrationTestCase):
 	def test_queue_is_idempotent(self):
 		svc = make_service(self.customer, self.product)
 		first = self.queue(svc, idempotency_key="idem-1")
-		second = provisioning.queue_operation(service=svc.name, operation_type="Create",
-											  idempotency_key="idem-1", provider_account=self.account)
+		second = provisioning.queue_operation(service=svc.name, operation_type="Create", idempotency_key="idem-1", provider_account=self.account)
 		self.assertEqual(first.name, second.name)
 		self.assertEqual(len(frappe.get_all("Provisioning Operation", {"idempotency_key": "idem-1"})), 1)
 

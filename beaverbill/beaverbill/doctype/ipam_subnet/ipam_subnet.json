@@ -1,91 +1,93 @@
 {
- "actions": [],
- "allow_rename": 1,
- "creation": "2023-10-27 12:00:00",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "subnet_name",
-  "cidr",
-  "ip_version",
-  "gateway",
-  "dns_servers",
-  "vlan_id"
- ],
- "fields": [
-  {
-   "fieldname": "subnet_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Subnet Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "cidr",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "CIDR",
-   "reqd": 1
-  },
-  {
-   "fieldname": "ip_version",
-   "fieldtype": "Select",
-   "label": "IP Version",
-   "options": "IPv4\nIPv6",
-   "default": "IPv4",
-   "read_only": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "gateway",
-   "fieldtype": "Data",
-   "label": "Gateway"
-  },
-  {
-   "fieldname": "dns_servers",
-   "fieldtype": "Text",
-   "label": "DNS Servers"
-  },
-  {
-   "fieldname": "vlan_id",
-   "fieldtype": "Int",
-   "label": "VLAN ID"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["cidr"]
-  }
- ],
- "links": [],
- "modified": "2026-09-27 19:54:15.367900",
- "modified_by": "Administrator",
- "module": "BeaverBill",
- "name": "IPAM Subnet",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Hosting Support"
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2023-10-27 12:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "subnet_name",
+        "cidr",
+        "ip_version",
+        "gateway",
+        "dns_servers",
+        "vlan_id"
+    ],
+    "fields": [
+        {
+            "fieldname": "subnet_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Subnet Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "cidr",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "CIDR",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ip_version",
+            "fieldtype": "Select",
+            "label": "IP Version",
+            "options": "IPv4\nIPv6",
+            "default": "IPv4",
+            "read_only": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "gateway",
+            "fieldtype": "Data",
+            "label": "Gateway"
+        },
+        {
+            "fieldname": "dns_servers",
+            "fieldtype": "Text",
+            "label": "DNS Servers"
+        },
+        {
+            "fieldname": "vlan_id",
+            "fieldtype": "Int",
+            "label": "VLAN ID"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "cidr"
+            ]
+        }
+    ],
+    "links": [],
+    "modified": "2026-09-27 19:54:15.367900",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "IPAM Subnet",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

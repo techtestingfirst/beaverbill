@@ -1,99 +1,102 @@
 {
- "actions": [],
- "allow_rename": 1,
- "creation": "2023-10-27 12:00:00.000000",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "ip_address",
-  "subnet",
-  "ip_version",
-  "status",
-  "allocated_to_doctype",
-  "allocated_to_name",
-  "allocated_at"
- ],
- "fields": [
-  {
-   "fieldname": "ip_address",
-   "fieldtype": "Data",
-   "label": "IP Address",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "subnet",
-   "fieldtype": "Link",
-   "label": "Subnet",
-   "options": "IPAM Subnet",
-   "reqd": 1
-  },
-  {
-   "fieldname": "ip_version",
-   "fieldtype": "Select",
-   "label": "IP Version",
-   "options": "IPv4\nIPv6",
-   "default": "IPv4",
-   "read_only": 1
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Available\nReserved\nAllocated\nReleased\nQuarantined",
-   "default": "Available",
-   "reqd": 1
-  },
-  {
-   "fieldname": "allocated_to_doctype",
-   "fieldtype": "Data",
-   "label": "Allocated To DocType"
-  },
-  {
-   "fieldname": "allocated_to_name",
-   "fieldtype": "Data",
-   "label": "Allocated To Name"
-  },
-  {
-   "fieldname": "allocated_at",
-   "fieldtype": "Datetime",
-   "label": "Allocated At",
-   "read_only": 1
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["status", "subnet"]
-  }
- ],
- "track_changes": 1,
- "links": [],
- "modified": "2023-10-27 12:00:00.000000",
- "modified_by": "Administrator",
- "module": "BeaverBill",
- "name": "IPAM IP Address",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Hosting Support"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2023-10-27 12:00:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "ip_address",
+        "subnet",
+        "ip_version",
+        "status",
+        "allocated_to_doctype",
+        "allocated_to_name",
+        "allocated_at"
+    ],
+    "fields": [
+        {
+            "fieldname": "ip_address",
+            "fieldtype": "Data",
+            "label": "IP Address",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "subnet",
+            "fieldtype": "Link",
+            "label": "Subnet",
+            "options": "IPAM Subnet",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ip_version",
+            "fieldtype": "Select",
+            "label": "IP Version",
+            "options": "IPv4\nIPv6",
+            "default": "IPv4",
+            "read_only": 1
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Available\nReserved\nAllocated\nReleased\nQuarantined",
+            "default": "Available",
+            "reqd": 1
+        },
+        {
+            "fieldname": "allocated_to_doctype",
+            "fieldtype": "Data",
+            "label": "Allocated To DocType"
+        },
+        {
+            "fieldname": "allocated_to_name",
+            "fieldtype": "Data",
+            "label": "Allocated To Name"
+        },
+        {
+            "fieldname": "allocated_at",
+            "fieldtype": "Datetime",
+            "label": "Allocated At",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "status",
+                "subnet"
+            ]
+        }
+    ],
+    "track_changes": 1,
+    "links": [],
+    "modified": "2023-10-27 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "IPAM IP Address",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

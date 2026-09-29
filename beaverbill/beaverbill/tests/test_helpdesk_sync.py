@@ -50,8 +50,7 @@ def ensure_customer(user, name="P12 Buyer"):
 	if existing:
 		return existing
 	return frappe.get_doc(
-		{"doctype": "Hosting Customer", "customer_name": name,
-		 "primary_user": user, "status": "Active"}
+		{"doctype": "Hosting Customer", "customer_name": name, "primary_user": user, "status": "Active"}
 	).insert().name
 
 
@@ -61,8 +60,7 @@ def ensure_product(name="Phase12 Small"):
 	if frappe.db.exists("Hosting Product", name):
 		return name
 	return frappe.get_doc(
-		{"doctype": "Hosting Product", "product_name": name, "product_group": "Phase12 Group",
-		 "billing_cycle": "Monthly", "price": 10, "currency": "USD"}
+		{"doctype": "Hosting Product", "product_name": name, "product_group": "Phase12 Group", "billing_cycle": "Monthly", "price": 10, "currency": "USD"}
 	).insert().name
 
 
@@ -102,8 +100,7 @@ class TestHelpdeskSync(IntegrationTestCase):
 
 	def test_contact_sync_idempotent(self):
 		contact = frappe.get_doc(
-			{"doctype": "Hosting Customer Contact", "customer": self.customer_a,
-			 "contact_type": "Billing", "full_name": "A Acct", "email": "acct12@example.com"}
+			{"doctype": "Hosting Customer Contact", "customer": self.customer_a, "contact_type": "Billing", "full_name": "A Acct", "email": "acct12@example.com"}
 		).insert().name
 		first = bridge.sync_contact(contact)
 		second = bridge.sync_contact(contact)
@@ -116,9 +113,7 @@ class TestHelpdeskSync(IntegrationTestCase):
 		bridge.SYNC_FAULTS["customer"] = "helpdesk timeout"
 		bad = bridge.sync_customer(self.customer_a)
 		self.assertIsNone(bad["hd_customer"])
-		row = frappe.db.get_value("Helpdesk Sync Log",
-								  {"entity_type": "Customer", "entity": self.customer_a},
-								  ["name", "status"], as_dict=True)
+		row = frappe.db.get_value("Helpdesk Sync Log", {"entity_type": "Customer", "entity": self.customer_a}, ["name", "status"], as_dict=True)
 		self.assertIsNotNone(row)
 		bridge.SYNC_FAULTS.clear()
 		# Mature the backoff so the scheduler picks the row up immediately.
@@ -161,8 +156,7 @@ class TestHelpdeskSync(IntegrationTestCase):
 	def test_ticket_create_links_and_visibility(self):
 		frappe.set_user("Administrator")
 		svc = frappe.get_doc(
-			{"doctype": "Hosting Service", "customer": self.customer_a,
-			 "status": "Pending", "product": self.product, "billing_cycle": "Monthly"}
+			{"doctype": "Hosting Service", "customer": self.customer_a, "status": "Pending", "product": self.product, "billing_cycle": "Monthly"}
 		).insert()
 		frappe.set_user(self.user_a)
 		opened = support.create_ticket.__wrapped__(
@@ -179,12 +173,10 @@ class TestHelpdeskSync(IntegrationTestCase):
 		# Agent-authored HD comments stay internal; customer comments show.
 		frappe.set_user("Administrator")
 		agent_note = frappe.get_doc(
-			{"doctype": "HD Ticket Comment", "reference_ticket": ticket,
-			 "content": "internal: escalate", "commented_by": "Administrator"}
+			{"doctype": "HD Ticket Comment", "reference_ticket": ticket, "content": "internal: escalate", "commented_by": "Administrator"}
 		).insert(ignore_permissions=True)
 		mine = frappe.get_doc(
-			{"doctype": "HD Ticket Comment", "reference_ticket": ticket,
-			 "content": "still down here", "commented_by": self.user_a}
+			{"doctype": "HD Ticket Comment", "reference_ticket": ticket, "content": "still down here", "commented_by": self.user_a}
 		).insert(ignore_permissions=True)
 		frappe.set_user(self.user_a)
 		shown = bridge.visible_comments(ticket, self.user_a)
@@ -199,8 +191,7 @@ class TestHelpdeskSync(IntegrationTestCase):
 	def test_cross_customer_link_and_read_denied(self):
 		frappe.set_user("Administrator")
 		svc_b = frappe.get_doc(
-			{"doctype": "Hosting Service", "customer": self.customer_b,
-			 "status": "Pending", "product": self.product, "billing_cycle": "Monthly"}
+			{"doctype": "Hosting Service", "customer": self.customer_b, "status": "Pending", "product": self.product, "billing_cycle": "Monthly"}
 		).insert()
 		frappe.set_user(self.user_b)
 		opened = support.create_ticket.__wrapped__("B issue", "help", service=svc_b.name)
@@ -222,5 +213,4 @@ class TestHelpdeskSync(IntegrationTestCase):
 	def test_attachment_ownership(self):
 		frappe.set_user(self.user_a)
 		with self.assertRaises(frappe.ValidationError):
-			support.create_ticket.__wrapped__("Files", "see attached",
-											  attachments='["/files/ghost-12.png"]')
+			support.create_ticket.__wrapped__("Files", "see attached", attachments='["/files/ghost-12.png"]')

@@ -43,9 +43,7 @@ def request_certificate(domain: str, customer: str, service: str | None = None,
 		}
 	).insert()
 	if validation_method == "DNS":
-		notify(cert.customer, f"Certificate validation pending for {dom.domain_name}",
-			   f"Add a TXT record for _acme-challenge with value {cert.validation_token}, then validate.",
-			   "SSL Certificate", cert.name)
+		notify(cert.customer, f"Certificate validation pending for {dom.domain_name}", f"Add a TXT record for _acme-challenge with value {cert.validation_token}, then validate.", "SSL Certificate", cert.name)
 	return {"certificate": cert.name, "status": cert.status, "validation_token": cert.validation_token}
 
 
@@ -84,8 +82,7 @@ def validate_certificate(name: str) -> dict:
 	cert.last_checked_at = now_datetime()
 	cert.save()
 	dom = frappe.db.get_value("Hosting Domain", cert.domain, "domain_name")
-	notify(cert.customer, f"Certificate active for {dom}", f"Your certificate is valid until {cert.expires_at}.",
-		   "SSL Certificate", cert.name)
+	notify(cert.customer, f"Certificate active for {dom}", f"Your certificate is valid until {cert.expires_at}.", "SSL Certificate", cert.name)
 	return {"certificate": cert.name, "status": cert.status}
 
 
@@ -94,8 +91,7 @@ def _fail_validation(cert, reason: str) -> dict:
 	cert.failure_reason = reason[:1000]
 	cert.last_checked_at = now_datetime()
 	cert.save()
-	notify(cert.customer, "Certificate validation failed",
-		   f"{reason} Fix it and revalidate.", "SSL Certificate", cert.name)
+	notify(cert.customer, "Certificate validation failed", f"{reason} Fix it and revalidate.", "SSL Certificate", cert.name)
 	return {"certificate": cert.name, "status": cert.status, "error": reason}
 
 
@@ -124,8 +120,7 @@ def renew_certificate(name: str) -> dict:
 		cert.status = "Failed"
 		cert.failure_reason = f"Renewal failed: {CERT_FAULTS['renew']}"[:1000]
 		cert.save()
-		notify(cert.customer, "Certificate renewal failed",
-			   f"{CERT_FAULTS['renew']} Staff will retry.", "SSL Certificate", cert.name)
+		notify(cert.customer, "Certificate renewal failed", f"{CERT_FAULTS['renew']} Staff will retry.", "SSL Certificate", cert.name)
 		return {"certificate": cert.name, "status": cert.status, "error": CERT_FAULTS["renew"]}
 	cert.renewal_idempotency_key = f"{cert.name}-renew-{cert.expires_at}"
 	cert.validation_token = _token()
@@ -138,8 +133,7 @@ def monitor_certificates(as_of=None) -> dict:
 	"""Daily job: expiry watch, auto-renewal, stale-validation cleanup."""
 	day = getdate(as_of) if as_of else getdate(today())
 	ran = {"renewed": 0, "failed": 0, "expired": 0, "stale": 0}
-	for row in frappe.get_all("SSL Certificate", filters={"status": ("in", ["Active", "Renewal Pending"])},
-							  fields=["name"]):
+	for row in frappe.get_all("SSL Certificate", filters={"status": ("in", ["Active", "Renewal Pending"])}, fields=["name"]):
 		cert = frappe.get_doc("SSL Certificate", row.name)
 		cert.last_checked_at = now_datetime()
 		cert.save(ignore_permissions=True)
@@ -150,8 +144,7 @@ def monitor_certificates(as_of=None) -> dict:
 			cert.status = "Expired"
 			cert.save(ignore_permissions=True)
 			ran["expired"] += 1
-			notify(cert.customer, "Certificate expired", "Renew it to restore HTTPS.",
-				   "SSL Certificate", cert.name)
+			notify(cert.customer, "Certificate expired", "Renew it to restore HTTPS.", "SSL Certificate", cert.name)
 		elif days_left <= EXPIRY_WARN_DAYS and cert.auto_renew and cert.status == "Active":
 			out = renew_certificate(cert.name)
 			if out.get("status") == "Active":

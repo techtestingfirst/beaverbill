@@ -18,8 +18,7 @@ def _invoice_payload(doc) -> dict:
 		"outstanding_amount": float(doc.outstanding_amount or 0),
 		"currency": doc.currency,
 		"items": [
-			{"description": r.description, "qty": r.qty, "unit_price": float(r.unit_price or 0),
-			 "line_total": float(r.line_total or 0)}
+			{"description": r.description, "qty": r.qty, "unit_price": float(r.unit_price or 0), "line_total": float(r.line_total or 0)}
 			for r in doc.items
 		],
 	}
@@ -142,9 +141,7 @@ def list_payment_methods() -> dict:
 
 @frappe.whitelist()
 @portal_endpoint("portal.add_payment_method", limit=10)
-def add_payment_method(gateway: str, token_reference: str, brand: str | None = None,
-					   last4: str | None = None, exp_month: str | None = None,
-					   exp_year: str | None = None, make_default: bool = False) -> dict:
+def add_payment_method(gateway: str, token_reference: str, brand: str | None = None, last4: str | None = None, exp_month: str | None = None, exp_year: str | None = None, make_default: bool = False) -> dict:
 	"""Save a gateway-issued token reference. PANs and CVVs are always refused."""
 	user = frappe.session.user
 	portal_customer()
@@ -169,8 +166,7 @@ def add_payment_method(gateway: str, token_reference: str, brand: str | None = N
 		}
 	).insert()
 	if make_default:
-		for row in frappe.get_all("Hosting Payment Method",
-								  filters={"customer": user, "name": ("!=", doc.name)}, pluck="name"):
+		for row in frappe.get_all("Hosting Payment Method", filters={"customer": user, "name": ("!=", doc.name)}, pluck="name"):
 			frappe.db.set_value("Hosting Payment Method", row, "is_default", 0)
 	return {"method": doc.name}
 
@@ -204,7 +200,5 @@ def list_gateways(currency: str | None = None) -> dict:
 		currencies = [c.strip().upper() for c in (row.supported_currencies or "").split(",") if c.strip()]
 		if currency and currency.upper() not in currencies:
 			continue
-		items.append({"name": row.name, "provider": row.provider,
-					  "supported_currencies": row.supported_currencies,
-					  "default_currency": row.default_currency})
+		items.append({"name": row.name, "provider": row.provider, "supported_currencies": row.supported_currencies, "default_currency": row.default_currency})
 	return {"gateways": items}

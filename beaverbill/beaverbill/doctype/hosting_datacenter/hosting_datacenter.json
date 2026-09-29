@@ -1,73 +1,73 @@
 {
- "actions": [],
- "allow_rename": 1,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "datacenter_name",
-  "region",
-  "availability_zone",
-  "status",
-  "notes"
- ],
- "fields": [
-  {
-   "fieldname": "datacenter_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Datacenter Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "region",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Region"
-  },
-  {
-   "fieldname": "availability_zone",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Availability Zone"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Active\nMaintenance\nDecommissioned",
-   "default": "Active"
-  },
-  {
-   "fieldname": "notes",
-   "fieldtype": "Small Text",
-   "label": "Notes"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Datacenter",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Hosting Support"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "datacenter_name",
+        "region",
+        "availability_zone",
+        "status",
+        "notes"
+    ],
+    "fields": [
+        {
+            "fieldname": "datacenter_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Datacenter Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "region",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Region"
+        },
+        {
+            "fieldname": "availability_zone",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Availability Zone"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Active\nMaintenance\nDecommissioned",
+            "default": "Active"
+        },
+        {
+            "fieldname": "notes",
+            "fieldtype": "Small Text",
+            "label": "Notes"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Datacenter",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

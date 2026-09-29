@@ -46,9 +46,7 @@ class TestPortalBillingExtras(IntegrationTestCase):
 		ensure_customer(self.user_a)
 		ensure_customer(self.user_b)
 		self.gateway = frappe.get_doc(
-			{"doctype": "Hosting Payment Gateway", "gateway_name": "P11 GW",
-			 "provider": "Test Gateway", "supported_currencies": "USD,INR",
-			 "default_currency": "USD", "is_active": 1}
+			{"doctype": "Hosting Payment Gateway", "gateway_name": "P11 GW", "provider": "Test Gateway", "supported_currencies": "USD,INR", "default_currency": "USD", "is_active": 1}
 		).insert().name
 		frappe.set_user(self.user_a)
 

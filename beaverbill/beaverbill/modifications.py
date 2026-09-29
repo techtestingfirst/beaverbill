@@ -124,8 +124,7 @@ def open_request(subscription_name):
     )
 
 
-def request_modification(subscription_name, new_product, effective_mode="Immediate",
-                         service=None, data_loss_acknowledged=False, idempotency_key=None):
+def request_modification(subscription_name, new_product, effective_mode="Immediate", service=None, data_loss_acknowledged=False, idempotency_key=None):
     if idempotency_key:
         existing = frappe.db.get_value(
             "Hosting Service Modification Request", {"idempotency_key": idempotency_key}, "name"

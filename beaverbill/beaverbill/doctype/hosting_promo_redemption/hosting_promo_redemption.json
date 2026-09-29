@@ -1,67 +1,69 @@
 {
- "actions": [],
- "allow_rename": 0,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "promo_code",
-  "customer",
-  "order",
-  "discount_given"
- ],
- "fields": [
-  {
-   "fieldname": "promo_code",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Promo Code",
-   "options": "Hosting Promo Code",
-   "reqd": 1
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "User"
-  },
-  {
-   "fieldname": "order",
-   "fieldtype": "Link",
-   "label": "Order",
-   "options": "Hosting Order"
-  },
-  {
-   "fieldname": "discount_given",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Discount Given"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["promo_code"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Promo Redemption",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 0,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "promo_code",
+        "customer",
+        "order",
+        "discount_given"
+    ],
+    "fields": [
+        {
+            "fieldname": "promo_code",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Promo Code",
+            "options": "Hosting Promo Code",
+            "reqd": 1
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "label": "Customer",
+            "options": "User"
+        },
+        {
+            "fieldname": "order",
+            "fieldtype": "Link",
+            "label": "Order",
+            "options": "Hosting Order"
+        },
+        {
+            "fieldname": "discount_given",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Discount Given"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "promo_code"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Promo Redemption",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

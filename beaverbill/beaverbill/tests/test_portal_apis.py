@@ -88,8 +88,7 @@ def ensure_customer(user, name="Buyer"):
 	if existing:
 		return existing
 	return frappe.get_doc(
-		{"doctype": "Hosting Customer", "customer_name": name,
-		 "primary_user": user, "status": "Active"}
+		{"doctype": "Hosting Customer", "customer_name": name, "primary_user": user, "status": "Active"}
 	).insert().name
 
 
@@ -113,8 +112,7 @@ def ensure_product(name="Phase10 Small", price=10, group="Phase10 Group"):
 def ensure_status():
 	if not frappe.get_all("HD Ticket Status", limit=1):
 		frappe.get_doc(
-			{"doctype": "HD Ticket Status", "label_agent": "Open",
-			 "label_customer": "Open", "category": "Open"}
+			{"doctype": "HD Ticket Status", "label_agent": "Open", "label_customer": "Open", "category": "Open"}
 		).insert(ignore_permissions=True)
 
 
@@ -160,8 +158,7 @@ class TestPortalAuth(IntegrationTestCase):
 		frappe.set_user("Administrator")
 		product = ensure_product()
 		svc_b = frappe.get_doc(
-			{"doctype": "Hosting Service", "customer": self.customer_b,
-			 "status": "Pending", "product": product, "billing_cycle": "Monthly"}
+			{"doctype": "Hosting Service", "customer": self.customer_b, "status": "Pending", "product": product, "billing_cycle": "Monthly"}
 		).insert()
 		inv_b = ledger.issue_invoice(
 			self.user_b, [{"description": "B line", "qty": 1, "unit_price": 5, "line_total": 5}],
@@ -187,8 +184,7 @@ class TestPortalAuth(IntegrationTestCase):
 	def test_audit_events_recorded(self):
 		frappe.set_user(self.user_a)
 		account.get_profile()
-		rows = frappe.get_all("Portal Audit Event",
-							  filters={"endpoint": "portal.get_profile", "user": self.user_a})
+		rows = frappe.get_all("Portal Audit Event", filters={"endpoint": "portal.get_profile", "user": self.user_a})
 		self.assertTrue(rows)
 		with self.assertRaises(frappe.DoesNotExistError):
 			services.service_detail("no-such-service")
@@ -235,8 +231,7 @@ class TestPortalCommerce(IntegrationTestCase):
 		self.assertEqual(float(detail["price"]), 10)
 		frappe.set_user("Administrator")
 		promo = frappe.get_doc(
-			{"doctype": "Hosting Promo Code", "code": "P10OFF", "discount_type": "Percentage",
-			 "discount_value": 10, "applies_to": "All Orders"}
+			{"doctype": "Hosting Promo Code", "code": "P10OFF", "discount_type": "Percentage", "discount_value": 10, "applies_to": "All Orders"}
 		).insert()
 		frappe.set_user(self.user_a)
 		quote = catalog.validate_coupon.__wrapped__("P10OFF", self.product)
@@ -262,8 +257,7 @@ class TestPortalCommerce(IntegrationTestCase):
 	def test_checkout_with_coupon_redeems_once(self):
 		frappe.set_user("Administrator")
 		frappe.get_doc(
-			{"doctype": "Hosting Promo Code", "code": "P10ONE", "discount_type": "Fixed Amount",
-			 "discount_value": 4, "applies_to": "All Orders", "usage_limit": 5}
+			{"doctype": "Hosting Promo Code", "code": "P10ONE", "discount_type": "Fixed Amount", "discount_value": 4, "applies_to": "All Orders", "usage_limit": 5}
 		).insert()
 		frappe.set_user(self.user_a)
 		orders.cart_add.__wrapped__(self.product, 1)
@@ -282,9 +276,7 @@ class TestPortalCommerce(IntegrationTestCase):
 		self.assertEqual(got["outstanding_amount"], 25)
 		frappe.set_user("Administrator")
 		gw = frappe.get_doc(
-			{"doctype": "Hosting Payment Gateway", "gateway_name": "P10 GW",
-			 "provider": "Test Gateway", "supported_currencies": "USD",
-			 "default_currency": "USD", "is_active": 1}
+			{"doctype": "Hosting Payment Gateway", "gateway_name": "P10 GW", "provider": "Test Gateway", "supported_currencies": "USD", "default_currency": "USD", "is_active": 1}
 		).insert()
 		frappe.set_user(self.user_a)
 		pay = billing.pay_invoice.__wrapped__(inv.name, gw.name, idempotency_key="phase10-pay-1")
@@ -313,8 +305,7 @@ class TestPortalServices(IntegrationTestCase):
 		self.small = ensure_product("Phase10 Small", 10)
 		self.big = ensure_product("Phase10 Big", 30)
 		self.service = frappe.get_doc(
-			{"doctype": "Hosting Service", "customer": self.customer_a,
-			 "status": "Pending", "product": self.small, "billing_cycle": "Monthly"}
+			{"doctype": "Hosting Service", "customer": self.customer_a, "status": "Pending", "product": self.small, "billing_cycle": "Monthly"}
 		).insert()
 		for target in ("Provisioning", "Active"):
 			self.service.reload()
@@ -368,8 +359,7 @@ class TestPortalServices(IntegrationTestCase):
 	def test_console_single_use_ticket(self):
 		frappe.set_user("Administrator")
 		account = frappe.get_doc(
-			{"doctype": "Hosting Provider Account", "provider_name": "P10 Proxmox",
-			 "provider_type": "Proxmox VE"}
+			{"doctype": "Hosting Provider Account", "provider_name": "P10 Proxmox", "provider_type": "Proxmox VE"}
 		).insert()
 		frappe.db.set_value("Hosting Service", self.service.name, "provider_account", account.name)
 		frappe.set_user(self.user_a)
@@ -389,18 +379,15 @@ class TestPortalServices(IntegrationTestCase):
 		with self.assertRaises(frappe.ValidationError):
 			services.password_reset.__wrapped__(self.service.name, "pw-2", confirm=False)
 		with self.assertRaises(frappe.ValidationError):
-			services.os_reinstall.__wrapped__(self.service.name, "os-1", confirm=True,
-											  acknowledge_data_loss=False)
+			services.os_reinstall.__wrapped__(self.service.name, "os-1", confirm=True, acknowledge_data_loss=False)
 		os_done = services.os_reinstall.__wrapped__(self.service.name, "os-1", confirm=True,
 													acknowledge_data_loss=True)
 		self.assertEqual(os_done["status"], "Completed")
 
 	def test_change_plan(self):
-		out = services.change_plan.__wrapped__(self.service.name, self.big,
-											   idempotency_key="phase10-mod-1")
+		out = services.change_plan.__wrapped__(self.service.name, self.big, idempotency_key="phase10-mod-1")
 		self.assertGreater(float(out["proration_amount"]), 0)
-		dup = services.change_plan.__wrapped__(self.service.name, self.big,
-											   idempotency_key="phase10-mod-1")
+		dup = services.change_plan.__wrapped__(self.service.name, self.big, idempotency_key="phase10-mod-1")
 		self.assertEqual(dup["request"], out["request"])
 
 
@@ -422,8 +409,7 @@ class TestPortalAssetsAndSupport(IntegrationTestCase):
 		grant_customer_role(self.user_b)
 		self.product = ensure_product()
 		self.service = frappe.get_doc(
-			{"doctype": "Hosting Service", "customer": self.customer_a,
-			 "status": "Pending", "product": self.product, "billing_cycle": "Monthly"}
+			{"doctype": "Hosting Service", "customer": self.customer_a, "status": "Pending", "product": self.product, "billing_cycle": "Monthly"}
 		).insert()
 		for target in ("Provisioning", "Active"):
 			self.service.reload()
@@ -454,13 +440,11 @@ class TestPortalAssetsAndSupport(IntegrationTestCase):
 
 	def test_certificates_and_backups(self):
 		req = assets.request_certificate.__wrapped__(self.domain, service=self.service.name)
-		self.assertEqual(frappe.db.get_value("SSL Certificate", req["certificate"], "customer"),
-						 self.customer_a)
+		self.assertEqual(frappe.db.get_value("SSL Certificate", req["certificate"], "customer"), self.customer_a)
 		mine = assets.my_certificates.__wrapped__()
 		self.assertTrue(mine["certificates"])
 		policy = frappe.get_doc(
-			{"doctype": "Backup Policy", "policy_name": "P10 Pol", "service": self.service.name,
-			 "frequency": "Manual", "retention_count": 3, "retention_days": 7, "enabled": 1}
+			{"doctype": "Backup Policy", "policy_name": "P10 Pol", "service": self.service.name, "frequency": "Manual", "retention_count": 3, "retention_days": 7, "enabled": 1}
 		).insert(ignore_permissions=True)
 		from beaverbill.beaverbill import backups as backup_engine
 
@@ -479,8 +463,7 @@ class TestPortalAssetsAndSupport(IntegrationTestCase):
 	def test_addons_and_usage(self):
 		frappe.set_user("Administrator")
 		row = frappe.get_doc(
-			{"doctype": "Hosting Product Addon", "addon_name": "P10 Disk",
-			 "product": self.product, "price": 3}
+			{"doctype": "Hosting Product Addon", "addon_name": "P10 Disk", "product": self.product, "price": 3}
 		).insert()
 		frappe.set_user(self.user_a)
 		out = assets.order_addon.__wrapped__(self.service.name, row.name, "phase10-ao-1")
@@ -500,8 +483,7 @@ class TestPortalAssetsAndSupport(IntegrationTestCase):
 		self.assertEqual(len(store["snapshots"]), 1)
 
 	def test_tickets_and_notifications(self):
-		opened = support.create_ticket.__wrapped__("Portal is slow", "Dashboard loads slowly",
-												   service=self.service.name)
+		opened = support.create_ticket.__wrapped__("Portal is slow", "Dashboard loads slowly", service=self.service.name)
 		self.assertTrue(opened["ticket"])
 		mine = support.my_tickets.__wrapped__()
 		self.assertTrue([t for t in mine["tickets"] if t["name"] == opened["ticket"]])

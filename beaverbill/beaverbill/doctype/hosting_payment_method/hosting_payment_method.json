@@ -1,119 +1,122 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "format:PM-{####}",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "customer",
-  "gateway",
-  "token_reference",
-  "brand",
-  "last4",
-  "exp_month",
-  "exp_year",
-  "is_default"
- ],
- "fields": [
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Customer",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "gateway",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Gateway",
-   "options": "Hosting Payment Gateway",
-   "reqd": 1
-  },
-  {
-   "fieldname": "token_reference",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Token Reference (never store card numbers)",
-   "reqd": 1
-  },
-  {
-   "fieldname": "brand",
-   "fieldtype": "Data",
-   "label": "Brand"
-  },
-  {
-   "fieldname": "last4",
-   "fieldtype": "Data",
-   "label": "Last 4"
-  },
-  {
-   "fieldname": "exp_month",
-   "fieldtype": "Int",
-   "label": "Expiry Month"
-  },
-  {
-   "fieldname": "exp_year",
-   "fieldtype": "Int",
-   "label": "Expiry Year"
-  },
-  {
-   "default": "0",
-   "fieldname": "is_default",
-   "fieldtype": "Check",
-   "label": "Is Default"
-  }
- ],
- "index_web_pages_for_search": 1,
- "indexes": [
-  {
-   "fields": ["customer", "gateway"]
-  }
- ],
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Payment Method",
- "naming_rule": "Expression",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Support"
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "read": 1,
-   "role": "Hosting Customer"
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:PM-{####}",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "customer",
+        "gateway",
+        "token_reference",
+        "brand",
+        "last4",
+        "exp_month",
+        "exp_year",
+        "is_default"
+    ],
+    "fields": [
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "gateway",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Gateway",
+            "options": "Hosting Payment Gateway",
+            "reqd": 1
+        },
+        {
+            "fieldname": "token_reference",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Token Reference (never store card numbers)",
+            "reqd": 1
+        },
+        {
+            "fieldname": "brand",
+            "fieldtype": "Data",
+            "label": "Brand"
+        },
+        {
+            "fieldname": "last4",
+            "fieldtype": "Data",
+            "label": "Last 4"
+        },
+        {
+            "fieldname": "exp_month",
+            "fieldtype": "Int",
+            "label": "Expiry Month"
+        },
+        {
+            "fieldname": "exp_year",
+            "fieldtype": "Int",
+            "label": "Expiry Year"
+        },
+        {
+            "default": "0",
+            "fieldname": "is_default",
+            "fieldtype": "Check",
+            "label": "Is Default"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "indexes": [
+        {
+            "fields": [
+                "customer",
+                "gateway"
+            ]
+        }
+    ],
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Payment Method",
+    "naming_rule": "Expression",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Hosting Customer"
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

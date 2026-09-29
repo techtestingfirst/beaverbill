@@ -105,12 +105,9 @@ def ticket_sla(ticket: str) -> dict:
 
 def email_health() -> dict:
 	"""Inbound/outbound mail configuration report (admins own the mailboxes)."""
-	incoming = frappe.get_all("Email Account", filters={"enable_incoming": 1},
-							  fields=["name", "email_id"], ignore_permissions=True)
-	outgoing = frappe.get_all("Email Account", filters={"enable_outgoing": 1},
-							  fields=["name"], ignore_permissions=True)
-	default_out = frappe.db.get_value("Email Account",
-									  {"enable_outgoing": 1, "default_outgoing": 1}, "name")
+	incoming = frappe.get_all("Email Account", filters={"enable_incoming": 1}, fields=["name", "email_id"], ignore_permissions=True)
+	outgoing = frappe.get_all("Email Account", filters={"enable_outgoing": 1}, fields=["name"], ignore_permissions=True)
+	default_out = frappe.db.get_value("Email Account", {"enable_outgoing": 1, "default_outgoing": 1}, "name")
 	return {
 		"same_site": SAME_SITE_DEPLOYMENT,
 		"inbound_configured": bool(incoming),
@@ -415,11 +412,7 @@ def check_attachments(attachments: list, user: str) -> None:
 			frappe.throw(f"Attachment does not belong to this customer: {url}", frappe.PermissionError)
 
 
-def create_portal_ticket(subject: str, description: str, service: str | None = None,
-						 order: str | None = None, invoice: str | None = None,
-						 domain: str | None = None, priority: str | None = None,
-						 team: str | None = None, attachments: list | None = None,
-						 idempotency_key: str | None = None, user: str | None = None) -> dict:
+def create_portal_ticket(subject: str, description: str, service: str | None = None, order: str | None = None, invoice: str | None = None, domain: str | None = None, priority: str | None = None, team: str | None = None, attachments: list | None = None, idempotency_key: str | None = None, user: str | None = None) -> dict:
 	"""End-to-end portal ticket flow: sync, map, dedup, link."""
 	from beaverbill.beaverbill.portal import guard
 

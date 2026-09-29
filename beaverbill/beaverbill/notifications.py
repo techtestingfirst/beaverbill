@@ -17,8 +17,7 @@ def customer_email(customer: str | None) -> str | None:
 	return None
 
 
-def notify(customer: str | None, subject: str, message: str, reference_doctype: str | None = None,
-		   reference_name: str | None = None) -> None:
+def notify(customer: str | None, subject: str, message: str, reference_doctype: str | None = None, reference_name: str | None = None) -> None:
 	"""Audit-log a notice and email the customer when possible. Never raises."""
 	if reference_doctype and reference_name:
 		try:

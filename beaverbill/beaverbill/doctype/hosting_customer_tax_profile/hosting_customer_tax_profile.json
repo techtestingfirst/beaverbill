@@ -1,75 +1,75 @@
 {
- "actions": [],
- "allow_rename": 1,
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "user",
-  "customer",
-  "country",
-  "state",
-  "tax_exempt",
-  "gstin"
- ],
- "fields": [
-  {
-   "fieldname": "user",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "User",
-   "options": "User",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Hosting Customer"
-  },
-  {
-   "fieldname": "country",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Country"
-  },
-  {
-   "fieldname": "state",
-   "fieldtype": "Data",
-   "label": "State / State Code"
-  },
-  {
-   "fieldname": "tax_exempt",
-   "fieldtype": "Check",
-   "label": "Tax Exempt",
-   "default": 0
-  },
-  {
-   "fieldname": "gstin",
-   "fieldtype": "Data",
-   "label": "GSTIN (India)"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "module": "BeaverBill",
- "name": "Hosting Customer Tax Profile",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "user",
+        "customer",
+        "country",
+        "state",
+        "tax_exempt",
+        "gstin"
+    ],
+    "fields": [
+        {
+            "fieldname": "user",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "User",
+            "options": "User",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "label": "Customer",
+            "options": "Hosting Customer"
+        },
+        {
+            "fieldname": "country",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Country"
+        },
+        {
+            "fieldname": "state",
+            "fieldtype": "Data",
+            "label": "State / State Code"
+        },
+        {
+            "fieldname": "tax_exempt",
+            "fieldtype": "Check",
+            "label": "Tax Exempt",
+            "default": 0
+        },
+        {
+            "fieldname": "gstin",
+            "fieldtype": "Data",
+            "label": "GSTIN (India)"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Customer Tax Profile",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

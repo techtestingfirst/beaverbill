@@ -107,12 +107,7 @@ class BaseProvisioningDriver:
 		}
 
 	def describe(self, subscription_name):
-		"""Return remote resource state for reconciliation.
-
-	 Default raises NotImplementedError; the engine records an
-	 `Unknown` verdict instead of failing. Drivers implement this
-	 additively when their upstream API supports a status query.
-	 """
+		"""Return remote resource state for reconciliation. Default raises NotImplementedError; the engine records an `Unknown` verdict instead of failing. Drivers implement this additively when their upstream API supports a status query. """
 		raise NotImplementedError(
 			f"{type(self).__name__} does not implement describe(); reconciliation stays Unknown"
 		)

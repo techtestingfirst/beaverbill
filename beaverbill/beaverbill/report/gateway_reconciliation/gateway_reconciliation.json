@@ -1,18 +1,18 @@
 {
- "add_total_row": 0,
- "doctype": "Report",
- "is_standard": "Yes",
- "module": "BeaverBill",
- "name": "Gateway Reconciliation",
- "ref_doctype": "Hosting Payment Transaction",
- "report_name": "Gateway Reconciliation",
- "report_type": "Script Report",
- "roles": [
-  {
-   "role": "Hosting Admin"
-  },
-  {
-   "role": "Hosting Support"
-  }
- ]
+    "add_total_row": 0,
+    "doctype": "Report",
+    "is_standard": "Yes",
+    "module": "BeaverBill",
+    "name": "Gateway Reconciliation",
+    "ref_doctype": "Hosting Payment Transaction",
+    "report_name": "Gateway Reconciliation",
+    "report_type": "Script Report",
+    "roles": [
+        {
+            "role": "Hosting Admin"
+        },
+        {
+            "role": "Hosting Support"
+        }
+    ]
 }

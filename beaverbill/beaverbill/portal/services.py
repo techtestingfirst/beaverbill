@@ -116,9 +116,7 @@ def power(service: str, action: str) -> dict:
 		provider_account=doc.provider_account,
 	)
 	out = provisioning.run_operation(op.name)
-	notify(doc.customer, f"Service {action} {out.status}",
-		   f"{action} on {doc.name} finished with status {out.status}.",
-		   "Hosting Service", doc.name)
+	notify(doc.customer, f"Service {action} {out.status}", f"{action} on {doc.name} finished with status {out.status}.", "Hosting Service", doc.name)
 	return {"service": doc.name, "action": action, "operation": out.name, "status": out.status}
 
 
@@ -194,8 +192,7 @@ def _service_action(service: str, action_type: str, idempotency_key: str,
 	record.status = "Completed"
 	record.finished_at = now_datetime()
 	record.save()
-	notify(doc.customer, f"{action_type} completed on {doc.name}", detail,
-		   "Hosting Service", doc.name)
+	notify(doc.customer, f"{action_type} completed on {doc.name}", detail, "Hosting Service", doc.name)
 	return {"action": record.name, "status": record.status}
 
 
@@ -203,14 +200,12 @@ def _service_action(service: str, action_type: str, idempotency_key: str,
 @portal_endpoint("portal.password_reset", limit=10)
 def password_reset(service: str, idempotency_key: str, confirm: bool = False) -> dict:
 	"""Reset the service password. Confirmation plus idempotency required."""
-	return _service_action(service, "Password Reset", idempotency_key, bool(confirm),
-						   "Root/administrator password was reset. Use the new credentials from your vault.")
+	return _service_action(service, "Password Reset", idempotency_key, bool(confirm), "Root/administrator password was reset. Use the new credentials from your vault.")
 
 
 @frappe.whitelist()
 @portal_endpoint("portal.os_reinstall", limit=5)
-def os_reinstall(service: str, idempotency_key: str, confirm: bool = False,
-				 acknowledge_data_loss: bool = False, image: str | None = None) -> dict:
+def os_reinstall(service: str, idempotency_key: str, confirm: bool = False, acknowledge_data_loss: bool = False, image: str | None = None) -> dict:
 	"""Reinstall the OS. Double confirmation (action + data loss) plus idempotency."""
 	if not acknowledge_data_loss:
 		frappe.throw("OS reinstall wipes all data; acknowledge_data_loss is required", frappe.ValidationError)

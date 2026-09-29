@@ -24,11 +24,7 @@ def _own_ticket(name: str, user=None) -> str:
 
 @frappe.whitelist()
 @portal_endpoint("portal.create_ticket", limit=20)
-def create_ticket(subject: str, description: str, service: str | None = None,
-				 order: str | None = None, invoice: str | None = None,
-				 domain: str | None = None, priority: str | None = None,
-				 team: str | None = None, attachments: str | None = None,
-				 idempotency_key: str | None = None) -> dict:
+def create_ticket(subject: str, description: str, service: str | None = None, order: str | None = None, invoice: str | None = None, domain: str | None = None, priority: str | None = None, team: str | None = None, attachments: str | None = None, idempotency_key: str | None = None) -> dict:
 	"""Open a support ticket as the caller, linked to owned records."""
 	import json as _json
 

@@ -1,119 +1,119 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "field:product_name",
- "creation": "2025-01-01 00:00:00",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "product_name",
-  "product_group",
-  "billing_cycle",
-  "price",
-  "currency",
-  "description",
-  "cpu_cores",
-  "ram_mb",
-  "disk_gb",
-  "bandwidth_gb"
- ],
- "fields": [
-  {
-   "fieldname": "product_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Product Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "product_group",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Product Group",
-   "options": "Hosting Product Group",
-   "reqd": 1
-  },
-  {
-   "fieldname": "billing_cycle",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Billing Cycle",
-   "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
-   "reqd": 1
-  },
-  {
-   "fieldname": "price",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Price",
-   "reqd": 1
-  },
-  {
-   "default": "USD",
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency"
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Text",
-   "label": "Description"
-  },
-  {
-   "default": "0",
-   "fieldname": "cpu_cores",
-   "fieldtype": "Int",
-   "label": "CPU Cores (0 = unspecified)"
-  },
-  {
-   "default": "0",
-   "fieldname": "ram_mb",
-   "fieldtype": "Int",
-   "label": "RAM (MB, 0 = unspecified)"
-  },
-  {
-   "default": "0",
-   "fieldname": "disk_gb",
-   "fieldtype": "Int",
-   "label": "Disk (GB, 0 = unspecified)"
-  },
-  {
-   "default": "0",
-   "fieldname": "bandwidth_gb",
-   "fieldtype": "Int",
-   "label": "Bandwidth (GB, 0 = unspecified)"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-09-27 19:49:51.027622",
- "modified_by": "Administrator",
- "module": "BeaverBill",
- "name": "Hosting Product",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Hosting Customer"
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:product_name",
+    "creation": "2025-01-01 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "product_name",
+        "product_group",
+        "billing_cycle",
+        "price",
+        "currency",
+        "description",
+        "cpu_cores",
+        "ram_mb",
+        "disk_gb",
+        "bandwidth_gb"
+    ],
+    "fields": [
+        {
+            "fieldname": "product_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Product Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "product_group",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Product Group",
+            "options": "Hosting Product Group",
+            "reqd": 1
+        },
+        {
+            "fieldname": "billing_cycle",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Billing Cycle",
+            "options": "Monthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially",
+            "reqd": 1
+        },
+        {
+            "fieldname": "price",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Price",
+            "reqd": 1
+        },
+        {
+            "default": "USD",
+            "fieldname": "currency",
+            "fieldtype": "Link",
+            "label": "Currency",
+            "options": "Currency"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text",
+            "label": "Description"
+        },
+        {
+            "default": "0",
+            "fieldname": "cpu_cores",
+            "fieldtype": "Int",
+            "label": "CPU Cores (0 = unspecified)"
+        },
+        {
+            "default": "0",
+            "fieldname": "ram_mb",
+            "fieldtype": "Int",
+            "label": "RAM (MB, 0 = unspecified)"
+        },
+        {
+            "default": "0",
+            "fieldname": "disk_gb",
+            "fieldtype": "Int",
+            "label": "Disk (GB, 0 = unspecified)"
+        },
+        {
+            "default": "0",
+            "fieldname": "bandwidth_gb",
+            "fieldtype": "Int",
+            "label": "Bandwidth (GB, 0 = unspecified)"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2026-09-27 19:49:51.027622",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Hosting Product",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Customer"
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

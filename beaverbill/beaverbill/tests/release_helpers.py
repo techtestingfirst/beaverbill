@@ -69,8 +69,7 @@ def wipe(extra=()):
 def ensure_user(email, first="Phase14"):
 	if not frappe.db.exists("User", email):
 		frappe.get_doc(
-			{"doctype": "User", "email": email, "first_name": first,
-			 "send_welcome_email": 0}
+			{"doctype": "User", "email": email, "first_name": first, "send_welcome_email": 0}
 		).insert(ignore_permissions=True)
 	try:
 		frappe.get_doc("User", email).add_roles("Hosting Customer")
@@ -84,8 +83,7 @@ def ensure_customer(user, name="P14 Buyer"):
 	if existing:
 		return existing
 	return frappe.get_doc(
-		{"doctype": "Hosting Customer", "customer_name": name,
-		 "primary_user": user, "status": "Active", "email_verified": 1}
+		{"doctype": "Hosting Customer", "customer_name": name, "primary_user": user, "status": "Active", "email_verified": 1}
 	).insert().name
 
 

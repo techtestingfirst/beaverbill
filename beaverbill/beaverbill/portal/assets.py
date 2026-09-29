@@ -54,8 +54,7 @@ def dns_add(domain: str, record_type: str, host: str, value: str,
 			ttl: int = 3600, priority: int = 0) -> dict:
 	"""Add a DNS record on the caller's domain."""
 	own_domain_or_throw(domain)
-	rec = domain_engine.add_dns_record(domain, record_type, host, value, ttl=int(ttl or 3600),
-									   priority=int(priority or 0))
+	rec = domain_engine.add_dns_record(domain, record_type, host, value, ttl=int(ttl or 3600), priority=int(priority or 0))
 	return {"record": rec.name}
 
 
@@ -92,8 +91,7 @@ def request_certificate(domain: str, service: str | None = None,
 		from beaverbill.beaverbill.portal.guard import own_service_or_throw
 
 		own_service_or_throw(service)
-	return cert_engine.request_certificate(dom.name, dom.customer, service=service,
-										   validation_method=validation_method)
+	return cert_engine.request_certificate(dom.name, dom.customer, service=service, validation_method=validation_method)
 
 
 @frappe.whitelist()
