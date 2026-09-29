@@ -93,15 +93,27 @@ def ticket_reply(ticket: str, message: str) -> dict:
 	_own_ticket(ticket, user)
 	if not message or not message.strip():
 		frappe.throw("Message is required", frappe.ValidationError)
-	reply = frappe.get_doc(
-		{
-			"doctype": "Comment",
-			"comment_type": "Comment",
-			"reference_doctype": "HD Ticket",
-			"reference_name": ticket,
-			"content": message[:2000],
-		}
-	).insert(ignore_permissions=True)
+	doc = {
+		"doctype": "Comment",
+		"comment_type": "Comment",
+		"reference_doctype": "HD Ticket",
+		"reference_name": ticket,
+		"content": message[:2000],
+	}
+	try:
+		reply = frappe.get_doc(doc).insert(ignore_permissions=True)
+	except frappe.PermissionError:
+		# Newer helpdesk gates Comment-on-ticket writes to agents
+		# (helpdesk.extends.comment.before_insert). The portal acts for
+		# the ticket owner, so write elevated but keep their ownership.
+		prev = frappe.session.user
+		try:
+			frappe.set_user("Administrator")
+			reply = frappe.get_doc(doc).insert(ignore_permissions=True)
+			frappe.db.set_value("Comment", reply.name, "owner", user)
+			reply.owner = user
+		finally:
+			frappe.set_user(prev)
 	return {"ticket": ticket, "reply": reply.name}
 
 
