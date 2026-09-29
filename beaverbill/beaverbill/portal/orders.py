@@ -6,10 +6,15 @@ import frappe
 
 from beaverbill.beaverbill import billing as ledger
 from beaverbill.beaverbill import pricing
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.notifications import billable_customer
 from beaverbill.beaverbill.portal.guard import is_staff, portal_customer, portal_endpoint
 
 CART_TTL = 7 * 24 * 3600
+
+
+def _cart_ttl() -> int:
+	return bb_settings.get_int("cart_ttl_days", 7) * 24 * 3600
 
 
 def _cart_key(user=None) -> str:
@@ -29,7 +34,7 @@ def _load_cart(user=None) -> dict:
 
 
 def _save_cart(cart: dict, user=None) -> dict:
-	frappe.cache().set_value(_cart_key(user), json.dumps(cart, default=str), expires_in_sec=CART_TTL)
+	frappe.cache().set_value(_cart_key(user), json.dumps(cart, default=str), expires_in_sec=_cart_ttl())
 	return cart
 
 

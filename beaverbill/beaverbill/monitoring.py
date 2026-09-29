@@ -12,7 +12,21 @@ from __future__ import annotations
 import frappe
 from frappe.utils import add_days, add_to_date, getdate, now_datetime, today
 
+from beaverbill.beaverbill import settings as bb_settings
+
 STATUSES = ("ok", "warn", "fail")
+
+
+def _expiring_warn_days() -> int:
+	return bb_settings.get_int("expiring_warn_days", 30)
+
+
+def _expiring_urgent_days() -> int:
+	return bb_settings.get_int("expiring_urgent_days", 7)
+
+
+def _ip_low_threshold() -> float:
+	return bb_settings.get_float("ip_low_threshold_pct", 10) / 100.0
 
 
 def _since(hours: int) -> str:
@@ -89,7 +103,7 @@ def check_ip_exhaustion() -> dict:
 			continue
 		if free == 0:
 			empty.append(subnet)
-		elif free / total < 0.1:
+		elif free / total < _ip_low_threshold():
 			low.append(subnet)
 	status = "fail" if empty else _level(len(low), 1, 10 ** 9)
 	return _result("mon:ip_exhaustion", status, len(empty) + len(low),
@@ -100,9 +114,9 @@ def check_expiring_domains() -> dict:
 	rows = frappe.get_all("Hosting Domain", filters={"status": "Active"},
 		fields=["name", "expiry_date"], limit_page_length=500)
 	soon = [r.name for r in rows if r.expiry_date
-		and getdate(r.expiry_date) <= add_days(getdate(today()), 30)]
+		and getdate(r.expiry_date) <= add_days(getdate(today()), _expiring_warn_days())]
 	urgent = [r.name for r in rows if r.expiry_date
-		and getdate(r.expiry_date) <= add_days(getdate(today()), 7)]
+		and getdate(r.expiry_date) <= add_days(getdate(today()), _expiring_urgent_days())]
 	status = "fail" if urgent else _level(len(soon), 1, 10 ** 9)
 	return _result("mon:expiring_domains", status, len(soon),
 		f"urgent={urgent[:5]}" if urgent else (f"within30d={len(soon)}" if soon else ""))
@@ -113,9 +127,9 @@ def check_expiring_certificates() -> dict:
 		filters={"status": ["not in", ["Expired", "Revoked", "Failed"]]},
 		fields=["name", "expires_at"], limit_page_length=500)
 	soon = [r.name for r in rows if r.expires_at
-		and getdate(r.expires_at) <= add_days(getdate(today()), 30)]
+		and getdate(r.expires_at) <= add_days(getdate(today()), _expiring_warn_days())]
 	urgent = [r.name for r in rows if r.expires_at
-		and getdate(r.expires_at) <= add_days(getdate(today()), 7)]
+		and getdate(r.expires_at) <= add_days(getdate(today()), _expiring_urgent_days())]
 	status = "fail" if urgent else _level(len(soon), 1, 10 ** 9)
 	return _result("mon:expiring_certificates", status, len(soon),
 		f"urgent={urgent[:5]}" if urgent else (f"within30d={len(soon)}" if soon else ""))

@@ -11,6 +11,7 @@ Helpdesk Sync Log. Nothing in the helpdesk app itself is modified.
 import frappe
 from frappe.utils import add_to_date, now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.notifications import notify
 
 SAME_SITE_DEPLOYMENT = True
@@ -18,6 +19,18 @@ SAME_SITE_DEPLOYMENT = True
 MAX_ATTEMPTS = 5
 BACKOFF_BASE_MINUTES = 5
 BACKOFF_CAP_MINUTES = 4 * 60
+
+
+def _max_attempts() -> int:
+	return bb_settings.get_int("sync_max_attempts", MAX_ATTEMPTS)
+
+
+def _backoff_base() -> int:
+	return bb_settings.get_int("sync_backoff_base_minutes", BACKOFF_BASE_MINUTES)
+
+
+def _backoff_cap() -> int:
+	return bb_settings.get_int("sync_backoff_cap_minutes", BACKOFF_CAP_MINUTES)
 
 # Portal-facing display names for HD Ticket Status values.
 PORTAL_STATUS_MAP = {
@@ -120,7 +133,7 @@ def email_health() -> dict:
 
 
 def _backoff(attempts: int) -> int:
-	return min(BACKOFF_BASE_MINUTES * (2 ** max(int(attempts or 0), 0)), BACKOFF_CAP_MINUTES)
+	return min(_backoff_base() * (2 ** max(int(attempts or 0), 0)), _backoff_cap())
 
 
 def _sync_row(entity_type: str, entity: str, key: str) -> object:
@@ -134,7 +147,7 @@ def _sync_row(entity_type: str, entity: str, key: str) -> object:
 			"entity": entity,
 			"status": "Pending",
 			"attempts": 0,
-			"max_attempts": MAX_ATTEMPTS,
+			"max_attempts": _max_attempts(),
 			"idempotency_key": key,
 		}
 	).insert(ignore_permissions=True)
@@ -154,7 +167,7 @@ def _fail(row: object, error: str, error_type: str = "transient") -> object:
 	row.attempts = int(row.attempts or 0) + 1
 	row.error_type = error_type
 	row.last_error = (error or "")[:1000]
-	if error_type == "permanent" or int(row.attempts) >= int(row.max_attempts or MAX_ATTEMPTS):
+	if error_type == "permanent" or int(row.attempts) >= int(row.max_attempts or _max_attempts()):
 		row.status = "Failed"
 		row.next_retry_at = None
 	else:

@@ -5,11 +5,24 @@ import secrets
 import frappe
 from frappe.utils import add_days, add_months, date_diff, getdate, now_datetime, today
 
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.notifications import notify, require_staff
 
 CERT_VALIDITY_DAYS = 90
 EXPIRY_WARN_DAYS = 30
 STALE_VALIDATION_DAYS = 7
+
+
+def _cert_validity_days() -> int:
+	return bb_settings.get_int("cert_validity_days", CERT_VALIDITY_DAYS)
+
+
+def _expiry_warn_days() -> int:
+	return bb_settings.get_int("cert_expiry_warn_days", EXPIRY_WARN_DAYS)
+
+
+def _stale_validation_days() -> int:
+	return bb_settings.get_int("cert_stale_validation_days", STALE_VALIDATION_DAYS)
 
 # Fault injection for tests: {"validate": msg, "renew": msg}
 CERT_FAULTS: dict = {}
@@ -77,7 +90,7 @@ def validate_certificate(name: str) -> dict:
 		return _fail_validation(cert, "Challenge record not found; publish it and retry")
 	cert.status = "Active"
 	cert.issued_at = now_datetime()
-	cert.expires_at = add_days(getdate(today()), CERT_VALIDITY_DAYS)
+	cert.expires_at = add_days(getdate(today()), _cert_validity_days())
 	cert.failure_reason = None
 	cert.last_checked_at = now_datetime()
 	cert.save()
@@ -145,14 +158,14 @@ def monitor_certificates(as_of=None) -> dict:
 			cert.save(ignore_permissions=True)
 			ran["expired"] += 1
 			notify(cert.customer, "Certificate expired", "Renew it to restore HTTPS.", "SSL Certificate", cert.name)
-		elif days_left <= EXPIRY_WARN_DAYS and cert.auto_renew and cert.status == "Active":
+		elif days_left <= _expiry_warn_days() and cert.auto_renew and cert.status == "Active":
 			out = renew_certificate(cert.name)
 			if out.get("status") == "Active":
 				ran["renewed"] += 1
 			else:
 				ran["failed"] += 1
 		frappe.db.commit()
-	cutoff = add_days(day, -STALE_VALIDATION_DAYS)
+	cutoff = add_days(day, -_stale_validation_days())
 	for row in frappe.get_all("SSL Certificate", filters={"status": "Pending Validation"}, fields=["name", "creation"]):
 		if getdate(row.creation) < cutoff:
 			cert = frappe.get_doc("SSL Certificate", row.name)

@@ -11,6 +11,8 @@ import functools
 import frappe
 from frappe.utils import now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
+
 STAFF_ROLES = {"System Manager", "Hosting Admin", "Hosting Support"}
 
 
@@ -109,17 +111,21 @@ def audit(endpoint: str, status: str, detail: str = "", user=None) -> None:
 		pass
 
 
-def portal_endpoint(name: str, limit: int = 120, window: int = 60):
+def portal_endpoint(name: str, limit: int | None = None, window: int | None = None):
 	"""Decorate a whitelisted portal function with rate limit + audit.
 
 	Permission denials audit as Denied, rate trips as Rate Limited,
 	other failures as Error; every outcome re-raises to the caller.
 	"""
+	_limit = limit
+	_window = window
 
 	def decorator(fn):
 		@functools.wraps(fn)
 		def wrapper(*args, **kwargs):
-			check_rate(name, limit, window)
+			eff_limit = _limit if _limit is not None else bb_settings.get_int("portal_default_rate_limit", 120)
+			eff_window = _window if _window is not None else bb_settings.get_int("portal_default_rate_window_sec", 60)
+			check_rate(name, eff_limit, eff_window)
 			try:
 				result = fn(*args, **kwargs)
 			except frappe.PermissionError as exc:

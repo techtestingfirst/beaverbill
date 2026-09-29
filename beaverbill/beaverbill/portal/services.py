@@ -7,6 +7,7 @@ import frappe
 from frappe.utils import now_datetime
 
 from beaverbill.beaverbill import modifications, provisioning
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.notifications import notify
 from beaverbill.beaverbill.portal.guard import (
 	is_staff,
@@ -17,6 +18,10 @@ from beaverbill.beaverbill.portal.guard import (
 )
 
 CONSOLE_TTL = 15 * 60
+
+
+def _console_ttl() -> int:
+	return bb_settings.get_int("console_ttl_minutes", 15) * 60
 
 POWER_TO_OPERATION = {
 	"poweroff": "Suspend",
@@ -137,12 +142,13 @@ def console_url(service: str) -> dict:
 		frappe.throw(f"Console is unavailable for this service: {exc}", frappe.ValidationError)
 		result = {}
 	token = secrets.token_hex(16)
+	ttl = _console_ttl()
 	frappe.cache().set_value(
 		f"portal-console:{token}",
 		{"service": doc.name, "user": frappe.session.user, "url": result.get("url")},
-		expires_in_sec=CONSOLE_TTL,
+		expires_in_sec=ttl,
 	)
-	return {"service": doc.name, "ticket": token, "url": result.get("url"), "expires_in": CONSOLE_TTL}
+	return {"service": doc.name, "ticket": token, "url": result.get("url"), "expires_in": ttl}
 
 
 @frappe.whitelist()

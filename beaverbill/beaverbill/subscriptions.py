@@ -8,6 +8,7 @@ import frappe
 from frappe.utils import add_days, add_months, getdate, now_datetime, today
 
 from beaverbill.beaverbill import billing
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.subscription_support import (
     acquire_lock,
     add_minutes_to_now,
@@ -52,6 +53,26 @@ CYCLE_MONTHS = {
 
 TERMINATE_AFTER_SUSPEND_DAYS = 14
 PURGE_AFTER_TERMINATE_DAYS = 30
+
+
+def _terminate_after_suspend_days() -> int:
+	return bb_settings.get_int("terminate_after_suspend_days", TERMINATE_AFTER_SUSPEND_DAYS)
+
+
+def _purge_after_terminate_days() -> int:
+	return bb_settings.get_int("purge_after_terminate_days", PURGE_AFTER_TERMINATE_DAYS)
+
+
+def _default_max_retries() -> int:
+	return bb_settings.get_int("sub_default_max_retries", 4)
+
+
+def _default_grace_days() -> int:
+	return bb_settings.get_int("sub_default_grace_period_days", 7)
+
+
+def _default_lead_days() -> int:
+	return bb_settings.get_int("sub_default_renewal_lead_days", 3)
 
 
 def validate_transition(previous, nxt):
@@ -144,7 +165,7 @@ def handle_due_renewal(sub, day):
             sub.reload()
         if sub.status not in ("Active", "Renewal Pending"):
             return "skipped"
-        lead = int(sub.renewal_lead_days or 3)
+        lead = int(sub.renewal_lead_days or _default_lead_days())
         if (getdate(sub.next_renewal_date) - day).days > lead and sub.status == "Active":
             return "not-due"
         if sub.status == "Active":
@@ -172,8 +193,8 @@ def handle_due_renewal(sub, day):
         fresh.last_retry_at = now_datetime()
         fresh.next_retry_at = add_minutes_to_now(backoff_for(sub))
         fresh.last_error = f"Insufficient credit for invoice {invoice.name}"
-        maxed = int(fresh.max_retries if fresh.max_retries is not None else 4)
-        grace = int(fresh.grace_period_days if fresh.grace_period_days is not None else 7)
+        maxed = int(fresh.max_retries if fresh.max_retries is not None else _default_max_retries())
+        grace = int(fresh.grace_period_days if fresh.grace_period_days is not None else _default_grace_days())
         if fresh.retry_count < maxed:
             fresh.status = "Payment Failed"
         elif grace <= 0:
@@ -216,7 +237,7 @@ def handle_retry(sub, now):
     fresh.retry_count = int(fresh.retry_count or 0) + 1
     fresh.last_retry_at = now
     fresh.next_retry_at = add_minutes_to_now(backoff_for(sub))
-    maxed = int(fresh.max_retries if fresh.max_retries is not None else 4)
+    maxed = int(fresh.max_retries if fresh.max_retries is not None else _default_max_retries())
     nxt = "Payment Failed" if fresh.retry_count < maxed else "Grace Period"
     previous = fresh.status
     fresh.status = nxt
@@ -229,7 +250,7 @@ def handle_retry(sub, now):
 def handle_grace(sub, day):
     if sub.status != "Grace Period":
         return "skipped"
-    window = int(sub.grace_period_days or 7)
+    window = int(sub.grace_period_days or _default_grace_days())
     anchor = getdate(sub.last_retry_at or sub.next_renewal_date or today())
     if (day - anchor).days < window:
         return "not-due"
@@ -241,12 +262,12 @@ def handle_suspended(sub, day):
     if sub.status != "Suspended":
         return "skipped"
     anchor = getdate(sub.last_retry_at or sub.next_renewal_date or today())
-    if (day - anchor).days < TERMINATE_AFTER_SUSPEND_DAYS:
+    if (day - anchor).days < _terminate_after_suspend_days():
         return "not-due"
     transition(sub.name, "Terminated", "Auto-terminated after suspension window")
     fresh = frappe.get_doc("Hosting Subscription", sub.name)
     fresh.termination_scheduled_at = today()
-    fresh.data_purge_scheduled_at = add_days(today(), PURGE_AFTER_TERMINATE_DAYS)
+    fresh.data_purge_scheduled_at = add_days(today(), _purge_after_terminate_days())
     fresh.save()
     return "terminated"
 
@@ -259,7 +280,7 @@ def handle_cancellation_pending(sub, day):
         return "not-due"
     transition(sub.name, "Terminated", "Cancellation effective date reached")
     fresh = frappe.get_doc("Hosting Subscription", sub.name)
-    fresh.data_purge_scheduled_at = add_days(today(), PURGE_AFTER_TERMINATE_DAYS)
+    fresh.data_purge_scheduled_at = add_days(today(), _purge_after_terminate_days())
     fresh.save()
     return "terminated"
 

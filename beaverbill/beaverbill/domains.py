@@ -12,6 +12,7 @@ import frappe
 from frappe.utils import add_days, add_months, add_years, date_diff, getdate, now_datetime, today
 
 from beaverbill.beaverbill import billing
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.notifications import billable_customer, notify, require_staff
 from beaverbill.beaverbill.provisioning_drivers import ProvisioningError
 
@@ -25,6 +26,34 @@ REMINDER_STAGES = (30, 14, 7, 1)
 AUTO_RENEW_WITHIN_DAYS = 7
 GRACE_DAYS = 30
 REDEMPTION_DAYS = 30
+
+
+def _renewal_price() -> float:
+	return bb_settings.get_float("domain_renewal_price", RENEWAL_PRICE)
+
+
+def _renewal_currency() -> str:
+	return bb_settings.get_str("domain_renewal_currency", RENEWAL_CURRENCY)
+
+
+def _reminder_stages() -> tuple:
+	return bb_settings.get_reminder_stages()
+
+
+def _auto_renew_within_days() -> int:
+	return bb_settings.get_int("auto_renew_within_days", AUTO_RENEW_WITHIN_DAYS)
+
+
+def _grace_days() -> int:
+	return bb_settings.get_int("domain_grace_days", GRACE_DAYS)
+
+
+def _redemption_days() -> int:
+	return bb_settings.get_int("domain_redemption_days", REDEMPTION_DAYS)
+
+
+def _default_dns_ttl() -> int:
+	return bb_settings.get_int("default_dns_ttl", 3600)
 
 # Fault injection for tests: {"register": msg, "renew": msg, "transfer": msg, "nameservers": msg}
 REGISTRAR_FAULTS: dict = {}
@@ -222,10 +251,10 @@ def _renewal_invoice(domain, years=1):
 		[{
 			"description": f"Domain renewal {domain.domain_name} x {years} year(s)",
 			"qty": 1,
-			"unit_price": RENEWAL_PRICE * years,
-			"line_total": RENEWAL_PRICE * years,
+			"unit_price": _renewal_price() * years,
+			"line_total": _renewal_price() * years,
 		}],
-		currency=RENEWAL_CURRENCY,
+		currency=_renewal_currency(),
 		idempotency_key=key,
 	)
 
@@ -304,8 +333,9 @@ def update_nameservers(name: str, nameservers: list | str) -> dict:
 	return {"domain": doc.name, "nameservers": doc.nameservers}
 
 
-def add_dns_record(domain: str, record_type: str, host: str, value: str, ttl: int = 3600, priority: int = 0) -> object:
+def add_dns_record(domain: str, record_type: str, host: str, value: str, ttl: int | None = None, priority: int = 0) -> object:
 	"""Add a DNS record; exact duplicates are refused."""
+	ttl = ttl or _default_dns_ttl()
 	doc = frappe.get_doc("Hosting Domain", domain)
 	if doc.status == "Terminated":
 		frappe.throw("DNS cannot be managed on a Terminated domain", frappe.ValidationError)
@@ -354,13 +384,13 @@ def process_domain_renewals(as_of=None) -> dict:
 		if not doc.expiry_date:
 			continue
 		days_left = date_diff(getdate(doc.expiry_date), day)
-		for stage in sorted(REMINDER_STAGES):
+		for stage in sorted(_reminder_stages()):
 			if days_left <= stage and str(doc.last_reminder_stage or "") != str(stage):
 				_send_reminder(doc, stage)
 				doc.reload()
 				ran["reminded"] += 1
 				break
-		if doc.auto_renew and 0 <= days_left <= AUTO_RENEW_WITHIN_DAYS and doc.status == "Active":
+		if doc.auto_renew and 0 <= days_left <= _auto_renew_within_days() and doc.status == "Active":
 			invoice = _renewal_invoice(doc)
 			if not doc.renewal_invoice:
 				doc.renewal_invoice = invoice.name
@@ -380,11 +410,13 @@ def process_domain_renewals(as_of=None) -> dict:
 		doc = frappe.get_doc("Hosting Domain", row.name)
 		overdue = date_diff(day, getdate(doc.expiry_date)) if doc.expiry_date else 0
 		nxt = None
-		if doc.status == "Expired" and overdue >= GRACE_DAYS:
+		grace = _grace_days()
+		redemption = _redemption_days()
+		if doc.status == "Expired" and overdue >= grace:
 			nxt = "Grace Period"
-		elif doc.status == "Grace Period" and overdue >= GRACE_DAYS + REDEMPTION_DAYS:
+		elif doc.status == "Grace Period" and overdue >= grace + redemption:
 			nxt = "Redemption"
-		elif doc.status == "Redemption" and overdue >= GRACE_DAYS + 2 * REDEMPTION_DAYS:
+		elif doc.status == "Redemption" and overdue >= grace + 2 * redemption:
 			nxt = "Terminated"
 		if nxt:
 			doc.status = nxt

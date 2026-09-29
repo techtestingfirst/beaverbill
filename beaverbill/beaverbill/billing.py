@@ -10,6 +10,12 @@ import uuid
 import frappe
 from frappe.utils import getdate, today
 
+from beaverbill.beaverbill import settings as bb_settings
+
+
+def _default_currency() -> str:
+	return bb_settings.get_str("default_currency", "USD")
+
 
 def _key(value=None):
 	return value or f"bb-{uuid.uuid4().hex[:12]}"
@@ -20,8 +26,9 @@ def _invoice_totals(items):
 	return subtotal
 
 
-def issue_invoice(customer, items, due_date=None, currency="USD", order=None, idempotency_key=None, pricing_snapshot=None):
+def issue_invoice(customer, items, due_date=None, currency=None, order=None, idempotency_key=None, pricing_snapshot=None):
 	"""Create a Draft invoice with frozen line snapshots, then Issue it."""
+	currency = currency or _default_currency()
 	if idempotency_key:
 		existing = frappe.db.get_value("Hosting Invoice", {"idempotency_key": idempotency_key}, "name")
 		if existing:

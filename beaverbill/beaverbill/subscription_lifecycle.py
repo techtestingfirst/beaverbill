@@ -7,6 +7,7 @@ import frappe
 from frappe.utils import add_days, getdate, now_datetime, today
 
 from beaverbill.beaverbill import billing
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.subscription_support import notify_transition, require_staff, sync_services
 from beaverbill.beaverbill.subscriptions import (
     PURGE_AFTER_TERMINATE_DAYS,
@@ -67,7 +68,9 @@ def cancel_subscription(subscription_name: str, mode: str = "end_of_period", rea
     sub.cancellation_requested_at = now_datetime()
     sub.cancellation_effective_at = getdate(today())
     sub.terminated_at = now_datetime()
-    sub.data_purge_scheduled_at = add_days(today(), PURGE_AFTER_TERMINATE_DAYS)
+    sub.data_purge_scheduled_at = add_days(
+        today(), bb_settings.get_int("purge_after_terminate_days", PURGE_AFTER_TERMINATE_DAYS)
+    )
     sub.save()
     if credit > 0:
         note = billing.create_credit_note(sub.customer, credit, reason=f"Unused period {sub.name}")

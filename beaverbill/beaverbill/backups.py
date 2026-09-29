@@ -4,6 +4,7 @@ import frappe
 from frappe.utils import add_days, add_to_date, getdate, now_datetime, today
 
 from beaverbill.beaverbill import billing
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.notifications import billable_customer, notify, require_staff
 
 FREQUENCY_INTERVALS = {
@@ -14,6 +15,18 @@ FREQUENCY_INTERVALS = {
 }
 
 EXPIRED_PURGE_DAYS = 7
+
+
+def _expired_purge_days() -> int:
+	return bb_settings.get_int("backup_expired_purge_days", EXPIRED_PURGE_DAYS)
+
+
+def _default_retention_days() -> int:
+	return bb_settings.get_int("backup_default_retention_days", 30)
+
+
+def _default_snapshot_mb() -> float:
+	return bb_settings.get_float("backup_default_snapshot_size_mb", 512.0)
 
 # Fault injection for tests: {"run": msg, "restore": msg}
 BACKUP_FAULTS: dict = {}
@@ -39,7 +52,7 @@ def run_backup(policy_name: str) -> dict:
 			"status": "In Progress",
 			"started_at": now_datetime(),
 			"storage_location": policy.storage_location,
-			"retain_until": add_days(getdate(today()), int(policy.retention_days or 30)),
+			"retain_until": add_days(getdate(today()), int(policy.retention_days or _default_retention_days())),
 		}
 	).insert()
 	if BACKUP_FAULTS.get("run"):
@@ -50,7 +63,7 @@ def run_backup(policy_name: str) -> dict:
 		notify(policy.customer, f"Backup failed for service {policy.service}", f"{BACKUP_FAULTS['run']} The next scheduled run will retry.", "Service Backup", backup.name)
 		return {"backup": backup.name, "status": backup.status, "error": BACKUP_FAULTS["run"]}
 	# Simulated snapshot size; real drivers report actual bytes in later phases.
-	backup.size_mb = 512.0
+	backup.size_mb = _default_snapshot_mb()
 	backup.status = "Completed"
 	backup.finished_at = now_datetime()
 	backup.save()
@@ -92,7 +105,7 @@ def enforce_retention() -> dict:
 			doc.status = "Expired"
 			doc.save(ignore_permissions=True)
 			ran["expired"] += 1
-	cutoff = add_days(day, -EXPIRED_PURGE_DAYS)
+	cutoff = add_days(day, -_expired_purge_days())
 	for row in frappe.get_all("Service Backup", filters={"status": "Expired"}, fields=["name", "modified"]):
 		if getdate(row.modified) < cutoff:
 			doc = frappe.get_doc("Service Backup", row.name)
@@ -221,7 +234,7 @@ def process_storage_overage() -> dict:
 				"unit_price": amount,
 				"line_total": amount,
 			}],
-			currency="USD",
+			currency=bb_settings.get_str("default_currency", "USD"),
 			idempotency_key=f"overage-{row.name}",
 		)
 		frappe.db.set_value(

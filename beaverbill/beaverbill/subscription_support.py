@@ -6,7 +6,13 @@ Kept separate so the renewal engine and staff actions stay small.
 import frappe
 from frappe.utils import add_to_date, now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
+
 LOCK_TIMEOUT_MINUTES = 10
+
+
+def _lock_timeout() -> float:
+	return float(bb_settings.get_int("lock_timeout_minutes", LOCK_TIMEOUT_MINUTES))
 
 
 def require_staff():
@@ -16,7 +22,7 @@ def require_staff():
 
 
 def backoff_for(sub):
-    base = int(sub.retry_backoff_minutes or 240)
+    base = int(sub.retry_backoff_minutes or bb_settings.get_int("sub_default_retry_backoff_minutes", 240))
     count = int(sub.retry_count or 0) + 1
     return base * (2 ** (count - 1))
 
@@ -78,7 +84,7 @@ def acquire_lock(sub):
     locked_at = sub.locked_at
     if locked_at:
         age = (now_datetime() - locked_at).total_seconds() / 60
-        if age < LOCK_TIMEOUT_MINUTES:
+        if age < _lock_timeout():
             return False
     sub.locked_at = now_datetime()
     sub.locked_by = "scheduler"

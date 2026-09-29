@@ -1,36 +1,39 @@
-# Beaver Bill Agent Operating Guidelines
+# AGENTS.md — BeaverBill
 
-This repository implements Beaver Bill, an automated billing, subscription, customer-portal, and service-provisioning system for web-hosting providers built directly on Frappe Framework.
+Self-contained Frappe hosting-billing app. No ERPNext — never add imports, DocTypes (`Customer`, `Sales Invoice`, `Payment Entry`), or dependencies. Full setup + customer test path: `SETUPGUIDE.md`. End-user manual: `docs/user-manual.md`. Architecture: `docs/architecture.md`. Customer/staff runbooks: `docs/guides.md`.
 
-## 1. Absolute Directives
+## Invariants (do not break)
 
-1. **No ERPNext**: Never add ERPNext, ERPNext imports (`import erpnext`), ERPNext DocTypes (`Customer`, `Sales Invoice`, `Payment Entry`, etc.), or ERPNext dependencies. Beaver Bill is self-contained.
-2. **Compatibility Preservation**: Do not break or rewrite existing features, DocTypes, APIs, field names, or business logic. All improvements must be additive or wrapped with backward compatibility.
-3. **No Manual Status Edits**: Never manually set a phase to `completed` in `process.md` or `progress/phase-status.json`. All status progressions must happen automatically via `scripts/run_phase_gate.sh`.
-4. **Current Phase Scope**: Always read `progress/phase-status.json` to determine the current active phase. Implement only the tasks assigned to the active phase.
+- Additive only: never rename/delete DocTypes, fields, hooks, roles, APIs, fixtures, status values without migration plan. Preserve API signatures; wrap changes in compat shims.
+- Never hand-edit phase status. Gate only: `bash scripts/run_phase_gate.sh <phase-id>`. Status source: `progress/phase-status.json`.
+- State machines enforced server-side (`docs/architecture.md` §3); illegal jump = `ValidationError`. Money corrections = new docs only, never in-place edits.
+- Every portal call passes `portal/guard.py` (rate limit → ownership → audit); row ownership via `permissions.py` (`permission_query_conditions` + `has_permission` in `hooks.py`). Cross-customer access must deny.
 
-## 2. Automatic Progress Lifecycle
+## Layout (real entrypoints)
 
-When working on a phase:
-1. Read `plan.md`, `process.md`, `progress/phase-status.json`, and `AGENTS.md`.
-2. Ensure you understand all tasks and invariants for the current phase.
-3. Perform changes with high code quality, security, and tests.
-4. Run the phase gate:
-   ```bash
-   bash scripts/run_phase_gate.sh <phase-id>
-   ```
-5. If the phase gate fails, address the reported errors and re-run.
+- `beaverbill/beaverbill/portal/` — whitelisted SPA APIs (`account,billing,catalog,orders,services,assets,support,public`); `www/beaverbill.py` + `frontend/src/router.ts` (base `/beaverbill`, `website_route_rules` in `hooks.py`).
+- Engines: `billing.py, gateways.py+webhooks.py, subscriptions*.py, modifications*.py, provisioning*.py, domains.py, certificates.py, backups.py, addons.py, helpdesk_sync.py, monitoring.py, reconciliation.py, security*.py, deployment.py`.
+- 56 DocTypes in `beaverbill/beaverbill/doctype/`; scheduler jobs (daily, lock-guarded) in `hooks.py:scheduler_events`.
+- Stack that matters: `required_apps=["frappe"]`; CI installs `telephony,payments,helpdesk` alongside (`.github/workflows/ci.yml`); local site `beaverbill.localhost`.
 
-## 3. Tooling and Script Reference
+## Commands (bench runs from `~/frappe/frappe-bench`)
 
-- `scripts/beaverbill_phase_check.py`: Runs automated checks for a phase (ERPNext scanner, unit tests, schema, documentation, evidence).
-- `scripts/mark_phase_complete.py`: Atomically updates `progress/phase-status.json` and updates the generated sections in `process.md`.
-- `scripts/run_phase_gate.sh`: Runs the full gate pipeline and invokes `mark_phase_complete.py` only when all checks pass.
-- `.githooks/pre-commit`: Validates that markers in `process.md` have not been manually tampered with.
+```bash
+bench --site beaverbill.localhost migrate
+bench --site beaverbill.localhost run-tests --app beaverbill   # 195 + 16 stubs, ~135s
+bench --site beaverbill.localhost execute beaverbill.beaverbill.deployment.release_status  # smoke
+cd apps/beaverbill/frontend && npm run build && npm run type-check
+bash apps/beaverbill/scripts/deploy_beaverbill.sh <site> [--branch <ref>]
+```
 
-## Web Browsing Rule
-- Do NOT call native `browser.tabs.*` tools.
-- Execute web actions via terminal using `agent-browser`:
-  - `agent-browser open <url>`
-  - `agent-browser snapshot -i`
-  - `agent-browser click @e1`
+- Pre-commit: ruff + eslint + prettier (`pre-commit run --all-files`); ruff rules in `pyproject.toml`.
+- `use_json_request_body=True`: send non-GET portal bodies as native JSON. `export_python_type_annotations` + `require_type_annotated_api_methods`: all whitelisted methods need annotations.
+- Destructive portal actions need confirmation flag + idempotency key (retry same key returns original). Console tickets 15-min single-use. Store gateway `token_reference` only, never card numbers.
+
+## Gotchas
+
+- IPAM: subnets auto-create host rows on insert; never hand-insert addresses.
+- Provider endpoints: public http(s) 80/443 only (SSRF guard rejects private/metadata hosts); console needs driver with `get_vnc_console`.
+- Unknown destructive provisioning outcome → `Manual Review`, never blind-retry terminate.
+- Backup key ships beside ciphertext locally; production must vault it. Live `bench restore` needs MariaDB root — staging-first.
+- Browser e2e/a11y/load tests never ran here (no browser binary); portal coverage is API-layer + `npm build/type-check`.

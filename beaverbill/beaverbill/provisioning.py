@@ -11,6 +11,7 @@ import json
 import frappe
 from frappe.utils import add_to_date, now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.provisioning_drivers import (
 	ProvisioningError,
 	call_driver_action,
@@ -46,6 +47,28 @@ BACKOFF_BASE_MINUTES = {
 	"unknown": 30,
 }
 
+
+def _backoff_base() -> dict:
+	return {
+		"transient": bb_settings.get_int("backoff_transient_minutes", BACKOFF_BASE_MINUTES["transient"]),
+		"rate_limited": bb_settings.get_int("backoff_rate_limited_minutes", BACKOFF_BASE_MINUTES["rate_limited"]),
+		"capacity": bb_settings.get_int("backoff_capacity_minutes", BACKOFF_BASE_MINUTES["capacity"]),
+		"permanent": 0,
+		"unknown": bb_settings.get_int("backoff_unknown_minutes", BACKOFF_BASE_MINUTES["unknown"]),
+	}
+
+
+def _backoff_cap() -> int:
+	return bb_settings.get_int("backoff_backoff_cap_minutes", 24 * 60)
+
+
+def _default_timeout() -> int:
+	return bb_settings.get_int("timeout_seconds", 300)
+
+
+def _default_max_retries() -> int:
+	return bb_settings.get_int("provisioning_max_retries", 3)
+
 SUCCESS_SERVICE_STATUS = {
 	"Create": "Active",
 	"Suspend": "Suspended",
@@ -61,11 +84,11 @@ def require_staff() -> None:
 
 
 def backoff_for(error_type: str, retry_count: int) -> int:
-	"""Backoff minutes by error type with exponential growth, capped at 24h."""
-	base = BACKOFF_BASE_MINUTES.get(error_type or "unknown", 30)
+	"""Backoff minutes by error type with exponential growth, capped."""
+	base = _backoff_base().get(error_type or "unknown", 30)
 	if base <= 0:
 		return 0
-	return min(base * (2 ** max(int(retry_count or 0), 0)), 24 * 60)
+	return min(base * (2 ** max(int(retry_count or 0), 0)), _backoff_cap())
 
 
 def should_retry(operation_type: str, error_type: str, retryable: bool, retry_count: int, max_retries: int) -> bool:
@@ -87,11 +110,13 @@ def queue_operation(
 	idempotency_key: str | None = None,
 	provider_account: str | None = None,
 	new_product: str | None = None,
-	timeout_seconds: int = 300,
-	max_retries: int = 3,
+	timeout_seconds: int | None = None,
+	max_retries: int | None = None,
 	customer: str | None = None,
 ) -> object:
 	"""Queue a provisioning operation; idempotent by `idempotency_key`."""
+	timeout_seconds = timeout_seconds or _default_timeout()
+	max_retries = _default_max_retries() if max_retries is None else max_retries
 	if operation_type not in OPERATION_TO_ACTION:
 		frappe.throw(f"Unknown operation type: {operation_type}", frappe.ValidationError)
 	if not idempotency_key:
@@ -116,8 +141,8 @@ def queue_operation(
 			"correlation_id": new_correlation_id(),
 			"provider_account": provider_account,
 			"new_product": new_product,
-			"timeout_seconds": timeout_seconds or 300,
-			"max_retries": max_retries if max_retries is not None else 3,
+			"timeout_seconds": timeout_seconds or _default_timeout(),
+			"max_retries": max_retries if max_retries is not None else _default_max_retries(),
 			"retry_count": 0,
 		}
 	)
@@ -318,7 +343,7 @@ def run_operation(name: str) -> object:
 	# Stale Running runs are treated as unknown outcomes (possible timeout).
 	if op.status == "Running" and op.started_at:
 		elapsed = (now_datetime() - op.started_at).total_seconds()
-		if elapsed < int(op.timeout_seconds or 300):
+		if elapsed < int(op.timeout_seconds or _default_timeout()):
 			return op
 		_record_attempt(op, "Failed", "unknown", "Previous run timed out; outcome unknown")
 		_log_request(op, action, op.driver_type, "stale-run-timeout", error_type="unknown")
@@ -391,8 +416,9 @@ def get_now() -> object:
 	return now_datetime()
 
 
-def process_queued_operations(limit: int = 50) -> dict:
+def process_queued_operations(limit: int | None = None) -> dict:
 	"""Scheduler worker: run due operations. Idempotent and lock-safe."""
+	limit = limit or bb_settings.get_int("queue_batch_limit", 50)
 	due = frappe.get_all(
 		"Provisioning Operation",
 		filters={"status": ("in", list(DUE_STATUSES))},

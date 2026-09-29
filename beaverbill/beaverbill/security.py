@@ -15,6 +15,8 @@ from urllib.parse import urlparse
 import frappe
 from frappe.utils import now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
+
 STAFF_ROLES = frozenset({"System Manager", "Hosting Admin", "Hosting Support"})
 CUSTOMER_ROLES = frozenset({"Hosting Customer", "HD Customer"})
 
@@ -134,8 +136,8 @@ def validate_upload(filename: str, content_type: str | None,
 		frappe.throw(f"File type {suffix or '?'} is not allowed", frappe.ValidationError)
 	if content_type and content_type not in ALLOWED_UPLOAD_MIME:
 		frappe.throw(f"Content type {content_type} is not allowed", frappe.ValidationError)
-	if size_bytes is not None and size_bytes > MAX_UPLOAD_BYTES:
-		frappe.throw("File exceeds the 5 MB limit", frappe.ValidationError)
+	if size_bytes is not None and size_bytes > bb_settings.get_int("max_upload_mb", 5) * 1024 * 1024:
+		frappe.throw(f"File exceeds the {bb_settings.get_int('max_upload_mb', 5)} MB limit", frappe.ValidationError)
 	if ".." in str(filename) or "/" in str(filename) or "\\" in str(filename):
 		frappe.throw("Filename must not contain a path", frappe.ValidationError)
 
@@ -165,8 +167,10 @@ def validate_outbound_url(url: str) -> str:
 
 
 def validate_provider_response(payload: object,
-	limit: int = MAX_PROVIDER_RESPONSE_BYTES) -> dict:
+	limit: int | None = None) -> dict:
 	"""Accept only small plain-dict driver payloads; reject the rest."""
+	if limit is None:
+		limit = bb_settings.get_int("max_provider_response_kb", 256) * 1024
 	if not isinstance(payload, dict):
 		frappe.throw("Provider response must be a JSON object", frappe.ValidationError)
 	text = str(payload)

@@ -11,12 +11,23 @@ from __future__ import annotations
 import frappe
 from frappe.utils import getdate, today
 
+from beaverbill.beaverbill import settings as bb_settings
+
 LIMIT = 50
 
 
+def _limit() -> int:
+	return bb_settings.get_int("recon_batch_limit", LIMIT)
+
+
+def _overdue_flag_days() -> int:
+	return bb_settings.get_int("invoice_overdue_flag_days", 90)
+
+
 def _out(pair: str, mismatches: list, skipped: str = "") -> dict:
+	limit = _limit()
 	return {"pair": pair, "count": len(mismatches),
-		"mismatches": [str(item)[:200] for item in mismatches[:LIMIT]],
+		"mismatches": [str(item)[:200] for item in mismatches[:limit]],
 		"skipped": skipped}
 
 
@@ -48,8 +59,8 @@ def recon_invoices_vs_payments() -> dict:
 				f"{float(inv.total_amount or 0) - float(inv.paid_amount or 0):.2f}")
 	for inv in frappe.get_all("Hosting Invoice", filters={"status": "Overdue"},
 			fields=["name", "due_date"], limit_page_length=500):
-		if inv.due_date and (getdate(today()) - getdate(inv.due_date)).days > 90:
-			bad.append(f"{inv.name}: overdue more than 90 days")
+		if inv.due_date and (getdate(today()) - getdate(inv.due_date)).days > _overdue_flag_days():
+			bad.append(f"{inv.name}: overdue more than {_overdue_flag_days()} days")
 	return _out("invoices_vs_payments", bad)
 
 

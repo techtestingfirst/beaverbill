@@ -11,11 +11,20 @@ import secrets
 import frappe
 from frappe.utils import now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.portal.guard import audit, check_rate
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 MIN_PASSWORD_LENGTH = 8
 VERIFICATION_TTL = 24 * 3600
+
+
+def _min_password_length() -> int:
+	return bb_settings.get_int("min_password_length", MIN_PASSWORD_LENGTH)
+
+
+def _verification_ttl() -> int:
+	return bb_settings.get_int("verification_ttl_hours", 24) * 3600
 
 
 def _token_key(token: str) -> str:
@@ -33,9 +42,9 @@ def _validate_signup(full_name: str, email: str, password: str) -> str:
 		frappe.throw("Full name is required", frappe.ValidationError)
 	if not EMAIL_RE.match(mail):
 		frappe.throw("Enter a valid email address", frappe.ValidationError)
-	if len(password or "") < MIN_PASSWORD_LENGTH:
+	if len(password or "") < _min_password_length():
 		frappe.throw(
-			f"Password must be at least {MIN_PASSWORD_LENGTH} characters", frappe.ValidationError
+			f"Password must be at least {_min_password_length()} characters", frappe.ValidationError
 		)
 	return mail
 
@@ -85,8 +94,8 @@ def signup(full_name: str, password: str, email: str) -> dict:
 
 def _issue_token(mail: str) -> str | None:
 	token = secrets.token_hex(24)
-	frappe.cache().set_value(_token_key(token), mail, expires_in_sec=VERIFICATION_TTL)
-	frappe.cache().set_value(_pending_key(mail), token, expires_in_sec=VERIFICATION_TTL)
+	frappe.cache().set_value(_token_key(token), mail, expires_in_sec=_verification_ttl())
+	frappe.cache().set_value(_pending_key(mail), token, expires_in_sec=_verification_ttl())
 	try:
 		app_url = frappe.utils.get_url()
 		frappe.sendmail(

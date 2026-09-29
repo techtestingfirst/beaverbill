@@ -12,6 +12,7 @@ import secrets
 import frappe
 from frappe.utils import add_to_date, now_datetime
 
+from beaverbill.beaverbill import settings as bb_settings
 from beaverbill.beaverbill.security import (
 	can_manage_credentials,
 	is_staff,
@@ -25,15 +26,39 @@ LOGIN_LOCK_SEC = 15 * 60
 SESSION_TTL_HOURS = 12
 
 
+def _login_fail_limit() -> int:
+	return bb_settings.get_int("login_fail_limit", LOGIN_FAIL_LIMIT)
+
+
+def _login_fail_window_sec() -> int:
+	return bb_settings.get_int("login_fail_window_minutes", 15) * 60
+
+
+def _login_lock_sec() -> int:
+	return bb_settings.get_int("login_lock_minutes", 15) * 60
+
+
+def _session_ttl_hours() -> int:
+	return bb_settings.get_int("session_ttl_hours", SESSION_TTL_HOURS)
+
+
+def _console_ttl_minutes() -> int:
+	return bb_settings.get_int("console_ttl_minutes", 15)
+
+
+def _verification_ttl_hours() -> int:
+	return bb_settings.get_int("verification_ttl_hours", 24)
+
+
 def get_session_policy() -> dict:
 	"""Published session limits: TTL, MFA expectation, revocation support."""
 	return {
-		"session_ttl_hours": SESSION_TTL_HOURS,
+		"session_ttl_hours": _session_ttl_hours(),
 		"admin_mfa": "via Frappe Two Factor Authentication",
 		"customer_mfa": "optional via Frappe Two Factor Authentication",
 		"revocation": "beaverbill.beaverbill.security_tokens.revoke_user_sessions",
-		"verification_ttl_hours": 24,
-		"console_ttl_minutes": 15,
+		"verification_ttl_hours": _verification_ttl_hours(),
+		"console_ttl_minutes": _console_ttl_minutes(),
 	}
 
 
@@ -59,9 +84,9 @@ def record_login_attempt(login: str, success: bool) -> None:
 		cache.delete_value(_fail_key(login))
 		return
 	count = int(cache.get_value(_fail_key(login)) or 0) + 1
-	cache.set_value(_fail_key(login), count, expires_in_sec=LOGIN_FAIL_WINDOW_SEC)
-	if count >= LOGIN_FAIL_LIMIT:
-		cache.set_value(_lock_key(login), 1, expires_in_sec=LOGIN_LOCK_SEC)
+	cache.set_value(_fail_key(login), count, expires_in_sec=_login_fail_window_sec())
+	if count >= _login_fail_limit():
+		cache.set_value(_lock_key(login), 1, expires_in_sec=_login_lock_sec())
 		log_security_event("auth.login_lock", "Denied", f"locked {login}")
 
 
@@ -71,8 +96,9 @@ def _hash_token(token: str) -> str:
 
 @frappe.whitelist()
 def issue_scoped_token(user: str, scopes: str,
-	ttl_hours: int = 12) -> dict:
+	ttl_hours: int | None = None) -> dict:
 	"""Staff-only: mint a hashed, expiring, scope-limited API token."""
+	ttl_hours = ttl_hours or bb_settings.get_int("token_default_ttl_hours", 12)
 	if not is_staff():
 		log_security_event("token.issue", "Denied", f"for {user}")
 		frappe.throw("Only staff may issue API tokens", frappe.PermissionError)
