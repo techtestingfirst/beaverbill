@@ -10,6 +10,18 @@ class TestHostingServiceModificationRequest(unittest.TestCase):
 		frappe.db.delete("Customer Credit Transaction")
 		frappe.db.delete("Hosting Invoice")
 
+		# Hosting Subscription.customer links to User; create it so a
+		# fresh site (CI) does not hit LinkValidationError.
+		if not frappe.db.exists("User", "test_customer@beaver.com"):
+			frappe.get_doc(
+				{
+					"doctype": "User",
+					"email": "test_customer@beaver.com",
+					"first_name": "Beaver",
+					"send_welcome_email": 0,
+				}
+			).insert(ignore_permissions=True)
+
 		# Ensure test products exist
 		if not frappe.db.exists("Hosting Product Group", "VPS Servers"):
 			frappe.get_doc({

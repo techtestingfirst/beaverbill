@@ -88,9 +88,11 @@ jobs:
       - name: Install
         working-directory: /home/runner/frappe-bench
         run: |
+          bench get-app helpdesk https://github.com/frappe/helpdesk
           bench get-app beaverbill $GITHUB_WORKSPACE
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
+          bench --site test_site install-app helpdesk
           bench --site test_site install-app beaverbill
           bench build
         env:

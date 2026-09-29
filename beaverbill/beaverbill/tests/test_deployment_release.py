@@ -35,7 +35,10 @@ class TestDeploymentRelease(IntegrationTestCase):
 
 	def test_blockers_detect_dev_settings(self):
 		blockers = deployment.check_release_blockers()
-		self.assertTrue(any("ignore_csrf" in item for item in blockers))
+		# allow_tests is always set in the test runner (CI sets it
+		# explicitly before run-tests), so it is the deterministic
+		# blocker to assert. ignore_csrf is dev-site-only.
+		self.assertTrue(any("allow_tests" in item for item in blockers))
 
 	def test_smoke_tests_pass(self):
 		results = deployment.run_smoke_tests()

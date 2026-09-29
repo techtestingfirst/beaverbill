@@ -110,6 +110,12 @@ def ensure_product(name="Phase10 Small", price=10, group="Phase10 Group"):
 
 
 def ensure_status():
+	from beaverbill.beaverbill import helpdesk_sync as bridge
+
+	if not bridge.helpdesk_available():
+		return
+	if not frappe.db.exists("DocType", "HD Ticket Status"):
+		return
 	if not frappe.get_all("HD Ticket Status", limit=1):
 		frappe.get_doc(
 			{"doctype": "HD Ticket Status", "label_agent": "Open", "label_customer": "Open", "category": "Open"}
@@ -483,6 +489,10 @@ class TestPortalAssetsAndSupport(IntegrationTestCase):
 		self.assertEqual(len(store["snapshots"]), 1)
 
 	def test_tickets_and_notifications(self):
+		from beaverbill.beaverbill import helpdesk_sync as bridge
+
+		if not bridge.helpdesk_available():
+			self.skipTest("helpdesk not installed on this site")
 		opened = support.create_ticket.__wrapped__("Portal is slow", "Dashboard loads slowly", service=self.service.name)
 		self.assertTrue(opened["ticket"])
 		mine = support.my_tickets.__wrapped__()
