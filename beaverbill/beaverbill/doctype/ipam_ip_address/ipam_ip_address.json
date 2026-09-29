@@ -6,12 +6,16 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_address",
         "ip_address",
         "subnet",
+        "column_break_2",
         "ip_version",
         "status",
+        "section_break_allocation",
         "allocated_to_doctype",
         "allocated_to_name",
+        "column_break_4",
         "allocated_at"
     ],
     "fields": [
@@ -60,6 +64,24 @@
             "fieldtype": "Datetime",
             "label": "Allocated At",
             "read_only": 1
+        },
+        {
+            "fieldname": "section_break_address",
+            "fieldtype": "Section Break",
+            "label": "Address"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_allocation",
+            "fieldtype": "Section Break",
+            "label": "Allocation"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

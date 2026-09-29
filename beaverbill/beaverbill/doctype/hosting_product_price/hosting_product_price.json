@@ -5,11 +5,15 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_price",
         "product",
         "billing_cycle",
+        "column_break_2",
         "currency",
         "price",
+        "section_break_validity",
         "effective_from",
+        "column_break_4",
         "effective_to"
     ],
     "fields": [
@@ -56,6 +60,24 @@
             "fieldname": "effective_to",
             "fieldtype": "Date",
             "label": "Effective To"
+        },
+        {
+            "fieldname": "section_break_price",
+            "fieldtype": "Section Break",
+            "label": "Price"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_validity",
+            "fieldtype": "Section Break",
+            "label": "Validity"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

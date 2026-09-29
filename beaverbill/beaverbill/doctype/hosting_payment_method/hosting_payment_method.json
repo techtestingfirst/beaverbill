@@ -6,11 +6,15 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_method",
         "customer",
         "gateway",
+        "column_break_2",
         "token_reference",
+        "section_break_card",
         "brand",
         "last4",
+        "column_break_4",
         "exp_month",
         "exp_year",
         "is_default"
@@ -64,6 +68,24 @@
             "fieldname": "is_default",
             "fieldtype": "Check",
             "label": "Is Default"
+        },
+        {
+            "fieldname": "section_break_method",
+            "fieldtype": "Section Break",
+            "label": "Method"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_card",
+            "fieldtype": "Section Break",
+            "label": "Card"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

@@ -1,121 +1,154 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "backup",
-    "service",
-    "customer",
-    "status",
-    "requested_by",
-    "approved_by",
-    "authorization_note",
-    "failure_reason",
-    "completed_at"
-  ],
-  "fields": [
-    {
-      "fieldname": "backup",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Backup",
-      "options": "Service Backup",
-      "reqd": 1
-    },
-    {
-      "fieldname": "service",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Service",
-      "options": "Hosting Service",
-      "reqd": 1
-    },
-    {
-      "fieldname": "customer",
-      "fieldtype": "Link",
-      "label": "Customer",
-      "options": "Hosting Customer"
-    },
-    {
-      "default": "Pending",
-      "fieldname": "status",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Status",
-      "options": "Pending\nApproved\nIn Progress\nCompleted\nFailed\nRejected",
-      "reqd": 1
-    },
-    {
-      "fieldname": "requested_by",
-      "fieldtype": "Data",
-      "label": "Requested By"
-    },
-    {
-      "fieldname": "approved_by",
-      "fieldtype": "Data",
-      "label": "Approved By"
-    },
-    {
-      "fieldname": "authorization_note",
-      "fieldtype": "Small Text",
-      "label": "Authorization Note"
-    },
-    {
-      "fieldname": "failure_reason",
-      "fieldtype": "Small Text",
-      "label": "Failure Reason"
-    },
-    {
-      "fieldname": "completed_at",
-      "fieldtype": "Datetime",
-      "label": "Completed At"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Restore Request",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    },
-    {
-      "create": 1,
-      "read": 1,
-      "role": "Hosting Customer"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_request",
+        "backup",
+        "service",
+        "column_break_2",
+        "customer",
+        "status",
+        "section_break_auth",
+        "requested_by",
+        "approved_by",
+        "column_break_4",
+        "authorization_note",
+        "section_break_result",
+        "failure_reason",
+        "column_break_6",
+        "completed_at"
+    ],
+    "fields": [
+        {
+            "fieldname": "backup",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Backup",
+            "options": "Service Backup",
+            "reqd": 1
+        },
+        {
+            "fieldname": "service",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Service",
+            "options": "Hosting Service",
+            "reqd": 1
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "label": "Customer",
+            "options": "Hosting Customer"
+        },
+        {
+            "default": "Pending",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Pending\nApproved\nIn Progress\nCompleted\nFailed\nRejected",
+            "reqd": 1
+        },
+        {
+            "fieldname": "requested_by",
+            "fieldtype": "Data",
+            "label": "Requested By"
+        },
+        {
+            "fieldname": "approved_by",
+            "fieldtype": "Data",
+            "label": "Approved By"
+        },
+        {
+            "fieldname": "authorization_note",
+            "fieldtype": "Small Text",
+            "label": "Authorization Note"
+        },
+        {
+            "fieldname": "failure_reason",
+            "fieldtype": "Small Text",
+            "label": "Failure Reason"
+        },
+        {
+            "fieldname": "completed_at",
+            "fieldtype": "Datetime",
+            "label": "Completed At"
+        },
+        {
+            "fieldname": "section_break_request",
+            "fieldtype": "Section Break",
+            "label": "Request"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_auth",
+            "fieldtype": "Section Break",
+            "label": "Auth"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_result",
+            "fieldtype": "Section Break",
+            "label": "Result"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Restore Request",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Hosting Customer"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

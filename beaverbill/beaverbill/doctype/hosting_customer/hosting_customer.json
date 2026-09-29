@@ -5,20 +5,29 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_identity",
         "customer_name",
         "customer_type",
+        "column_break_2",
         "company_name",
+        "status",
+        "section_break_account",
         "primary_user",
         "customer_group",
+        "column_break_4",
         "tax_profile",
-        "status",
+        "section_break_locale",
         "locale",
+        "column_break_6",
         "timezone",
+        "section_break_verification",
         "email_verified",
         "identity_verified",
+        "column_break_8",
         "consent_terms",
         "consent_marketing",
         "consent_datetime",
+        "section_break_notes",
         "notes"
     ],
     "fields": [
@@ -117,6 +126,47 @@
         {
             "fieldname": "notes",
             "fieldtype": "Small Text",
+            "label": "Notes"
+        },
+        {
+            "fieldname": "section_break_identity",
+            "fieldtype": "Section Break",
+            "label": "Identity"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_account",
+            "fieldtype": "Section Break",
+            "label": "Account"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_locale",
+            "fieldtype": "Section Break",
+            "label": "Locale"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_verification",
+            "fieldtype": "Section Break",
+            "label": "Verification"
+        },
+        {
+            "fieldname": "column_break_8",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_notes",
+            "fieldtype": "Section Break",
             "label": "Notes"
         }
     ],

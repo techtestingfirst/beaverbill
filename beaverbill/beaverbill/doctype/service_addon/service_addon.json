@@ -1,155 +1,205 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "service",
-    "subscription",
-    "customer",
-    "addon",
-    "status",
-    "price",
-    "billing_cycle",
-    "product_snapshot",
-    "current_period_end",
-    "idempotency_key",
-    "renewal_invoice",
-    "failure_reason",
-    "fulfilment_detail"
-  ],
-  "fields": [
-    {
-      "fieldname": "service",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Service",
-      "options": "Hosting Service",
-      "reqd": 1
-    },
-    {
-      "fieldname": "subscription",
-      "fieldtype": "Link",
-      "label": "Subscription",
-      "options": "Hosting Subscription"
-    },
-    {
-      "fieldname": "customer",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Customer",
-      "options": "Hosting Customer",
-      "reqd": 1
-    },
-    {
-      "fieldname": "addon",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Addon",
-      "options": "Hosting Product Addon",
-      "reqd": 1
-    },
-    {
-      "default": "Pending",
-      "fieldname": "status",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Status",
-      "options": "Pending\nActive\nSuspended\nCancellation Pending\nCancelled\nFailed",
-      "reqd": 1
-    },
-    {
-      "default": 0,
-      "fieldname": "price",
-      "fieldtype": "Currency",
-      "label": "Price"
-    },
-    {
-      "fieldname": "billing_cycle",
-      "fieldtype": "Select",
-      "label": "Billing Cycle",
-      "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially"
-    },
-    {
-      "fieldname": "product_snapshot",
-      "fieldtype": "Code",
-      "label": "Product Snapshot (JSON)",
-      "options": "JSON"
-    },
-    {
-      "fieldname": "current_period_end",
-      "fieldtype": "Date",
-      "label": "Current Period End"
-    },
-    {
-      "fieldname": "idempotency_key",
-      "fieldtype": "Data",
-      "label": "Idempotency Key",
-      "reqd": 1,
-      "unique": 1
-    },
-    {
-      "fieldname": "renewal_invoice",
-      "fieldtype": "Link",
-      "label": "Renewal Invoice",
-      "options": "Hosting Invoice"
-    },
-    {
-      "fieldname": "failure_reason",
-      "fieldtype": "Small Text",
-      "label": "Failure Reason"
-    },
-    {
-      "fieldname": "fulfilment_detail",
-      "fieldtype": "Small Text",
-      "label": "Fulfilment Detail"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Service Addon",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    },
-    {
-      "create": 1,
-      "read": 1,
-      "role": "Hosting Customer",
-      "write": 1
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_addon",
+        "service",
+        "subscription",
+        "column_break_2",
+        "customer",
+        "addon",
+        "section_break_state",
+        "status",
+        "price",
+        "column_break_4",
+        "billing_cycle",
+        "section_break_snapshot",
+        "product_snapshot",
+        "section_break_billing",
+        "current_period_end",
+        "idempotency_key",
+        "column_break_7",
+        "renewal_invoice",
+        "section_break_result",
+        "failure_reason",
+        "column_break_9",
+        "fulfilment_detail"
+    ],
+    "fields": [
+        {
+            "fieldname": "service",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Service",
+            "options": "Hosting Service",
+            "reqd": 1
+        },
+        {
+            "fieldname": "subscription",
+            "fieldtype": "Link",
+            "label": "Subscription",
+            "options": "Hosting Subscription"
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "Hosting Customer",
+            "reqd": 1
+        },
+        {
+            "fieldname": "addon",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Addon",
+            "options": "Hosting Product Addon",
+            "reqd": 1
+        },
+        {
+            "default": "Pending",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Pending\nActive\nSuspended\nCancellation Pending\nCancelled\nFailed",
+            "reqd": 1
+        },
+        {
+            "default": 0,
+            "fieldname": "price",
+            "fieldtype": "Currency",
+            "label": "Price"
+        },
+        {
+            "fieldname": "billing_cycle",
+            "fieldtype": "Select",
+            "label": "Billing Cycle",
+            "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually\nBiennially\nTriennially"
+        },
+        {
+            "fieldname": "product_snapshot",
+            "fieldtype": "Code",
+            "label": "Product Snapshot (JSON)",
+            "options": "JSON"
+        },
+        {
+            "fieldname": "current_period_end",
+            "fieldtype": "Date",
+            "label": "Current Period End"
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "label": "Idempotency Key",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "renewal_invoice",
+            "fieldtype": "Link",
+            "label": "Renewal Invoice",
+            "options": "Hosting Invoice"
+        },
+        {
+            "fieldname": "failure_reason",
+            "fieldtype": "Small Text",
+            "label": "Failure Reason"
+        },
+        {
+            "fieldname": "fulfilment_detail",
+            "fieldtype": "Small Text",
+            "label": "Fulfilment Detail"
+        },
+        {
+            "fieldname": "section_break_addon",
+            "fieldtype": "Section Break",
+            "label": "Addon"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_state",
+            "fieldtype": "Section Break",
+            "label": "State"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_snapshot",
+            "fieldtype": "Section Break",
+            "label": "Snapshot"
+        },
+        {
+            "fieldname": "section_break_billing",
+            "fieldtype": "Section Break",
+            "label": "Billing"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_result",
+            "fieldtype": "Section Break",
+            "label": "Result"
+        },
+        {
+            "fieldname": "column_break_9",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Service Addon",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Hosting Customer",
+            "write": 1
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

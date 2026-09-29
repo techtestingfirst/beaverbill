@@ -6,13 +6,20 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_gateway",
         "gateway_name",
         "provider",
+        "column_break_2",
         "supported_currencies",
+        "section_break_currency",
         "default_currency",
-        "webhook_secret",
+        "column_break_4",
         "is_active",
+        "section_break_credentials",
+        "webhook_secret",
+        "section_break_simulation",
         "maintenance_mode",
+        "column_break_7",
         "max_retries",
         "retry_backoff_minutes"
     ],
@@ -74,6 +81,38 @@
             "fieldname": "retry_backoff_minutes",
             "fieldtype": "Int",
             "label": "Retry Backoff Minutes"
+        },
+        {
+            "fieldname": "section_break_gateway",
+            "fieldtype": "Section Break",
+            "label": "Gateway"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_currency",
+            "fieldtype": "Section Break",
+            "label": "Currency"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_credentials",
+            "fieldtype": "Section Break",
+            "label": "Credentials"
+        },
+        {
+            "fieldname": "section_break_simulation",
+            "fieldtype": "Section Break",
+            "label": "Simulation"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

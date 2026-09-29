@@ -5,10 +5,13 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_datacenter",
         "datacenter_name",
         "region",
+        "column_break_2",
         "availability_zone",
         "status",
+        "section_break_notes",
         "notes"
     ],
     "fields": [
@@ -42,6 +45,20 @@
         {
             "fieldname": "notes",
             "fieldtype": "Small Text",
+            "label": "Notes"
+        },
+        {
+            "fieldname": "section_break_datacenter",
+            "fieldtype": "Section Break",
+            "label": "Datacenter"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_notes",
+            "fieldtype": "Section Break",
             "label": "Notes"
         }
     ],

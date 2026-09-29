@@ -1,109 +1,142 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "service",
-    "provider_account",
-    "operation",
-    "local_state",
-    "remote_state",
-    "verdict",
-    "details",
-    "checked_at"
-  ],
-  "fields": [
-    {
-      "fieldname": "service",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Service",
-      "options": "Hosting Service"
-    },
-    {
-      "fieldname": "provider_account",
-      "fieldtype": "Link",
-      "label": "Provider Account",
-      "options": "Hosting Provider Account"
-    },
-    {
-      "fieldname": "operation",
-      "fieldtype": "Link",
-      "label": "Provisioning Operation",
-      "options": "Provisioning Operation"
-    },
-    {
-      "fieldname": "local_state",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Local State"
-    },
-    {
-      "fieldname": "remote_state",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Remote State"
-    },
-    {
-      "default": "Unknown",
-      "fieldname": "verdict",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Verdict",
-      "options": "Matched\nMismatched\nOrphaned Local\nOrphaned Remote\nUnknown",
-      "reqd": 1
-    },
-    {
-      "fieldname": "details",
-      "fieldtype": "Small Text",
-      "label": "Details"
-    },
-    {
-      "fieldname": "checked_at",
-      "fieldtype": "Datetime",
-      "label": "Checked At"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Reconciliation Result",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_check",
+        "service",
+        "provider_account",
+        "column_break_2",
+        "operation",
+        "section_break_state",
+        "local_state",
+        "remote_state",
+        "column_break_4",
+        "verdict",
+        "section_break_report",
+        "details",
+        "column_break_6",
+        "checked_at"
+    ],
+    "fields": [
+        {
+            "fieldname": "service",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Service",
+            "options": "Hosting Service"
+        },
+        {
+            "fieldname": "provider_account",
+            "fieldtype": "Link",
+            "label": "Provider Account",
+            "options": "Hosting Provider Account"
+        },
+        {
+            "fieldname": "operation",
+            "fieldtype": "Link",
+            "label": "Provisioning Operation",
+            "options": "Provisioning Operation"
+        },
+        {
+            "fieldname": "local_state",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Local State"
+        },
+        {
+            "fieldname": "remote_state",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Remote State"
+        },
+        {
+            "default": "Unknown",
+            "fieldname": "verdict",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Verdict",
+            "options": "Matched\nMismatched\nOrphaned Local\nOrphaned Remote\nUnknown",
+            "reqd": 1
+        },
+        {
+            "fieldname": "details",
+            "fieldtype": "Small Text",
+            "label": "Details"
+        },
+        {
+            "fieldname": "checked_at",
+            "fieldtype": "Datetime",
+            "label": "Checked At"
+        },
+        {
+            "fieldname": "section_break_check",
+            "fieldtype": "Section Break",
+            "label": "Check"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_state",
+            "fieldtype": "Section Break",
+            "label": "State"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_report",
+            "fieldtype": "Section Break",
+            "label": "Report"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Reconciliation Result",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

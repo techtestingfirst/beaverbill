@@ -1,127 +1,166 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "entity_type",
-    "entity",
-    "hd_name",
-    "status",
-    "attempts",
-    "max_attempts",
-    "next_retry_at",
-    "error_type",
-    "last_error",
-    "idempotency_key"
-  ],
-  "fields": [
-    {
-      "fieldname": "entity_type",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Entity Type",
-      "options": "Customer\nContact\nTicket",
-      "reqd": 1
-    },
-    {
-      "fieldname": "entity",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Entity",
-      "reqd": 1
-    },
-    {
-      "fieldname": "hd_name",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Helpdesk Record"
-    },
-    {
-      "default": "Pending",
-      "fieldname": "status",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Status",
-      "options": "Pending\nIn Progress\nSynced\nFailed",
-      "reqd": 1
-    },
-    {
-      "default": 0,
-      "fieldname": "attempts",
-      "fieldtype": "Int",
-      "label": "Attempts"
-    },
-    {
-      "default": 5,
-      "fieldname": "max_attempts",
-      "fieldtype": "Int",
-      "label": "Max Attempts"
-    },
-    {
-      "fieldname": "next_retry_at",
-      "fieldtype": "Datetime",
-      "label": "Next Retry At"
-    },
-    {
-      "fieldname": "error_type",
-      "fieldtype": "Select",
-      "label": "Error Type",
-      "options": "\ntransient\npermanent\nunknown"
-    },
-    {
-      "fieldname": "last_error",
-      "fieldtype": "Small Text",
-      "label": "Last Error"
-    },
-    {
-      "fieldname": "idempotency_key",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Idempotency Key",
-      "reqd": 1,
-      "unique": 1
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Helpdesk Sync Log",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_sync",
+        "entity_type",
+        "entity",
+        "column_break_2",
+        "hd_name",
+        "status",
+        "section_break_retries",
+        "attempts",
+        "max_attempts",
+        "column_break_4",
+        "next_retry_at",
+        "section_break_error",
+        "error_type",
+        "column_break_6",
+        "last_error",
+        "section_break_key",
+        "idempotency_key"
+    ],
+    "fields": [
+        {
+            "fieldname": "entity_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Entity Type",
+            "options": "Customer\nContact\nTicket",
+            "reqd": 1
+        },
+        {
+            "fieldname": "entity",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Entity",
+            "reqd": 1
+        },
+        {
+            "fieldname": "hd_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Helpdesk Record"
+        },
+        {
+            "default": "Pending",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Pending\nIn Progress\nSynced\nFailed",
+            "reqd": 1
+        },
+        {
+            "default": 0,
+            "fieldname": "attempts",
+            "fieldtype": "Int",
+            "label": "Attempts"
+        },
+        {
+            "default": 5,
+            "fieldname": "max_attempts",
+            "fieldtype": "Int",
+            "label": "Max Attempts"
+        },
+        {
+            "fieldname": "next_retry_at",
+            "fieldtype": "Datetime",
+            "label": "Next Retry At"
+        },
+        {
+            "fieldname": "error_type",
+            "fieldtype": "Select",
+            "label": "Error Type",
+            "options": "\ntransient\npermanent\nunknown"
+        },
+        {
+            "fieldname": "last_error",
+            "fieldtype": "Small Text",
+            "label": "Last Error"
+        },
+        {
+            "fieldname": "idempotency_key",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Idempotency Key",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "section_break_sync",
+            "fieldtype": "Section Break",
+            "label": "Sync"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_retries",
+            "fieldtype": "Section Break",
+            "label": "Retries"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_error",
+            "fieldtype": "Section Break",
+            "label": "Error"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_key",
+            "fieldtype": "Section Break",
+            "label": "Key"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Helpdesk Sync Log",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

@@ -6,15 +6,19 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_debit",
         "customer",
         "invoice",
         "debit_date",
+        "column_break_2",
         "amount",
         "currency",
         "status",
+        "section_break_details",
         "reason",
-        "idempotency_key",
-        "reversal_of"
+        "column_break_4",
+        "reversal_of",
+        "idempotency_key"
     ],
     "fields": [
         {
@@ -78,6 +82,24 @@
             "fieldtype": "Link",
             "label": "Reversal Of",
             "options": "Hosting Debit Note"
+        },
+        {
+            "fieldname": "section_break_debit",
+            "fieldtype": "Section Break",
+            "label": "Debit"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_details",
+            "fieldtype": "Section Break",
+            "label": "Details"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

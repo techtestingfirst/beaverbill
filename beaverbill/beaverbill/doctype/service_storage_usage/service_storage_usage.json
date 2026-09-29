@@ -1,122 +1,155 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "service",
-    "customer",
-    "measured_at",
-    "used_gb",
-    "quota_gb",
-    "overage_gb",
-    "overage_rate",
-    "overage_invoice",
-    "notified"
-  ],
-  "fields": [
-    {
-      "fieldname": "service",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Service",
-      "options": "Hosting Service",
-      "reqd": 1
-    },
-    {
-      "fieldname": "customer",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Customer",
-      "options": "Hosting Customer"
-    },
-    {
-      "fieldname": "measured_at",
-      "fieldtype": "Datetime",
-      "in_list_view": 1,
-      "label": "Measured At"
-    },
-    {
-      "default": 0,
-      "fieldname": "used_gb",
-      "fieldtype": "Float",
-      "label": "Used (GB)"
-    },
-    {
-      "default": 0,
-      "fieldname": "quota_gb",
-      "fieldtype": "Float",
-      "label": "Quota (GB)"
-    },
-    {
-      "default": 0,
-      "fieldname": "overage_gb",
-      "fieldtype": "Float",
-      "in_list_view": 1,
-      "label": "Overage (GB)"
-    },
-    {
-      "default": 0,
-      "fieldname": "overage_rate",
-      "fieldtype": "Currency",
-      "label": "Overage Rate (per GB)"
-    },
-    {
-      "fieldname": "overage_invoice",
-      "fieldtype": "Link",
-      "label": "Overage Invoice",
-      "options": "Hosting Invoice"
-    },
-    {
-      "default": 0,
-      "fieldname": "notified",
-      "fieldtype": "Check",
-      "label": "Customer Notified"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Service Storage Usage",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    },
-    {
-      "read": 1,
-      "role": "Hosting Customer"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_usage",
+        "service",
+        "customer",
+        "column_break_2",
+        "measured_at",
+        "section_break_meter",
+        "used_gb",
+        "quota_gb",
+        "column_break_4",
+        "overage_gb",
+        "section_break_billing",
+        "overage_rate",
+        "overage_invoice",
+        "column_break_6",
+        "notified"
+    ],
+    "fields": [
+        {
+            "fieldname": "service",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Service",
+            "options": "Hosting Service",
+            "reqd": 1
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "Hosting Customer"
+        },
+        {
+            "fieldname": "measured_at",
+            "fieldtype": "Datetime",
+            "in_list_view": 1,
+            "label": "Measured At"
+        },
+        {
+            "default": 0,
+            "fieldname": "used_gb",
+            "fieldtype": "Float",
+            "label": "Used (GB)"
+        },
+        {
+            "default": 0,
+            "fieldname": "quota_gb",
+            "fieldtype": "Float",
+            "label": "Quota (GB)"
+        },
+        {
+            "default": 0,
+            "fieldname": "overage_gb",
+            "fieldtype": "Float",
+            "in_list_view": 1,
+            "label": "Overage (GB)"
+        },
+        {
+            "default": 0,
+            "fieldname": "overage_rate",
+            "fieldtype": "Currency",
+            "label": "Overage Rate (per GB)"
+        },
+        {
+            "fieldname": "overage_invoice",
+            "fieldtype": "Link",
+            "label": "Overage Invoice",
+            "options": "Hosting Invoice"
+        },
+        {
+            "default": 0,
+            "fieldname": "notified",
+            "fieldtype": "Check",
+            "label": "Customer Notified"
+        },
+        {
+            "fieldname": "section_break_usage",
+            "fieldtype": "Section Break",
+            "label": "Usage"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_meter",
+            "fieldtype": "Section Break",
+            "label": "Meter"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_billing",
+            "fieldtype": "Section Break",
+            "label": "Billing"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Service Storage Usage",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "read": 1,
+            "role": "Hosting Customer"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

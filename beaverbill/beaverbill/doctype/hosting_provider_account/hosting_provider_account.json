@@ -6,10 +6,14 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_provider",
         "provider_name",
         "provider_type",
+        "column_break_2",
         "endpoint_url",
+        "section_break_credentials",
         "api_key",
+        "column_break_4",
         "api_secret"
     ],
     "fields": [
@@ -43,6 +47,24 @@
             "fieldname": "api_secret",
             "fieldtype": "Password",
             "label": "API Secret"
+        },
+        {
+            "fieldname": "section_break_provider",
+            "fieldtype": "Section Break",
+            "label": "Provider"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_credentials",
+            "fieldtype": "Section Break",
+            "label": "Credentials"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

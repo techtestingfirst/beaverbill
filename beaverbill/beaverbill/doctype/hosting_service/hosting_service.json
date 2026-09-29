@@ -5,27 +5,41 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_service",
         "customer",
         "status",
+        "column_break_2",
         "product",
         "billing_cycle",
+        "section_break_order",
         "order",
         "order_item",
+        "column_break_4",
         "subscription",
+        "section_break_infrastructure",
         "provider_account",
         "server_node",
+        "column_break_6",
         "ip_address",
         "domain",
+        "section_break_upstream",
         "upstream_service_id",
+        "column_break_8",
         "upstream_metadata",
+        "section_break_lifecycle",
         "provisioned_at",
         "suspended_at",
+        "column_break_10",
         "cancellation_requested_at",
         "terminated_at",
+        "section_break_cancellation",
         "cancel_at_period_end",
+        "column_break_12",
         "termination_reason",
+        "section_break_reconciliation",
         "last_reconciled_at",
         "reconciliation_status",
+        "column_break_14",
         "reconciliation_notes"
     ],
     "fields": [
@@ -160,6 +174,69 @@
             "fieldname": "reconciliation_notes",
             "fieldtype": "Small Text",
             "label": "Reconciliation Notes"
+        },
+        {
+            "fieldname": "section_break_service",
+            "fieldtype": "Section Break",
+            "label": "Service"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_order",
+            "fieldtype": "Section Break",
+            "label": "Order"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_infrastructure",
+            "fieldtype": "Section Break",
+            "label": "Infrastructure"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_upstream",
+            "fieldtype": "Section Break",
+            "label": "Upstream"
+        },
+        {
+            "fieldname": "column_break_8",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_lifecycle",
+            "fieldtype": "Section Break",
+            "label": "Lifecycle"
+        },
+        {
+            "fieldname": "column_break_10",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_cancellation",
+            "fieldtype": "Section Break",
+            "label": "Cancellation"
+        },
+        {
+            "fieldname": "column_break_12",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_reconciliation",
+            "fieldtype": "Section Break",
+            "label": "Reconciliation"
+        },
+        {
+            "fieldname": "column_break_14",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

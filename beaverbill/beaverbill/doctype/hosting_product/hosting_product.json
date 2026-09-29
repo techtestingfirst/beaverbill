@@ -7,14 +7,21 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_product",
         "product_name",
         "product_group",
+        "column_break_2",
         "billing_cycle",
+        "section_break_pricing",
         "price",
+        "column_break_4",
         "currency",
+        "section_break_details",
         "description",
+        "section_break_specs",
         "cpu_cores",
         "ram_mb",
+        "column_break_7",
         "disk_gb",
         "bandwidth_gb"
     ],
@@ -85,6 +92,38 @@
             "fieldname": "bandwidth_gb",
             "fieldtype": "Int",
             "label": "Bandwidth (GB, 0 = unspecified)"
+        },
+        {
+            "fieldname": "section_break_product",
+            "fieldtype": "Section Break",
+            "label": "Product"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_pricing",
+            "fieldtype": "Section Break",
+            "label": "Pricing"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_details",
+            "fieldtype": "Section Break",
+            "label": "Details"
+        },
+        {
+            "fieldname": "section_break_specs",
+            "fieldtype": "Section Break",
+            "label": "Specs"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

@@ -5,15 +5,22 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_order",
         "customer",
         "hosting_customer",
+        "column_break_2",
         "order_date",
         "status",
+        "section_break_payment",
         "promo_code",
         "currency",
+        "column_break_4",
         "total_amount",
+        "section_break_items",
         "items",
+        "section_break_close",
         "idempotency_key",
+        "column_break_7",
         "cancellation_reason"
     ],
     "fields": [
@@ -84,6 +91,38 @@
             "fieldname": "cancellation_reason",
             "fieldtype": "Small Text",
             "label": "Cancellation Reason"
+        },
+        {
+            "fieldname": "section_break_order",
+            "fieldtype": "Section Break",
+            "label": "Order"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_payment",
+            "fieldtype": "Section Break",
+            "label": "Payment"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_items",
+            "fieldtype": "Section Break",
+            "label": "Items"
+        },
+        {
+            "fieldname": "section_break_close",
+            "fieldtype": "Section Break",
+            "label": "Close"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

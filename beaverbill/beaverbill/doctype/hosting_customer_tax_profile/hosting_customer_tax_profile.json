@@ -5,11 +5,15 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_profile",
         "user",
         "customer",
+        "column_break_2",
         "country",
         "state",
+        "section_break_tax",
         "tax_exempt",
+        "column_break_4",
         "gstin"
     ],
     "fields": [
@@ -49,6 +53,24 @@
             "fieldname": "gstin",
             "fieldtype": "Data",
             "label": "GSTIN (India)"
+        },
+        {
+            "fieldname": "section_break_profile",
+            "fieldtype": "Section Break",
+            "label": "Profile"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_tax",
+            "fieldtype": "Section Break",
+            "label": "Tax"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

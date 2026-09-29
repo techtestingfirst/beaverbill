@@ -1,99 +1,121 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "service",
-    "operation",
-    "task_type",
-    "status",
-    "details",
-    "completed_at"
-  ],
-  "fields": [
-    {
-      "fieldname": "service",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Service",
-      "options": "Hosting Service"
-    },
-    {
-      "fieldname": "operation",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Provisioning Operation",
-      "options": "Provisioning Operation"
-    },
-    {
-      "default": "Manual Check",
-      "fieldname": "task_type",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Task Type",
-      "options": "Release IP\nRemove DNS\nRevoke Console\nPurge Data\nRestore Snapshot\nManual Check",
-      "reqd": 1
-    },
-    {
-      "default": "Pending",
-      "fieldname": "status",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Status",
-      "options": "Pending\nDone\nFailed\nSkipped",
-      "reqd": 1
-    },
-    {
-      "fieldname": "details",
-      "fieldtype": "Small Text",
-      "label": "Details"
-    },
-    {
-      "fieldname": "completed_at",
-      "fieldtype": "Datetime",
-      "label": "Completed At"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Resource Cleanup Task",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_task",
+        "service",
+        "operation",
+        "column_break_2",
+        "task_type",
+        "status",
+        "section_break_result",
+        "details",
+        "column_break_4",
+        "completed_at"
+    ],
+    "fields": [
+        {
+            "fieldname": "service",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Service",
+            "options": "Hosting Service"
+        },
+        {
+            "fieldname": "operation",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Provisioning Operation",
+            "options": "Provisioning Operation"
+        },
+        {
+            "default": "Manual Check",
+            "fieldname": "task_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Task Type",
+            "options": "Release IP\nRemove DNS\nRevoke Console\nPurge Data\nRestore Snapshot\nManual Check",
+            "reqd": 1
+        },
+        {
+            "default": "Pending",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Pending\nDone\nFailed\nSkipped",
+            "reqd": 1
+        },
+        {
+            "fieldname": "details",
+            "fieldtype": "Small Text",
+            "label": "Details"
+        },
+        {
+            "fieldname": "completed_at",
+            "fieldtype": "Datetime",
+            "label": "Completed At"
+        },
+        {
+            "fieldname": "section_break_task",
+            "fieldtype": "Section Break",
+            "label": "Task"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_result",
+            "fieldtype": "Section Break",
+            "label": "Result"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Resource Cleanup Task",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

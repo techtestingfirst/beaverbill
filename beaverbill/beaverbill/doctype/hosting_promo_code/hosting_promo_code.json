@@ -7,12 +7,16 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_code",
         "code",
         "discount_type",
+        "column_break_2",
         "discount_value",
         "is_recurring",
+        "section_break_rules",
         "applies_to",
         "expiration_date",
+        "column_break_4",
         "usage_limit",
         "used_count",
         "product_group_restriction"
@@ -77,6 +81,24 @@
             "fieldtype": "Link",
             "label": "Product Group Restriction",
             "options": "Hosting Product Group"
+        },
+        {
+            "fieldname": "section_break_code",
+            "fieldtype": "Section Break",
+            "label": "Code"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_rules",
+            "fieldtype": "Section Break",
+            "label": "Rules"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

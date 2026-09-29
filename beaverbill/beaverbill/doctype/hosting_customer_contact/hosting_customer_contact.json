@@ -5,10 +5,14 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_contact",
         "customer",
         "contact_type",
+        "column_break_2",
         "full_name",
+        "section_break_reach",
         "email",
+        "column_break_4",
         "phone",
         "is_primary"
     ],
@@ -54,6 +58,24 @@
             "fieldtype": "Check",
             "label": "Is Primary",
             "default": 0
+        },
+        {
+            "fieldname": "section_break_contact",
+            "fieldtype": "Section Break",
+            "label": "Contact"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_reach",
+            "fieldtype": "Section Break",
+            "label": "Reach"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

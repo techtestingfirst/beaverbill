@@ -1,98 +1,126 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "customer",
-    "user",
-    "subject",
-    "message",
-    "read",
-    "created_at"
-  ],
-  "fields": [
-    {
-      "fieldname": "customer",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Customer",
-      "options": "Hosting Customer"
-    },
-    {
-      "fieldname": "user",
-      "fieldtype": "Data",
-      "label": "User"
-    },
-    {
-      "fieldname": "subject",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Subject",
-      "reqd": 1
-    },
-    {
-      "fieldname": "message",
-      "fieldtype": "Small Text",
-      "label": "Message"
-    },
-    {
-      "default": 0,
-      "fieldname": "read",
-      "fieldtype": "Check",
-      "in_list_view": 1,
-      "label": "Read"
-    },
-    {
-      "fieldname": "created_at",
-      "fieldtype": "Datetime",
-      "label": "Created At"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Customer Notification",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    },
-    {
-      "read": 1,
-      "role": "Hosting Customer",
-      "write": 1
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_message",
+        "customer",
+        "user",
+        "column_break_2",
+        "subject",
+        "section_break_content",
+        "message",
+        "section_break_status",
+        "read",
+        "column_break_5",
+        "created_at"
+    ],
+    "fields": [
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "Hosting Customer"
+        },
+        {
+            "fieldname": "user",
+            "fieldtype": "Data",
+            "label": "User"
+        },
+        {
+            "fieldname": "subject",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Subject",
+            "reqd": 1
+        },
+        {
+            "fieldname": "message",
+            "fieldtype": "Small Text",
+            "label": "Message"
+        },
+        {
+            "default": 0,
+            "fieldname": "read",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Read"
+        },
+        {
+            "fieldname": "created_at",
+            "fieldtype": "Datetime",
+            "label": "Created At"
+        },
+        {
+            "fieldname": "section_break_message",
+            "fieldtype": "Section Break",
+            "label": "Message"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_content",
+            "fieldtype": "Section Break",
+            "label": "Content"
+        },
+        {
+            "fieldname": "section_break_status",
+            "fieldtype": "Section Break",
+            "label": "Status"
+        },
+        {
+            "fieldname": "column_break_5",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Customer Notification",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "read": 1,
+            "role": "Hosting Customer",
+            "write": 1
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

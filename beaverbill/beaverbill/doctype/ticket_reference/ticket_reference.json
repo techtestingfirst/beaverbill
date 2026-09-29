@@ -1,113 +1,146 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "ticket",
-    "customer",
-    "service",
-    "order",
-    "invoice",
-    "domain",
-    "opened_by",
-    "opened_at"
-  ],
-  "fields": [
-    {
-      "fieldname": "ticket",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "HD Ticket",
-      "reqd": 1,
-      "unique": 1
-    },
-    {
-      "fieldname": "customer",
-      "fieldtype": "Link",
-      "in_list_view": 1,
-      "label": "Customer",
-      "options": "Hosting Customer",
-      "reqd": 1
-    },
-    {
-      "fieldname": "service",
-      "fieldtype": "Link",
-      "label": "Service",
-      "options": "Hosting Service"
-    },
-    {
-      "fieldname": "order",
-      "fieldtype": "Link",
-      "label": "Order",
-      "options": "Hosting Order"
-    },
-    {
-      "fieldname": "invoice",
-      "fieldtype": "Link",
-      "label": "Invoice",
-      "options": "Hosting Invoice"
-    },
-    {
-      "fieldname": "domain",
-      "fieldtype": "Link",
-      "label": "Domain",
-      "options": "Hosting Domain"
-    },
-    {
-      "fieldname": "opened_by",
-      "fieldtype": "Data",
-      "label": "Opened By"
-    },
-    {
-      "fieldname": "opened_at",
-      "fieldtype": "Datetime",
-      "label": "Opened At"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Ticket Reference",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    },
-    {
-      "read": 1,
-      "role": "Hosting Customer"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_ticket",
+        "ticket",
+        "customer",
+        "column_break_2",
+        "service",
+        "section_break_links",
+        "order",
+        "invoice",
+        "column_break_4",
+        "domain",
+        "section_break_meta",
+        "opened_by",
+        "column_break_6",
+        "opened_at"
+    ],
+    "fields": [
+        {
+            "fieldname": "ticket",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "HD Ticket",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Customer",
+            "options": "Hosting Customer",
+            "reqd": 1
+        },
+        {
+            "fieldname": "service",
+            "fieldtype": "Link",
+            "label": "Service",
+            "options": "Hosting Service"
+        },
+        {
+            "fieldname": "order",
+            "fieldtype": "Link",
+            "label": "Order",
+            "options": "Hosting Order"
+        },
+        {
+            "fieldname": "invoice",
+            "fieldtype": "Link",
+            "label": "Invoice",
+            "options": "Hosting Invoice"
+        },
+        {
+            "fieldname": "domain",
+            "fieldtype": "Link",
+            "label": "Domain",
+            "options": "Hosting Domain"
+        },
+        {
+            "fieldname": "opened_by",
+            "fieldtype": "Data",
+            "label": "Opened By"
+        },
+        {
+            "fieldname": "opened_at",
+            "fieldtype": "Datetime",
+            "label": "Opened At"
+        },
+        {
+            "fieldname": "section_break_ticket",
+            "fieldtype": "Section Break",
+            "label": "Ticket"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_links",
+            "fieldtype": "Section Break",
+            "label": "Links"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_meta",
+            "fieldtype": "Section Break",
+            "label": "Meta"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Ticket Reference",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        },
+        {
+            "read": 1,
+            "role": "Hosting Customer"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

@@ -6,27 +6,40 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_parties",
         "customer",
         "hosting_customer",
+        "column_break_2",
         "invoice_date",
         "due_date",
         "status",
+        "section_break_amounts",
         "subtotal",
         "discount_amount",
+        "column_break_4",
         "tax_amount",
         "total_amount",
+        "section_break_payments",
         "paid_amount",
         "outstanding_amount",
+        "column_break_6",
         "currency",
         "order",
+        "section_break_items",
         "items",
+        "section_break_meta",
         "pricing_snapshot",
+        "column_break_9",
         "idempotency_key",
+        "section_break_source",
         "source_type",
         "source_name",
+        "column_break_11",
         "reversal_of",
+        "section_break_documents",
         "reversal_reason",
         "cancellation_reason",
+        "column_break_13",
         "invoice_pdf"
     ],
     "fields": [
@@ -166,6 +179,65 @@
             "fieldtype": "Attach",
             "label": "Invoice PDF",
             "read_only": 1
+        },
+        {
+            "fieldname": "section_break_parties",
+            "fieldtype": "Section Break",
+            "label": "Parties"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_amounts",
+            "fieldtype": "Section Break",
+            "label": "Amounts"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_payments",
+            "fieldtype": "Section Break",
+            "label": "Payments"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_items",
+            "fieldtype": "Section Break",
+            "label": "Items"
+        },
+        {
+            "fieldname": "section_break_meta",
+            "fieldtype": "Section Break",
+            "label": "Meta"
+        },
+        {
+            "fieldname": "column_break_9",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_source",
+            "fieldtype": "Section Break",
+            "label": "Source"
+        },
+        {
+            "fieldname": "column_break_11",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_documents",
+            "fieldtype": "Section Break",
+            "label": "Documents"
+        },
+        {
+            "fieldname": "column_break_13",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

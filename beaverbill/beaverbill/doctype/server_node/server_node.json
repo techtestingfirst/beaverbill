@@ -6,15 +6,22 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_node",
         "node_name",
         "provider_account",
+        "column_break_2",
         "datacenter",
         "node_type",
+        "section_break_network",
         "ip_address",
+        "column_break_4",
         "status",
+        "section_break_capacity",
         "cpu_cores_total",
         "ram_gb_total",
+        "section_break_maintenance",
         "maintenance_mode",
+        "column_break_7",
         "maintenance_notes"
     ],
     "fields": [
@@ -76,6 +83,38 @@
             "fieldname": "maintenance_notes",
             "fieldtype": "Small Text",
             "label": "Maintenance Notes"
+        },
+        {
+            "fieldname": "section_break_node",
+            "fieldtype": "Section Break",
+            "label": "Node"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_network",
+            "fieldtype": "Section Break",
+            "label": "Network"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_capacity",
+            "fieldtype": "Section Break",
+            "label": "Capacity"
+        },
+        {
+            "fieldname": "section_break_maintenance",
+            "fieldtype": "Section Break",
+            "label": "Maintenance"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

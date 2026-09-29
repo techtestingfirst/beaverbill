@@ -5,16 +5,22 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_transaction",
         "customer",
         "hosting_customer",
         "transaction_date",
+        "column_break_2",
         "amount",
         "currency",
         "type",
+        "section_break_ledger",
         "balance_after",
+        "column_break_4",
         "description",
+        "section_break_references",
         "source_type",
         "source_name",
+        "column_break_6",
         "reversal_of",
         "idempotency_key"
     ],
@@ -95,6 +101,33 @@
             "fieldtype": "Data",
             "label": "Idempotency Key",
             "unique": 1
+        },
+        {
+            "fieldname": "section_break_transaction",
+            "fieldtype": "Section Break",
+            "label": "Transaction"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_ledger",
+            "fieldtype": "Section Break",
+            "label": "Ledger"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_references",
+            "fieldtype": "Section Break",
+            "label": "References"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

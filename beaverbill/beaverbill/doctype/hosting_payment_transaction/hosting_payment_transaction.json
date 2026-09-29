@@ -6,20 +6,28 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_payment",
         "customer",
         "payment_date",
+        "column_break_2",
         "amount",
         "currency",
         "status",
+        "section_break_gateway",
         "gateway",
         "gateway_reference",
+        "column_break_4",
         "gateway_event_id",
         "payment_token_ref",
+        "section_break_retry",
         "retry_count",
         "next_retry_at",
+        "column_break_6",
         "last_error",
+        "section_break_references",
         "idempotency_key",
         "source_invoice",
+        "column_break_8",
         "remarks"
     ],
     "fields": [
@@ -114,6 +122,42 @@
             "fieldname": "remarks",
             "fieldtype": "Small Text",
             "label": "Remarks"
+        },
+        {
+            "fieldname": "section_break_payment",
+            "fieldtype": "Section Break",
+            "label": "Payment"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_gateway",
+            "fieldtype": "Section Break",
+            "label": "Gateway"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_retry",
+            "fieldtype": "Section Break",
+            "label": "Retry"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_references",
+            "fieldtype": "Section Break",
+            "label": "References"
+        },
+        {
+            "fieldname": "column_break_8",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

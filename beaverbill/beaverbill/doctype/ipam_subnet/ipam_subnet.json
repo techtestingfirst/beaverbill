@@ -6,11 +6,15 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_subnet",
         "subnet_name",
         "cidr",
+        "column_break_2",
         "ip_version",
         "gateway",
+        "section_break_network",
         "dns_servers",
+        "column_break_4",
         "vlan_id"
     ],
     "fields": [
@@ -52,6 +56,24 @@
             "fieldname": "vlan_id",
             "fieldtype": "Int",
             "label": "VLAN ID"
+        },
+        {
+            "fieldname": "section_break_subnet",
+            "fieldtype": "Section Break",
+            "label": "Subnet"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_network",
+            "fieldtype": "Section Break",
+            "label": "Network"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

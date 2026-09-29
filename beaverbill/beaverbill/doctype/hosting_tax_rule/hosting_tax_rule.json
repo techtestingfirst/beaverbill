@@ -5,14 +5,20 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "section_break_rule",
         "tax_name",
         "country",
+        "column_break_2",
         "state_code",
         "gst_mode",
+        "section_break_applies",
         "product_group",
+        "column_break_4",
         "rate",
+        "section_break_validity",
         "effective_from",
         "effective_to",
+        "column_break_6",
         "is_active"
     ],
     "fields": [
@@ -70,6 +76,33 @@
             "fieldtype": "Check",
             "label": "Is Active",
             "default": 1
+        },
+        {
+            "fieldname": "section_break_rule",
+            "fieldtype": "Section Break",
+            "label": "Rule"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_applies",
+            "fieldtype": "Section Break",
+            "label": "Applies"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_validity",
+            "fieldtype": "Section Break",
+            "label": "Validity"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,

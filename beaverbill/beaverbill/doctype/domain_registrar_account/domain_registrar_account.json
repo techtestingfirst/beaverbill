@@ -1,102 +1,130 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2026-09-28 00:00:00",
-  "doctype": "DocType",
-  "editable_grid": 1,
-  "engine": "InnoDB",
-  "field_order": [
-    "registrar_name",
-    "registrar",
-    "api_endpoint",
-    "credential_reference",
-    "supported_tlds",
-    "auto_renew_default",
-    "is_active"
-  ],
-  "fields": [
-    {
-      "fieldname": "registrar_name",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "Registrar Name",
-      "reqd": 1,
-      "unique": 1
-    },
-    {
-      "default": "Simulated",
-      "fieldname": "registrar",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "Registrar",
-      "options": "Simulated\nCustom\nNamecheap\nCloudflare\nGoDaddy\nNameSilo",
-      "reqd": 1
-    },
-    {
-      "fieldname": "api_endpoint",
-      "fieldtype": "Data",
-      "label": "API Endpoint"
-    },
-    {
-      "fieldname": "credential_reference",
-      "fieldtype": "Data",
-      "label": "Credential Reference (no secrets here)"
-    },
-    {
-      "fieldname": "supported_tlds",
-      "fieldtype": "Small Text",
-      "label": "Supported TLDs (comma separated)"
-    },
-    {
-      "default": 1,
-      "fieldname": "auto_renew_default",
-      "fieldtype": "Check",
-      "label": "Auto Renew Default"
-    },
-    {
-      "default": 1,
-      "fieldname": "is_active",
-      "fieldtype": "Check",
-      "label": "Is Active"
-    }
-  ],
-  "istable": 0,
-  "links": [],
-  "modified": "2026-09-28 00:00:00",
-  "modified_by": "Administrator",
-  "module": "BeaverBill",
-  "name": "Domain Registrar Account",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "create": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "Hosting Admin",
-      "share": 1,
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Hosting Support"
-    }
-  ],
-  "sort_field": "creation",
-  "sort_order": "DESC",
-  "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2026-09-28 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_registrar",
+        "registrar_name",
+        "registrar",
+        "column_break_2",
+        "api_endpoint",
+        "section_break_credentials",
+        "credential_reference",
+        "column_break_4",
+        "is_active",
+        "auto_renew_default",
+        "section_break_tlds",
+        "supported_tlds"
+    ],
+    "fields": [
+        {
+            "fieldname": "registrar_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Registrar Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "default": "Simulated",
+            "fieldname": "registrar",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Registrar",
+            "options": "Simulated\nCustom\nNamecheap\nCloudflare\nGoDaddy\nNameSilo",
+            "reqd": 1
+        },
+        {
+            "fieldname": "api_endpoint",
+            "fieldtype": "Data",
+            "label": "API Endpoint"
+        },
+        {
+            "fieldname": "credential_reference",
+            "fieldtype": "Data",
+            "label": "Credential Reference (no secrets here)"
+        },
+        {
+            "fieldname": "supported_tlds",
+            "fieldtype": "Small Text",
+            "label": "Supported TLDs (comma separated)"
+        },
+        {
+            "default": 1,
+            "fieldname": "auto_renew_default",
+            "fieldtype": "Check",
+            "label": "Auto Renew Default"
+        },
+        {
+            "default": 1,
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "label": "Is Active"
+        },
+        {
+            "fieldname": "section_break_registrar",
+            "fieldtype": "Section Break",
+            "label": "Registrar"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_credentials",
+            "fieldtype": "Section Break",
+            "label": "Credentials"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_tlds",
+            "fieldtype": "Section Break",
+            "label": "TLDs"
+        }
+    ],
+    "istable": 0,
+    "links": [],
+    "modified": "2026-09-28 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "Domain Registrar Account",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Support"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }
