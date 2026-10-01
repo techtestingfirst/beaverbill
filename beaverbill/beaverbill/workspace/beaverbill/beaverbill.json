@@ -1,0 +1,353 @@
+{
+    "charts": [],
+    "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h3\\\"><a href=\\\"/beaverbill\\\">Visit Portal</a></span>\",\"col\":12}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"paragraph\",\"data\":{\"text\":\"<span class=\\\"h4\\\">BeaverBill Configuration<br></span>\",\"col\":12}},{\"type\":\"card\",\"data\":{\"card_name\":\"Getting Started\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Billing\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Orders and Services\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Domains and Security\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Infrastructure\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Support and Monitoring\",\"col\":4}}]",
+    "creation": "2026-09-30 00:00:00",
+    "docstatus": 0,
+    "doctype": "Workspace",
+    "for_user": "",
+    "hide_custom": 0,
+    "icon": "money",
+    "idx": 0,
+    "label": "BeaverBill",
+    "links": [
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Getting Started",
+            "link_count": 4,
+            "onboard": 1,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Configuration",
+            "link_count": 0,
+            "link_to": "BeaverBill Settings",
+            "link_type": "DocType",
+            "onboard": 1,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Product",
+            "link_count": 0,
+            "link_to": "Hosting Product",
+            "link_type": "DocType",
+            "onboard": 1,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Product Price",
+            "link_count": 0,
+            "link_to": "Hosting Product Price",
+            "link_type": "DocType",
+            "onboard": 1,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Customer",
+            "link_count": 0,
+            "link_to": "Hosting Customer",
+            "link_type": "DocType",
+            "onboard": 1,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Billing",
+            "link_count": 4,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Invoice",
+            "link_count": 0,
+            "link_to": "Hosting Invoice",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Payment Transaction",
+            "link_count": 0,
+            "link_to": "Hosting Payment Transaction",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Subscription",
+            "link_count": 0,
+            "link_to": "Hosting Subscription",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Tax Rule",
+            "link_count": 0,
+            "link_to": "Hosting Tax Rule",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Orders and Services",
+            "link_count": 4,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Order",
+            "link_count": 0,
+            "link_to": "Hosting Order",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Service",
+            "link_count": 0,
+            "link_to": "Hosting Service",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Service Modification",
+            "link_count": 0,
+            "link_to": "Hosting Service Modification Request",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Service Backup",
+            "link_count": 0,
+            "link_to": "Service Backup",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Domains and Security",
+            "link_count": 4,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Domain",
+            "link_count": 0,
+            "link_to": "Hosting Domain",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Certificate",
+            "link_count": 0,
+            "link_to": "SSL Certificate",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "DNS Record",
+            "link_count": 0,
+            "link_to": "Hosting DNS Record",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Registrar Account",
+            "link_count": 0,
+            "link_to": "Domain Registrar Account",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Infrastructure",
+            "link_count": 5,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Datacenter",
+            "link_count": 0,
+            "link_to": "Hosting Datacenter",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Server Node",
+            "link_count": 0,
+            "link_to": "Server Node",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "IP Subnet",
+            "link_count": 0,
+            "link_to": "IPAM Subnet",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Provider Account",
+            "link_count": 0,
+            "link_to": "Hosting Provider Account",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Provisioning Operation",
+            "link_count": 0,
+            "link_to": "Provisioning Operation",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Support and Monitoring",
+            "link_count": 4,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Ticket Reference",
+            "link_count": 0,
+            "link_to": "Ticket Reference",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Monitoring Alert",
+            "link_count": 0,
+            "link_to": "Monitoring Alert",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Reconciliation Result",
+            "link_count": 0,
+            "link_to": "Reconciliation Result",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Payment Gateway",
+            "link_count": 0,
+            "link_to": "Hosting Payment Gateway",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        }
+    ],
+    "modified": "2026-09-30 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "BeaverBill",
+    "owner": "Administrator",
+    "parent_page": "",
+    "public": 1,
+    "quick_lists": [],
+    "roles": [],
+    "sequence_id": 1,
+    "shortcuts": [
+        {
+            "color": "Blue",
+            "doc_view": "List",
+            "label": "Configuration",
+            "link_to": "BeaverBill Settings",
+            "type": "DocType"
+        },
+        {
+            "color": "Green",
+            "doc_view": "List",
+            "label": "Customers",
+            "link_to": "Hosting Customer",
+            "type": "DocType"
+        },
+        {
+            "color": "Orange",
+            "doc_view": "List",
+            "label": "Orders",
+            "link_to": "Hosting Order",
+            "type": "DocType"
+        },
+        {
+            "color": "Red",
+            "doc_view": "List",
+            "label": "Invoices",
+            "link_to": "Hosting Invoice",
+            "type": "DocType"
+        }
+    ],
+    "title": "BeaverBill"
+}

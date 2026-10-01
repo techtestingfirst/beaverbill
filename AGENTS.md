@@ -37,3 +37,13 @@ bash apps/beaverbill/scripts/deploy_beaverbill.sh <site> [--branch <ref>]
 - Unknown destructive provisioning outcome → `Manual Review`, never blind-retry terminate.
 - Backup key ships beside ciphertext locally; production must vault it. Live `bench restore` needs MariaDB root — staging-first.
 - Browser e2e/a11y/load tests never ran here (no browser binary); portal coverage is API-layer + `npm build/type-check`.
+
+
+## Sites
+- my backend site is beaverbill.localhost:8000
+- my frontend site is beaverbill.localhost:8080
+- Admin user is Administrator/admin
+- client user is thestockdot@gmail.com/HR&THAT0
+
+## Referance
+- Before making any change or writing code check the codes of erpnext how perticular thing is handeled and written in erpnext and than follow the same style.

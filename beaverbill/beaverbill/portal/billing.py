@@ -84,9 +84,53 @@ def pay_invoice(invoice: str, gateway: str, payment_method: str | None = None,
 		payment_method=payment_method,
 		idempotency_key=idempotency_key or f"portal-pay-{doc.name}",
 	)
-	return {"payment": intent.name, "status": intent.status,
+	result = {"payment": intent.name, "status": intent.status,
 			"gateway_reference": intent.gateway_reference,
 			"amount": float(intent.amount or 0), "currency": intent.currency}
+	checkout_url = gateways.build_checkout_url(intent.name)
+	if checkout_url:
+		result["payment_url"] = checkout_url
+	return result
+
+
+@frappe.whitelist()
+@portal_endpoint("portal.sync_payment", limit=20)
+def sync_payment(payment: str) -> dict:
+	"""Pull provider state for the caller's payment and complete it if paid.
+
+	Safety net for missed callbacks/webhooks (reloaded page, redirect-type
+	methods, network blips). Read-only against the provider; local writes are
+	idempotent and amounts always come from the server-side intent.
+	"""
+	user = frappe.session.user
+	doc = frappe.get_doc("Hosting Payment Transaction", payment)
+	allowed = doc.customer == user
+	if not allowed and doc.source_invoice:
+		try:
+			own_invoice_or_throw(doc.source_invoice, user)
+			allowed = True
+		except frappe.PermissionError:
+			allowed = False
+	if not allowed and not is_staff(user):
+		frappe.throw(f"Payment {payment} does not belong to this customer", frappe.PermissionError)
+	return gateways.sync_provider_payments(doc.name)
+
+
+@frappe.whitelist()
+@portal_endpoint("portal.sync_latest_payment", limit=20)
+def sync_latest_payment(invoice: str) -> dict:
+	"""Verify the newest intent for the caller's invoice against the provider."""
+	doc = own_invoice_or_throw(invoice)
+	names = frappe.get_all(
+		"Hosting Payment Transaction",
+		filters={"source_invoice": doc.name},
+		pluck="name",
+		order_by="creation desc",
+		limit=1,
+	)
+	if not names:
+		frappe.throw(f"No payment attempts found for invoice {doc.name}", frappe.ValidationError)
+	return gateways.sync_provider_payments(names[0])
 
 
 @frappe.whitelist()

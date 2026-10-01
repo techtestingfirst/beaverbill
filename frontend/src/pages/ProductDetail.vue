@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Button, Select, toast } from 'frappe-ui'
+import { Button, Select, TextInput, toast } from 'frappe-ui'
 import { api, money } from '../api'
 import AppShell from '../components/AppShell.vue'
 import AsyncState from '../components/AsyncState.vue'
+
+interface CyclePrice {
+  billing_cycle: string
+  price: number
+  currency: string
+  price_source: string
+}
 
 interface Detail {
   name: string
@@ -17,6 +24,7 @@ interface Detail {
   specs: Record<string, number | null>
   options: Array<{ name: string; option_name: string; option_type: string; price_per_unit: number }>
   addons: Array<{ name: string; addon_name: string; price: number }>
+  billing_cycles?: CyclePrice[]
 }
 
 const route = useRoute()
@@ -28,12 +36,26 @@ const detail = ref<Detail | null>(null)
 const cycle = ref('')
 const adding = ref(false)
 const qty = ref(1)
+const switching = ref(false)
 
-async function load() {
-  loading.value = true
+const cycleOptions = computed(() => {
+  if (!detail.value) return []
+  const list = detail.value.billing_cycles?.length
+    ? detail.value.billing_cycles
+    : [{ billing_cycle: detail.value.billing_cycle, price: detail.value.price, currency: detail.value.currency, price_source: '' }]
+  return list.map((c) => ({
+    label: `${c.billing_cycle} — ${money(c.price, c.currency)}`,
+    value: c.billing_cycle,
+  }))
+})
+
+async function load(selectedCycle?: string) {
+  loading.value = !detail.value
   error.value = null
   try {
-    detail.value = await api<Detail>('catalog.get_product', { product: name })
+    const params: Record<string, unknown> = { product: name }
+    if (selectedCycle) params.billing_cycle = selectedCycle
+    detail.value = await api<Detail>('catalog.get_product', params)
     cycle.value = detail.value.billing_cycle
   } catch (e) {
     error.value = (e as Error).message
@@ -41,6 +63,28 @@ async function load() {
     loading.value = false
   }
 }
+
+async function onCycleChange(next: string) {
+  if (!detail.value || !next || next === detail.value.billing_cycle) return
+  // Instant local update when price list already known, then confirm live price.
+  const known = detail.value.billing_cycles?.find((c) => c.billing_cycle === next)
+  if (known) {
+    detail.value = { ...detail.value, billing_cycle: known.billing_cycle, price: known.price, currency: known.currency }
+  }
+  switching.value = true
+  try {
+    detail.value = await api<Detail>('catalog.get_product', { product: name, billing_cycle: next })
+    cycle.value = detail.value.billing_cycle
+  } catch (e) {
+    toast.error((e as Error).message)
+  } finally {
+    switching.value = false
+  }
+}
+
+watch(cycle, (next) => {
+  void onCycleChange(next)
+})
 
 async function addToCart() {
   adding.value = true
@@ -55,12 +99,12 @@ async function addToCart() {
   }
 }
 
-onMounted(load)
+onMounted(() => load())
 </script>
 
 <template>
   <AppShell>
-    <AsyncState :loading="loading" :error="error" @retry="load">
+    <AsyncState :loading="loading" :error="error" @retry="() => load(cycle || undefined)">
       <template v-if="detail">
         <p class="text-xs text-ink-gray-5">{{ detail.product_group }}</p>
         <h1 class="text-xl font-semibold text-ink-gray-9">{{ detail.product_name }}</h1>
@@ -74,14 +118,14 @@ onMounted(load)
 
         <div class="mt-4 flex flex-wrap items-end gap-3 rounded-lg border border-outline-gray-1 bg-surface-white p-4">
           <div>
-            <label for="pd-cycle" class="mb-1 block text-sm font-medium">Billing cycle</label>
-            <Select id="pd-cycle" v-model="cycle" :options="[{ label: detail.billing_cycle, value: detail.billing_cycle }]" />
+            <label for="pd-cycle" class="mb-1 block text-sm font-medium text-ink-gray-7">Billing cycle</label>
+            <Select id="pd-cycle" v-model="cycle" :options="cycleOptions" :disabled="switching" />
           </div>
           <div>
-            <label for="pd-qty" class="mb-1 block text-sm font-medium">Quantity</label>
-            <input id="pd-qty" v-model.number="qty" type="number" min="1" max="100" class="w-20 rounded-md border border-outline-gray-2 px-2 py-1.5 text-sm" />
+            <label for="pd-qty" class="mb-1 block text-sm font-medium text-ink-gray-7">Quantity</label>
+            <TextInput id="pd-qty" v-model.number="qty" type="number" :min="1" :max="100" class="w-24" />
           </div>
-          <p class="text-lg font-semibold">{{ money(detail.price, detail.currency) }}</p>
+          <p class="text-lg font-semibold text-ink-gray-9">{{ money(detail.price, detail.currency) }}</p>
           <Button variant="solid" theme="blue" :loading="adding" @click="addToCart">Add to cart</Button>
         </div>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Button, Dialog, Select, toast } from 'frappe-ui'
 import { api, money } from '../api'
 import AppShell from '../components/AppShell.vue'
@@ -29,6 +29,7 @@ interface Gateway {
 }
 
 const route = useRoute()
+const router = useRouter()
 const name = route.params.name as string
 const loading = ref(true)
 const error = ref<string | null>(null)
@@ -39,6 +40,8 @@ const methods = ref<Method[]>([])
 const gateway = ref('')
 const method = ref('')
 const paying = ref(false)
+const downloading = ref(false)
+const syncing = ref(false)
 
 async function load() {
   loading.value = true
@@ -67,12 +70,31 @@ async function openPay() {
   }
 }
 
-async function downloadPdf() {
+async function syncPayments() {
+  syncing.value = true
+  try {
+    const res = await api<{ status: string; provider_status: string; detail?: string }>('billing.sync_latest_payment', { invoice: name })
+    if (res.status === 'Captured') {
+      toast.success('Payment verified and applied')
+    } else {
+      toast.message(res.detail || `Provider status: ${res.provider_status}`)
+    }
+    await load()
+  } catch (e) {
+    toast.error((e as Error).message)
+  } finally {
+    syncing.value = false
+  }
+}
+
+async function downloadPdf() {  downloading.value = true
   try {
     const res = await api<{ pdf_url: string }>('billing.invoice_pdf', { name })
     window.open(res.pdf_url, '_blank', 'noopener')
   } catch (e) {
     toast.error((e as Error).message)
+  } finally {
+    downloading.value = false
   }
 }
 
@@ -83,12 +105,28 @@ async function pay() {
   }
   paying.value = true
   try {
-    const res = await api<{ payment: string; status: string }>('billing.pay_invoice', {
+    const res = await api<{ payment: string; status: string; payment_url?: string }>('billing.pay_invoice', {
       invoice: name,
       gateway: gateway.value,
       payment_method: method.value || undefined,
       idempotency_key: `web-pay-${name}-${Date.now()}`,
     })
+    if (res.payment_url) {
+      // Provider checkout is a server page at site root (/razorpay_checkout).
+      // Navigate by token only: keeps the customer's current host:port (local
+      // DNS, LAN IP, port maps) and never carries the /beaverbill SPA base,
+      // which multisite answers with 404.
+      try {
+        const u = new URL(res.payment_url, window.location.origin)
+        const token = u.searchParams.get('token')
+        window.location.href = token
+          ? `/razorpay_checkout?token=${encodeURIComponent(token)}`
+          : `${u.pathname}${u.search}${u.hash}`.replace(/^\/beaverbill(?=\/)/, '')
+      } catch {
+        window.location.href = res.payment_url
+      }
+      return
+    }
     toast.success(`Payment ${res.payment} is ${res.status}`)
     showPay.value = false
     await load()
@@ -99,7 +137,15 @@ async function pay() {
   }
 }
 
-onMounted(load)
+onMounted(async () => {
+  await load()
+  // Returning from provider checkout (?just_paid=1): close the loop without
+  // depending on the checkout callback. Runs once, then cleans the URL.
+  if (route.query.just_paid && invoice.value && invoice.value.outstanding_amount > 0 && !syncing.value) {
+    router.replace({ path: route.path, query: {} })
+    await syncPayments()
+  }
+})
 </script>
 
 <template>
@@ -140,7 +186,8 @@ onMounted(load)
         </div>
         <div class="mt-4 flex flex-wrap gap-2">
           <Button v-if="invoice.outstanding_amount > 0" variant="solid" theme="blue" @click="openPay">Pay now</Button>
-          <Button @click="downloadPdf">Download PDF</Button>
+          <Button v-if="invoice.outstanding_amount > 0" @click="syncPayments" :loading="syncing" title="Paid at the provider but invoice still shows unpaid? Pull the latest provider status.">Verify payment</Button>
+          <Button @click="downloadPdf" :loading="downloading">Download PDF</Button>
         </div>
       </template>
     </AsyncState>

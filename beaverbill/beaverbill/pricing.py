@@ -12,6 +12,8 @@ from frappe.utils import getdate, today
 
 ZERO_DECIMAL_CURRENCIES = {"JPY", "KRW", "VND", "CLP", "XOF"}
 
+CYCLE_ORDER = ("Monthly", "Quarterly", "Semi-Annually", "Annually", "Biennially", "Triennially")
+
 
 def money(value, currency=None):
 	"""Round to the currency precision (half up)."""
@@ -60,6 +62,52 @@ def resolve_unit_price(product_name, billing_cycle=None, currency=None, on_date=
 		"billing_cycle": billing_cycle or product.billing_cycle,
 		"source": "legacy",
 	}
+
+
+def list_cycle_prices(
+	product_name: str, currency: str | None = None, on_date=None
+) -> list[dict]:
+	"""All currently-effective billing cycles for a product, cheapest lookup per cycle.
+
+	Collects distinct cycles from effective ``Hosting Product Price`` rows, plus
+	the product's own ``billing_cycle`` as legacy fallback. Each entry is a
+	resolved unit price so the portal can offer every purchasable cycle.
+	"""
+	product = frappe.get_doc("Hosting Product", product_name)
+	day = getdate(on_date) if on_date else getdate(today())
+	rows = frappe.get_all(
+		"Hosting Product Price",
+		filters={"product": product_name, "effective_from": ["<=", day]},
+		fields=["billing_cycle", "currency", "effective_to"],
+	)
+	cycles: list[str] = []
+	for row in rows:
+		if row.effective_to and getdate(row.effective_to) < day:
+			continue
+		cycle = row.billing_cycle or product.billing_cycle
+		if currency and row.currency and row.currency != currency:
+			continue
+		if cycle and cycle not in cycles:
+			cycles.append(cycle)
+	if product.billing_cycle and product.billing_cycle not in cycles:
+		cycles.append(product.billing_cycle)
+	order = {cycle: idx for idx, cycle in enumerate(CYCLE_ORDER)}
+	cycles.sort(key=lambda c: (order.get(c, 99), c))
+	entries = []
+	for cycle in cycles:
+		try:
+			unit = resolve_unit_price(product_name, cycle, currency, on_date)
+		except Exception:
+			continue
+		entries.append(
+			{
+				"billing_cycle": unit["billing_cycle"],
+				"price": unit["amount"],
+				"currency": unit["currency"],
+				"price_source": unit["source"],
+			}
+		)
+	return entries
 
 
 def convert(amount, from_currency, to_currency, on_date=None):

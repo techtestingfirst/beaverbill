@@ -156,12 +156,14 @@ def checkout(idempotency_key: str) -> dict:
 	promo = _promo_name(cart.get("coupon"))
 	is_first = not frappe.db.exists("Hosting Order", {"hosting_customer": customer})
 	lines = []
+	currencies = set()
 	for item in cart["items"]:
 		quote = pricing.calculate_price(
 			item["product"], config_options=item.get("options"), addons=item.get("addons"),
 			promo_code=promo, billing_cycle=item.get("billing_cycle"), customer=customer,
 			order_context={"is_first_order": is_first},
 		)
+		currencies.add(quote["currency"])
 		qty = float(item.get("qty") or 1)
 		lines.append({
 			"product": item["product"],
@@ -173,6 +175,12 @@ def checkout(idempotency_key: str) -> dict:
 			"billing_cycle": quote["billing_cycle"],
 			"calculation_snapshot": quote["snapshot"][:4000],
 		})
+	if len(currencies) > 1:
+		frappe.throw(
+			f"Cart mixes currencies ({', '.join(sorted(currencies))}). Check out each currency separately.",
+			frappe.ValidationError,
+		)
+	currency = next(iter(currencies)) if currencies else "USD"
 	total = round(sum(float(line["total"]) for line in lines), 2)
 	order = frappe.get_doc(
 		{
@@ -182,7 +190,7 @@ def checkout(idempotency_key: str) -> dict:
 			"order_date": frappe.utils.today(),
 			"status": "Draft",
 			"promo_code": promo,
-			"currency": "USD",
+			"currency": currency,
 			"total_amount": total,
 			"items": lines,
 			"idempotency_key": idempotency_key,
@@ -202,13 +210,13 @@ def checkout(idempotency_key: str) -> dict:
 			"unit_price": total,
 			"line_total": total,
 		}],
-		currency="USD",
+		currency=currency,
 		order=order.name,
 		idempotency_key=f"{idempotency_key}-invoice",
 	)
 	_save_cart({"items": [], "coupon": None}, user)
 	return {"order": order.name, "status": order.status, "invoice": invoice.name,
-			"total": total, "currency": "USD"}
+			"total": total, "currency": currency}
 
 
 @frappe.whitelist()

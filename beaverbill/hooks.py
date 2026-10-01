@@ -264,6 +264,9 @@ has_permission = {
 # ---------------
 
 scheduler_events = {
+    "hourly": [
+        "beaverbill.beaverbill.gateways.sweep_stuck_intents",
+    ],
     "daily": [
         "beaverbill.beaverbill.doctype.hosting_subscription.hosting_subscription.process_subscription_renewals",
         "beaverbill.beaverbill.doctype.hosting_service_modification_request.hosting_service_modification_request.apply_due_modifications",

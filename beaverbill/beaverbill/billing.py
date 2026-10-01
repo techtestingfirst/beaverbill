@@ -75,7 +75,7 @@ def _locked(doctype, name):
 	return frappe.db.get_value(doctype, name, ["name", "status"], for_update=True)
 
 
-def allocate_payment(payment_name, invoice_name, amount=None, idempotency_key=None):
+def allocate_payment(payment_name, invoice_name, amount=None, idempotency_key=None, ignore_permissions=False):
 	"""Allocate a captured payment to an invoice. Supports partial amounts."""
 	if idempotency_key:
 		existing = frappe.db.get_value("Hosting Payment Allocation", {"idempotency_key": idempotency_key}, "name")
@@ -100,7 +100,12 @@ def allocate_payment(payment_name, invoice_name, amount=None, idempotency_key=No
 			"allocation_date": today(),
 			"idempotency_key": _key(idempotency_key),
 		}
-	).insert()
+	)
+	if ignore_permissions:
+		# Provider callbacks run in the payer's session, which owns no
+		# allocation rights. Amounts were fixed server-side at intent time.
+		allocation.flags.ignore_permissions = True
+	allocation.insert()
 	paid = float(invoice.paid_amount or 0) + take
 	invoice.paid_amount = paid
 	invoice.outstanding_amount = float(invoice.total_amount or 0) - paid
@@ -255,12 +260,14 @@ def write_off_invoice(invoice_name, reason):
 
 
 def generate_invoice_pdf(invoice_name):
-	"""Render the invoice print view to a File and link it. Returns the File doc."""
+	"""Render the invoice print view to a real PDF File and link it. Returns the File doc."""
 	invoice = frappe.get_doc("Hosting Invoice", invoice_name)
 	html = frappe.get_print("Hosting Invoice", invoice_name, "Standard")
 	from frappe.utils.file_manager import save_file
+	from frappe.utils.pdf import get_pdf
 
-	stored = save_file(f"{invoice_name}.pdf", html, "Hosting Invoice", invoice_name, is_private=1)
+	pdf_bytes = get_pdf(html)
+	stored = save_file(f"{invoice_name}.pdf", pdf_bytes, "Hosting Invoice", invoice_name, is_private=1)
 	invoice.invoice_pdf = stored.file_url
 	invoice.save()
 	return stored

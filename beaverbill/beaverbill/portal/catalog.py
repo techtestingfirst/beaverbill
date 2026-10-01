@@ -49,6 +49,7 @@ def get_product(product: str, billing_cycle: str | None = None) -> dict:
 		fields=["name", "addon_name", "price"],
 	)
 	unit = pricing.resolve_unit_price(doc.name, billing_cycle)
+	cycles = pricing.list_cycle_prices(doc.name)
 	return {
 		"name": doc.name,
 		"product_name": doc.product_name,
@@ -57,6 +58,7 @@ def get_product(product: str, billing_cycle: str | None = None) -> dict:
 		"price": unit.get("amount"),
 		"currency": unit.get("currency"),
 		"price_source": unit.get("source"),
+		"billing_cycles": cycles,
 		"description": doc.description,
 		"specs": {
 			"cpu_cores": doc.get("cpu_cores"),

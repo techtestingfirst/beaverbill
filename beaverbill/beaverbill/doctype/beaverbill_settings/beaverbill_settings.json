@@ -1,469 +1,568 @@
 {
- "actions": [],
- "allow_rename": 0,
- "creation": "2026-09-30 00:00:00",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "subscriptions_section",
-  "terminate_after_suspend_days",
-  "purge_after_terminate_days",
-  "sub_default_max_retries",
-  "sub_default_grace_period_days",
-  "sub_default_renewal_lead_days",
-  "sub_default_retry_backoff_minutes",
-  "lock_timeout_minutes",
-  "domains_section",
-  "domain_renewal_price",
-  "domain_renewal_currency",
-  "domain_reminder_stages",
-  "auto_renew_within_days",
-  "domain_grace_days",
-  "domain_redemption_days",
-  "default_dns_ttl",
-  "provisioning_section",
-  "timeout_seconds",
-  "queue_batch_limit",
-  "backoff_transient_minutes",
-  "backoff_rate_limited_minutes",
-  "backoff_capacity_minutes",
-  "backoff_unknown_minutes",
-  "backoff_backoff_cap_minutes",
-  "certs_section",
-  "cert_validity_days",
-  "cert_expiry_warn_days",
-  "cert_stale_validation_days",
-  "billing_section",
-  "default_currency",
-  "backup_expired_purge_days",
-  "backup_default_retention_days",
-  "backup_default_snapshot_size_mb",
-  "security_section",
-  "max_upload_mb",
-  "max_provider_response_kb",
-  "session_ttl_hours",
-  "console_ttl_minutes",
-  "verification_ttl_hours",
-  "token_default_ttl_hours",
-  "login_fail_limit",
-  "login_fail_window_minutes",
-  "login_lock_minutes",
-  "min_password_length",
-  "portal_section",
-  "portal_default_rate_limit",
-  "portal_default_rate_window_sec",
-  "cart_ttl_days",
-  "helpdesk_section",
-  "sync_max_attempts",
-  "sync_backoff_base_minutes",
-  "sync_backoff_cap_minutes",
-  "monitoring_section",
-  "expiring_warn_days",
-  "expiring_urgent_days",
-  "invoice_overdue_flag_days",
-  "recon_batch_limit",
-  "ip_low_threshold_pct"
- ],
- "fields": [
-  {
-   "fieldname": "subscriptions_section",
-   "fieldtype": "Section Break",
-   "label": "Subscriptions"
-  },
-  {
-   "default": "14",
-   "description": "Days a Suspended subscription waits before auto-termination.",
-   "fieldname": "terminate_after_suspend_days",
-   "fieldtype": "Int",
-   "label": "Terminate After Suspend (days)"
-  },
-  {
-   "default": "30",
-   "description": "Days after termination before data purge is scheduled.",
-   "fieldname": "purge_after_terminate_days",
-   "fieldtype": "Int",
-   "label": "Purge After Terminate (days)"
-  },
-  {
-   "default": "4",
-   "description": "Retry attempts before a subscription leaves Payment Failed.",
-   "fieldname": "sub_default_max_retries",
-   "fieldtype": "Int",
-   "label": "Default Max Retries"
-  },
-  {
-   "default": "7",
-   "description": "Fallback grace window when the subscription row has none.",
-   "fieldname": "sub_default_grace_period_days",
-   "fieldtype": "Int",
-   "label": "Default Grace Period (days)"
-  },
-  {
-   "default": "3",
-   "description": "Days before next_renewal_date the renewal window opens.",
-   "fieldname": "sub_default_renewal_lead_days",
-   "fieldtype": "Int",
-   "label": "Default Renewal Lead (days)"
-  },
-  {
-   "default": "240",
-   "description": "Base dunning backoff in minutes (doubles per retry).",
-   "fieldname": "sub_default_retry_backoff_minutes",
-   "fieldtype": "Int",
-   "label": "Default Retry Backoff (minutes)"
-  },
-  {
-   "default": "10",
-   "description": "Scheduler lock expiry for subscription renewals.",
-   "fieldname": "lock_timeout_minutes",
-   "fieldtype": "Int",
-   "label": "Renewal Lock Timeout (minutes)"
-  },
-  {
-   "fieldname": "domains_section",
-   "fieldtype": "Section Break",
-   "label": "Domains"
-  },
-  {
-   "default": "15",
-   "description": "Price per renewal year charged on domain renewal invoices.",
-   "fieldname": "domain_renewal_price",
-   "fieldtype": "Currency",
-   "label": "Domain Renewal Price"
-  },
-  {
-   "default": "USD",
-   "fieldname": "domain_renewal_currency",
-   "fieldtype": "Data",
-   "label": "Domain Renewal Currency"
-  },
-  {
-   "default": "30,14,7,1",
-   "description": "Comma-separated days-before-expiry reminder stages.",
-   "fieldname": "domain_reminder_stages",
-   "fieldtype": "Data",
-   "label": "Reminder Stages (days)"
-  },
-  {
-   "default": "7",
-   "description": "Auto-renew invoice is raised when days-left is within this window.",
-   "fieldname": "auto_renew_within_days",
-   "fieldtype": "Int",
-   "label": "Auto Renew Within (days)"
-  },
-  {
-   "default": "30",
-   "description": "Expired -> Grace Period after this many overdue days.",
-   "fieldname": "domain_grace_days",
-   "fieldtype": "Int",
-   "label": "Domain Grace (days)"
-  },
-  {
-   "default": "30",
-   "description": "Length of each Grace/Redemption stage in days.",
-   "fieldname": "domain_redemption_days",
-   "fieldtype": "Int",
-   "label": "Domain Redemption (days)"
-  },
-  {
-   "default": "3600",
-   "fieldname": "default_dns_ttl",
-   "fieldtype": "Int",
-   "label": "Default DNS TTL (seconds)"
-  },
-  {
-   "fieldname": "provisioning_section",
-   "fieldtype": "Section Break",
-   "label": "Provisioning"
-  },
-  {
-   "default": "300",
-   "fieldname": "timeout_seconds",
-   "fieldtype": "Int",
-   "label": "Default Operation Timeout (seconds)"
-  },
-  {
-   "default": "50",
-   "description": "Operations processed per scheduler run.",
-   "fieldname": "queue_batch_limit",
-   "fieldtype": "Int",
-   "label": "Queue Batch Limit"
-  },
-  {
-   "default": "5",
-   "fieldname": "backoff_transient_minutes",
-   "fieldtype": "Int",
-   "label": "Backoff Transient (minutes)"
-  },
-  {
-   "default": "15",
-   "fieldname": "backoff_rate_limited_minutes",
-   "fieldtype": "Int",
-   "label": "Backoff Rate Limited (minutes)"
-  },
-  {
-   "default": "60",
-   "fieldname": "backoff_capacity_minutes",
-   "fieldtype": "Int",
-   "label": "Backoff Capacity (minutes)"
-  },
-  {
-   "default": "30",
-   "fieldname": "backoff_unknown_minutes",
-   "fieldtype": "Int",
-   "label": "Backoff Unknown (minutes)"
-  },
-  {
-   "default": "1440",
-   "description": "Upper cap for exponential provisioning backoff.",
-   "fieldname": "backoff_backoff_cap_minutes",
-   "fieldtype": "Int",
-   "label": "Backoff Cap (minutes)"
-  },
-  {
-   "fieldname": "certs_section",
-   "fieldtype": "Section Break",
-   "label": "Certificates"
-  },
-  {
-   "default": "90",
-   "fieldname": "cert_validity_days",
-   "fieldtype": "Int",
-   "label": "Certificate Validity (days)"
-  },
-  {
-   "default": "30",
-   "description": "Auto-renew when days-left is at or below this.",
-   "fieldname": "cert_expiry_warn_days",
-   "fieldtype": "Int",
-   "label": "Certificate Renew Warn (days)"
-  },
-  {
-   "default": "7",
-   "description": "Pending-validation certs older than this are marked Failed.",
-   "fieldname": "cert_stale_validation_days",
-   "fieldtype": "Int",
-   "label": "Stale Validation (days)"
-  },
-  {
-   "fieldname": "billing_section",
-   "fieldtype": "Section Break",
-   "label": "Billing and Backups"
-  },
-  {
-   "default": "USD",
-   "description": "Fallback currency for invoices and overage charges.",
-   "fieldname": "default_currency",
-   "fieldtype": "Data",
-   "label": "Default Currency"
-  },
-  {
-   "default": "7",
-   "description": "Expired backups older than this are purged to Deleted.",
-   "fieldname": "backup_expired_purge_days",
-   "fieldtype": "Int",
-   "label": "Expired Backup Purge (days)"
-  },
-  {
-   "default": "30",
-   "description": "Fallback retain_until window when a policy has no retention.",
-   "fieldname": "backup_default_retention_days",
-   "fieldtype": "Int",
-   "label": "Default Backup Retention (days)"
-  },
-  {
-   "default": "512",
-   "description": "Simulated snapshot size per backup run.",
-   "fieldname": "backup_default_snapshot_size_mb",
-   "fieldtype": "Float",
-   "label": "Default Snapshot Size (MB)"
-  },
-  {
-   "fieldname": "security_section",
-   "fieldtype": "Section Break",
-   "label": "Security and Identity"
-  },
-  {
-   "default": "5",
-   "fieldname": "max_upload_mb",
-   "fieldtype": "Int",
-   "label": "Max Upload (MB)"
-  },
-  {
-   "default": "256",
-   "fieldname": "max_provider_response_kb",
-   "fieldtype": "Int",
-   "label": "Max Provider Response (KB)"
-  },
-  {
-   "default": "12",
-   "fieldname": "session_ttl_hours",
-   "fieldtype": "Int",
-   "label": "Session TTL (hours)"
-  },
-  {
-   "default": "15",
-   "description": "Single-use console ticket lifetime.",
-   "fieldname": "console_ttl_minutes",
-   "fieldtype": "Int",
-   "label": "Console TTL (minutes)"
-  },
-  {
-   "default": "24",
-   "fieldname": "verification_ttl_hours",
-   "fieldtype": "Int",
-   "label": "Verification TTL (hours)"
-  },
-  {
-   "default": "12",
-   "fieldname": "token_default_ttl_hours",
-   "fieldtype": "Int",
-   "label": "Token Default TTL (hours)"
-  },
-  {
-   "default": "5",
-   "fieldname": "login_fail_limit",
-   "fieldtype": "Int",
-   "label": "Login Fail Limit"
-  },
-  {
-   "default": "15",
-   "fieldname": "login_fail_window_minutes",
-   "fieldtype": "Int",
-   "label": "Login Fail Window (minutes)"
-  },
-  {
-   "default": "15",
-   "fieldname": "login_lock_minutes",
-   "fieldtype": "Int",
-   "label": "Login Lock (minutes)"
-  },
-  {
-   "default": "8",
-   "fieldname": "min_password_length",
-   "fieldtype": "Int",
-   "label": "Min Password Length"
-  },
-  {
-   "fieldname": "portal_section",
-   "fieldtype": "Section Break",
-   "label": "Portal"
-  },
-  {
-   "default": "120",
-   "fieldname": "portal_default_rate_limit",
-   "fieldtype": "Int",
-   "label": "Portal Default Rate Limit"
-  },
-  {
-   "default": "60",
-   "fieldname": "portal_default_rate_window_sec",
-   "fieldtype": "Int",
-   "label": "Portal Rate Window (seconds)"
-  },
-  {
-   "default": "7",
-   "fieldname": "cart_ttl_days",
-   "fieldtype": "Int",
-   "label": "Cart TTL (days)"
-  },
-  {
-   "fieldname": "helpdesk_section",
-   "fieldtype": "Section Break",
-   "label": "Helpdesk Sync"
-  },
-  {
-   "default": "5",
-   "fieldname": "sync_max_attempts",
-   "fieldtype": "Int",
-   "label": "Sync Max Attempts"
-  },
-  {
-   "default": "5",
-   "fieldname": "sync_backoff_base_minutes",
-   "fieldtype": "Int",
-   "label": "Sync Backoff Base (minutes)"
-  },
-  {
-   "default": "240",
-   "fieldname": "sync_backoff_cap_minutes",
-   "fieldtype": "Int",
-   "label": "Sync Backoff Cap (minutes)"
-  },
-  {
-   "fieldname": "monitoring_section",
-   "fieldtype": "Section Break",
-   "label": "Monitoring and Reconciliation"
-  },
-  {
-   "default": "30",
-   "fieldname": "expiring_warn_days",
-   "fieldtype": "Int",
-   "label": "Expiring Warn (days)"
-  },
-  {
-   "default": "7",
-   "fieldname": "expiring_urgent_days",
-   "fieldtype": "Int",
-   "label": "Expiring Urgent (days)"
-  },
-  {
-   "default": "90",
-   "description": "Invoices overdue longer than this are flagged in reconciliation.",
-   "fieldname": "invoice_overdue_flag_days",
-   "fieldtype": "Int",
-   "label": "Overdue Flag (days)"
-  },
-  {
-   "default": "50",
-   "description": "Mismatch rows kept per reconciliation pair.",
-   "fieldname": "recon_batch_limit",
-   "fieldtype": "Int",
-   "label": "Reconciliation Limit"
-  },
-  {
-   "default": "10",
-   "description": "Subnets with less free space than this count as low.",
-   "fieldname": "ip_low_threshold_pct",
-   "fieldtype": "Percent",
-   "label": "IP Low Threshold (%)"
-  }
- ],
- "index_web_pages_for_search": 0,
- "issingle": 1,
- "links": [],
- "modified": "2026-09-30 00:00:00",
- "modified_by": "Administrator",
- "module": "BeaverBill",
- "name": "BeaverBill Settings",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Hosting Admin",
-   "share": 1,
-   "write": 1
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2026-09-30 00:00:00",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "subscriptions_tab",
+        "subscriptions_section",
+        "terminate_after_suspend_days",
+        "purge_after_terminate_days",
+        "sub_default_max_retries",
+        "sub_default_grace_period_days",
+        "subscriptions_col",
+        "sub_default_renewal_lead_days",
+        "sub_default_retry_backoff_minutes",
+        "lock_timeout_minutes",
+        "domains_tab",
+        "domains_section",
+        "domain_renewal_price",
+        "domain_renewal_currency",
+        "domain_reminder_stages",
+        "auto_renew_within_days",
+        "domains_col",
+        "domain_grace_days",
+        "domain_redemption_days",
+        "default_dns_ttl",
+        "provisioning_tab",
+        "provisioning_section",
+        "timeout_seconds",
+        "queue_batch_limit",
+        "backoff_transient_minutes",
+        "backoff_rate_limited_minutes",
+        "provisioning_col",
+        "backoff_capacity_minutes",
+        "backoff_unknown_minutes",
+        "backoff_backoff_cap_minutes",
+        "certs_tab",
+        "certs_section",
+        "cert_validity_days",
+        "cert_expiry_warn_days",
+        "certs_col",
+        "cert_stale_validation_days",
+        "billing_tab",
+        "billing_section",
+        "default_currency",
+        "backup_expired_purge_days",
+        "billing_col",
+        "backup_default_retention_days",
+        "backup_default_snapshot_size_mb",
+        "security_tab",
+        "security_section",
+        "max_upload_mb",
+        "max_provider_response_kb",
+        "session_ttl_hours",
+        "console_ttl_minutes",
+        "verification_ttl_hours",
+        "security_col",
+        "token_default_ttl_hours",
+        "login_fail_limit",
+        "login_fail_window_minutes",
+        "login_lock_minutes",
+        "min_password_length",
+        "portal_tab",
+        "portal_section",
+        "portal_default_rate_limit",
+        "portal_default_rate_window_sec",
+        "portal_col",
+        "cart_ttl_days",
+        "helpdesk_tab",
+        "helpdesk_section",
+        "sync_max_attempts",
+        "sync_backoff_base_minutes",
+        "helpdesk_col",
+        "sync_backoff_cap_minutes",
+        "monitoring_tab",
+        "monitoring_section",
+        "expiring_warn_days",
+        "expiring_urgent_days",
+        "invoice_overdue_flag_days",
+        "monitoring_col",
+        "recon_batch_limit",
+        "ip_low_threshold_pct"
+    ],
+    "fields": [
+        {
+            "fieldname": "subscriptions_tab",
+            "fieldtype": "Tab Break",
+            "label": "Subscriptions"
+        },
+        {
+            "fieldname": "subscriptions_section",
+            "fieldtype": "Section Break",
+            "label": "Subscriptions"
+        },
+        {
+            "default": "14",
+            "description": "Days a Suspended subscription waits before auto-termination.",
+            "fieldname": "terminate_after_suspend_days",
+            "fieldtype": "Int",
+            "label": "Terminate After Suspend (days)"
+        },
+        {
+            "default": "30",
+            "description": "Days after termination before data purge is scheduled.",
+            "fieldname": "purge_after_terminate_days",
+            "fieldtype": "Int",
+            "label": "Purge After Terminate (days)"
+        },
+        {
+            "default": "4",
+            "description": "Retry attempts before a subscription leaves Payment Failed.",
+            "fieldname": "sub_default_max_retries",
+            "fieldtype": "Int",
+            "label": "Default Max Retries"
+        },
+        {
+            "default": "7",
+            "description": "Fallback grace window when the subscription row has none.",
+            "fieldname": "sub_default_grace_period_days",
+            "fieldtype": "Int",
+            "label": "Default Grace Period (days)"
+        },
+        {
+            "fieldname": "subscriptions_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "3",
+            "description": "Days before next_renewal_date the renewal window opens.",
+            "fieldname": "sub_default_renewal_lead_days",
+            "fieldtype": "Int",
+            "label": "Default Renewal Lead (days)"
+        },
+        {
+            "default": "240",
+            "description": "Base dunning backoff in minutes (doubles per retry).",
+            "fieldname": "sub_default_retry_backoff_minutes",
+            "fieldtype": "Int",
+            "label": "Default Retry Backoff (minutes)"
+        },
+        {
+            "default": "10",
+            "description": "Scheduler lock expiry for subscription renewals.",
+            "fieldname": "lock_timeout_minutes",
+            "fieldtype": "Int",
+            "label": "Renewal Lock Timeout (minutes)"
+        },
+        {
+            "fieldname": "domains_tab",
+            "fieldtype": "Tab Break",
+            "label": "Domains"
+        },
+        {
+            "fieldname": "domains_section",
+            "fieldtype": "Section Break",
+            "label": "Domains"
+        },
+        {
+            "default": "15",
+            "description": "Price per renewal year charged on domain renewal invoices.",
+            "fieldname": "domain_renewal_price",
+            "fieldtype": "Currency",
+            "label": "Domain Renewal Price"
+        },
+        {
+            "default": "USD",
+            "fieldname": "domain_renewal_currency",
+            "fieldtype": "Data",
+            "label": "Domain Renewal Currency"
+        },
+        {
+            "default": "30,14,7,1",
+            "description": "Comma-separated days-before-expiry reminder stages.",
+            "fieldname": "domain_reminder_stages",
+            "fieldtype": "Data",
+            "label": "Reminder Stages (days)"
+        },
+        {
+            "default": "7",
+            "description": "Auto-renew invoice is raised when days-left is within this window.",
+            "fieldname": "auto_renew_within_days",
+            "fieldtype": "Int",
+            "label": "Auto Renew Within (days)"
+        },
+        {
+            "fieldname": "domains_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "30",
+            "description": "Expired -> Grace Period after this many overdue days.",
+            "fieldname": "domain_grace_days",
+            "fieldtype": "Int",
+            "label": "Domain Grace (days)"
+        },
+        {
+            "default": "30",
+            "description": "Length of each Grace/Redemption stage in days.",
+            "fieldname": "domain_redemption_days",
+            "fieldtype": "Int",
+            "label": "Domain Redemption (days)"
+        },
+        {
+            "default": "3600",
+            "fieldname": "default_dns_ttl",
+            "fieldtype": "Int",
+            "label": "Default DNS TTL (seconds)"
+        },
+        {
+            "fieldname": "provisioning_tab",
+            "fieldtype": "Tab Break",
+            "label": "Provisioning"
+        },
+        {
+            "fieldname": "provisioning_section",
+            "fieldtype": "Section Break",
+            "label": "Provisioning"
+        },
+        {
+            "default": "300",
+            "fieldname": "timeout_seconds",
+            "fieldtype": "Int",
+            "label": "Default Operation Timeout (seconds)"
+        },
+        {
+            "default": "50",
+            "description": "Operations processed per scheduler run.",
+            "fieldname": "queue_batch_limit",
+            "fieldtype": "Int",
+            "label": "Queue Batch Limit"
+        },
+        {
+            "default": "5",
+            "fieldname": "backoff_transient_minutes",
+            "fieldtype": "Int",
+            "label": "Backoff Transient (minutes)"
+        },
+        {
+            "default": "15",
+            "fieldname": "backoff_rate_limited_minutes",
+            "fieldtype": "Int",
+            "label": "Backoff Rate Limited (minutes)"
+        },
+        {
+            "fieldname": "provisioning_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "60",
+            "fieldname": "backoff_capacity_minutes",
+            "fieldtype": "Int",
+            "label": "Backoff Capacity (minutes)"
+        },
+        {
+            "default": "30",
+            "fieldname": "backoff_unknown_minutes",
+            "fieldtype": "Int",
+            "label": "Backoff Unknown (minutes)"
+        },
+        {
+            "default": "1440",
+            "description": "Upper cap for exponential provisioning backoff.",
+            "fieldname": "backoff_backoff_cap_minutes",
+            "fieldtype": "Int",
+            "label": "Backoff Cap (minutes)"
+        },
+        {
+            "fieldname": "certs_tab",
+            "fieldtype": "Tab Break",
+            "label": "Certificates"
+        },
+        {
+            "fieldname": "certs_section",
+            "fieldtype": "Section Break",
+            "label": "Certificates"
+        },
+        {
+            "default": "90",
+            "fieldname": "cert_validity_days",
+            "fieldtype": "Int",
+            "label": "Certificate Validity (days)"
+        },
+        {
+            "default": "30",
+            "description": "Auto-renew when days-left is at or below this.",
+            "fieldname": "cert_expiry_warn_days",
+            "fieldtype": "Int",
+            "label": "Certificate Renew Warn (days)"
+        },
+        {
+            "fieldname": "certs_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "7",
+            "description": "Pending-validation certs older than this are marked Failed.",
+            "fieldname": "cert_stale_validation_days",
+            "fieldtype": "Int",
+            "label": "Stale Validation (days)"
+        },
+        {
+            "fieldname": "billing_tab",
+            "fieldtype": "Tab Break",
+            "label": "Billing and Backups"
+        },
+        {
+            "fieldname": "billing_section",
+            "fieldtype": "Section Break",
+            "label": "Billing and Backups"
+        },
+        {
+            "default": "USD",
+            "description": "Fallback currency for invoices and overage charges.",
+            "fieldname": "default_currency",
+            "fieldtype": "Data",
+            "label": "Default Currency"
+        },
+        {
+            "default": "7",
+            "description": "Expired backups older than this are purged to Deleted.",
+            "fieldname": "backup_expired_purge_days",
+            "fieldtype": "Int",
+            "label": "Expired Backup Purge (days)"
+        },
+        {
+            "fieldname": "billing_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "30",
+            "description": "Fallback retain_until window when a policy has no retention.",
+            "fieldname": "backup_default_retention_days",
+            "fieldtype": "Int",
+            "label": "Default Backup Retention (days)"
+        },
+        {
+            "default": "512",
+            "description": "Simulated snapshot size per backup run.",
+            "fieldname": "backup_default_snapshot_size_mb",
+            "fieldtype": "Float",
+            "label": "Default Snapshot Size (MB)"
+        },
+        {
+            "fieldname": "security_tab",
+            "fieldtype": "Tab Break",
+            "label": "Security and Identity"
+        },
+        {
+            "fieldname": "security_section",
+            "fieldtype": "Section Break",
+            "label": "Security and Identity"
+        },
+        {
+            "default": "5",
+            "fieldname": "max_upload_mb",
+            "fieldtype": "Int",
+            "label": "Max Upload (MB)"
+        },
+        {
+            "default": "256",
+            "fieldname": "max_provider_response_kb",
+            "fieldtype": "Int",
+            "label": "Max Provider Response (KB)"
+        },
+        {
+            "default": "12",
+            "fieldname": "session_ttl_hours",
+            "fieldtype": "Int",
+            "label": "Session TTL (hours)"
+        },
+        {
+            "default": "15",
+            "description": "Single-use console ticket lifetime.",
+            "fieldname": "console_ttl_minutes",
+            "fieldtype": "Int",
+            "label": "Console TTL (minutes)"
+        },
+        {
+            "default": "24",
+            "fieldname": "verification_ttl_hours",
+            "fieldtype": "Int",
+            "label": "Verification TTL (hours)"
+        },
+        {
+            "fieldname": "security_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "12",
+            "fieldname": "token_default_ttl_hours",
+            "fieldtype": "Int",
+            "label": "Token Default TTL (hours)"
+        },
+        {
+            "default": "5",
+            "fieldname": "login_fail_limit",
+            "fieldtype": "Int",
+            "label": "Login Fail Limit"
+        },
+        {
+            "default": "15",
+            "fieldname": "login_fail_window_minutes",
+            "fieldtype": "Int",
+            "label": "Login Fail Window (minutes)"
+        },
+        {
+            "default": "15",
+            "fieldname": "login_lock_minutes",
+            "fieldtype": "Int",
+            "label": "Login Lock (minutes)"
+        },
+        {
+            "default": "8",
+            "fieldname": "min_password_length",
+            "fieldtype": "Int",
+            "label": "Min Password Length"
+        },
+        {
+            "fieldname": "portal_tab",
+            "fieldtype": "Tab Break",
+            "label": "Portal"
+        },
+        {
+            "fieldname": "portal_section",
+            "fieldtype": "Section Break",
+            "label": "Portal"
+        },
+        {
+            "default": "120",
+            "fieldname": "portal_default_rate_limit",
+            "fieldtype": "Int",
+            "label": "Portal Default Rate Limit"
+        },
+        {
+            "default": "60",
+            "fieldname": "portal_default_rate_window_sec",
+            "fieldtype": "Int",
+            "label": "Portal Rate Window (seconds)"
+        },
+        {
+            "fieldname": "portal_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "7",
+            "fieldname": "cart_ttl_days",
+            "fieldtype": "Int",
+            "label": "Cart TTL (days)"
+        },
+        {
+            "fieldname": "helpdesk_tab",
+            "fieldtype": "Tab Break",
+            "label": "Helpdesk Sync"
+        },
+        {
+            "fieldname": "helpdesk_section",
+            "fieldtype": "Section Break",
+            "label": "Helpdesk Sync"
+        },
+        {
+            "default": "5",
+            "fieldname": "sync_max_attempts",
+            "fieldtype": "Int",
+            "label": "Sync Max Attempts"
+        },
+        {
+            "default": "5",
+            "fieldname": "sync_backoff_base_minutes",
+            "fieldtype": "Int",
+            "label": "Sync Backoff Base (minutes)"
+        },
+        {
+            "fieldname": "helpdesk_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "240",
+            "fieldname": "sync_backoff_cap_minutes",
+            "fieldtype": "Int",
+            "label": "Sync Backoff Cap (minutes)"
+        },
+        {
+            "fieldname": "monitoring_tab",
+            "fieldtype": "Tab Break",
+            "label": "Monitoring and Reconciliation"
+        },
+        {
+            "fieldname": "monitoring_section",
+            "fieldtype": "Section Break",
+            "label": "Monitoring and Reconciliation"
+        },
+        {
+            "default": "30",
+            "fieldname": "expiring_warn_days",
+            "fieldtype": "Int",
+            "label": "Expiring Warn (days)"
+        },
+        {
+            "default": "7",
+            "fieldname": "expiring_urgent_days",
+            "fieldtype": "Int",
+            "label": "Expiring Urgent (days)"
+        },
+        {
+            "default": "90",
+            "description": "Invoices overdue longer than this are flagged in reconciliation.",
+            "fieldname": "invoice_overdue_flag_days",
+            "fieldtype": "Int",
+            "label": "Overdue Flag (days)"
+        },
+        {
+            "fieldname": "monitoring_col",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "50",
+            "description": "Mismatch rows kept per reconciliation pair.",
+            "fieldname": "recon_batch_limit",
+            "fieldtype": "Int",
+            "label": "Reconciliation Limit"
+        },
+        {
+            "default": "10",
+            "description": "Subnets with less free space than this count as low.",
+            "fieldname": "ip_low_threshold_pct",
+            "fieldtype": "Percent",
+            "label": "IP Low Threshold (%)"
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "issingle": 1,
+    "links": [],
+    "modified": "2026-09-30 00:00:00",
+    "modified_by": "Administrator",
+    "module": "BeaverBill",
+    "name": "BeaverBill Settings",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hosting Admin",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
 }

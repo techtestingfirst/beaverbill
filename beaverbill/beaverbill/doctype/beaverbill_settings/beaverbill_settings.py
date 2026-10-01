@@ -20,11 +20,15 @@ class BeaverBillSettings(Document):
 		backup_default_retention_days: DF.Int | None
 		backup_default_snapshot_size_mb: DF.Float | None
 		backup_expired_purge_days: DF.Int | None
+		billing_col: DF.ColumnBreak | None
 		billing_section: DF.SectionBreak | None
+		billing_tab: DF.TabBreak | None
 		cart_ttl_days: DF.Int | None
 		cert_expiry_warn_days: DF.Int | None
 		cert_stale_validation_days: DF.Int | None
 		cert_validity_days: DF.Int | None
+		certs_col: DF.ColumnBreak | None
+		certs_tab: DF.TabBreak | None
 		certs_section: DF.SectionBreak | None
 		console_ttl_minutes: DF.Int | None
 		default_currency: DF.Data | None
@@ -34,10 +38,14 @@ class BeaverBillSettings(Document):
 		domain_reminder_stages: DF.Data | None
 		domain_renewal_currency: DF.Data | None
 		domain_renewal_price: DF.Currency | None
+		domains_col: DF.ColumnBreak | None
+		domains_tab: DF.TabBreak | None
 		domains_section: DF.SectionBreak | None
 		expiring_urgent_days: DF.Int | None
 		expiring_warn_days: DF.Int | None
+		helpdesk_col: DF.ColumnBreak | None
 		helpdesk_section: DF.SectionBreak | None
+		helpdesk_tab: DF.TabBreak | None
 		invoice_overdue_flag_days: DF.Int | None
 		ip_low_threshold_pct: DF.Percent | None
 		lock_timeout_minutes: DF.Int | None
@@ -47,21 +55,31 @@ class BeaverBillSettings(Document):
 		max_provider_response_kb: DF.Int | None
 		max_upload_mb: DF.Int | None
 		min_password_length: DF.Int | None
+		monitoring_col: DF.ColumnBreak | None
 		monitoring_section: DF.SectionBreak | None
+		monitoring_tab: DF.TabBreak | None
 		portal_default_rate_limit: DF.Int | None
 		portal_default_rate_window_sec: DF.Int | None
+		portal_col: DF.ColumnBreak | None
 		portal_section: DF.SectionBreak | None
+		portal_tab: DF.TabBreak | None
+		provisioning_col: DF.ColumnBreak | None
 		provisioning_section: DF.SectionBreak | None
+		provisioning_tab: DF.TabBreak | None
 		purge_after_terminate_days: DF.Int | None
 		queue_batch_limit: DF.Int | None
 		recon_batch_limit: DF.Int | None
+		security_col: DF.ColumnBreak | None
 		security_section: DF.SectionBreak | None
+		security_tab: DF.TabBreak | None
 		session_ttl_hours: DF.Int | None
 		sub_default_grace_period_days: DF.Int | None
 		sub_default_max_retries: DF.Int | None
 		sub_default_renewal_lead_days: DF.Int | None
 		sub_default_retry_backoff_minutes: DF.Int | None
+		subscriptions_col: DF.ColumnBreak | None
 		subscriptions_section: DF.SectionBreak | None
+		subscriptions_tab: DF.TabBreak | None
 		sync_backoff_base_minutes: DF.Int | None
 		sync_backoff_cap_minutes: DF.Int | None
 		sync_max_attempts: DF.Int | None
