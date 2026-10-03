@@ -3,10 +3,12 @@ from frappe.model.document import Document
 from frappe.utils import today, add_months
 
 ALLOWED_TRANSITIONS = {
-	"Draft": {"Confirmed", "Cancelled", "Pending"},
-	"Confirmed": {"Payment Pending", "Pending", "Cancelled"},
-	"Payment Pending": {"Paid", "Cancelled"},
-	"Pending": {"Paid", "Cancelled", "Confirmed", "Payment Pending"},
+	"Draft": {"Confirmed", "Cancelled", "Pending", "Fraud Hold", "Manual Review"},
+	"Confirmed": {"Payment Pending", "Pending", "Cancelled", "Fraud Hold", "Manual Review"},
+	"Payment Pending": {"Paid", "Cancelled", "Fraud Hold"},
+	"Pending": {"Paid", "Cancelled", "Confirmed", "Payment Pending", "Fraud Hold", "Manual Review"},
+	"Fraud Hold": {"Confirmed", "Manual Review", "Cancelled"},
+	"Manual Review": {"Confirmed", "Cancelled"},
 	"Paid": {"Processing", "Cancelled"},
 	"Processing": {"Completed", "Cancelled"},
 	"Completed": set(),
@@ -32,7 +34,7 @@ class HostingOrder(Document):
 		items: DF.Table[HostingOrderItem]
 		order_date: DF.Date
 		promo_code: DF.Link | None
-		status: DF.Literal["Draft", "Confirmed", "Payment Pending", "Pending", "Paid", "Processing", "Completed", "Cancelled"]
+		status: DF.Literal["Draft", "Confirmed", "Payment Pending", "Pending", "Fraud Hold", "Manual Review", "Paid", "Processing", "Completed", "Cancelled"]
 		total_amount: DF.Currency
 	# end: auto-generated types
 

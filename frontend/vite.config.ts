@@ -17,6 +17,11 @@ export default defineConfig({
       '/payment-failed': 'http://beaverbill.localhost:8000',
       '/website_script.js': 'http://beaverbill.localhost:8000',
       '/website.css': 'http://beaverbill.localhost:8000',
+      // frappe.call POSTs to "/" with X-Frappe-CMD (see razorpay_checkout.js
+      // make_payment). Vite answers 404, confirmation never reaches bench,
+      // invoice stays unpaid. InvoiceDetail now navigates to backend absolute
+      // URL, this proxy is safety net for relative visits via :8080.
+      '^/$': 'http://beaverbill.localhost:8000',
     },
   },
 })

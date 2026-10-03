@@ -280,6 +280,9 @@ scheduler_events = {
         "beaverbill.beaverbill.helpdesk_sync.process_helpdesk_sync",
         "beaverbill.beaverbill.monitoring.run_monitoring_cycle",
         "beaverbill.beaverbill.reconciliation.run_reconciliation_cycle",
+        "beaverbill.beaverbill.billing.mark_overdue",
+        "beaverbill.beaverbill.billing.apply_late_fees",
+        "beaverbill.beaverbill.carts.process_abandoned_carts",
     ],
 }
 

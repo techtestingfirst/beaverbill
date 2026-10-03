@@ -16,6 +16,13 @@
         "currency",
         "column_break_4",
         "total_amount",
+        "section_break_form",
+        "order_form",
+        "domain_mode",
+        "column_break_form",
+        "domain_name",
+        "tos_consented",
+        "recurring_consented",
         "section_break_items",
         "items",
         "section_break_close",
@@ -51,7 +58,7 @@
             "fieldtype": "Select",
             "in_list_view": 1,
             "label": "Status",
-            "options": "Draft\nConfirmed\nPayment Pending\nPending\nPaid\nProcessing\nCompleted\nCancelled",
+            "options": "Draft\nConfirmed\nPayment Pending\nPending\nFraud Hold\nManual Review\nPaid\nProcessing\nCompleted\nCancelled",
             "reqd": 1
         },
         {
@@ -91,6 +98,45 @@
             "fieldname": "cancellation_reason",
             "fieldtype": "Small Text",
             "label": "Cancellation Reason"
+        },
+        {
+            "fieldname": "order_form",
+            "fieldtype": "Link",
+            "label": "Order Form",
+            "options": "Hosting Order Form"
+        },
+        {
+            "fieldname": "domain_mode",
+            "fieldtype": "Select",
+            "label": "Domain Mode",
+            "options": "\nregister\nexisting",
+            "default": ""
+        },
+        {
+            "fieldname": "domain_name",
+            "fieldtype": "Data",
+            "label": "Domain Name"
+        },
+        {
+            "fieldname": "tos_consented",
+            "fieldtype": "Check",
+            "label": "TOS Consented",
+            "default": "0"
+        },
+        {
+            "fieldname": "recurring_consented",
+            "fieldtype": "Check",
+            "label": "Recurring Consented",
+            "default": "0"
+        },
+        {
+            "fieldname": "section_break_form",
+            "fieldtype": "Section Break",
+            "label": "Order Form"
+        },
+        {
+            "fieldname": "column_break_form",
+            "fieldtype": "Column Break"
         },
         {
             "fieldname": "section_break_order",

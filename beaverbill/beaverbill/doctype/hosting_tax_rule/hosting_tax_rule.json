@@ -19,7 +19,9 @@
         "effective_from",
         "effective_to",
         "column_break_6",
-        "is_active"
+        "is_active",
+        "tax_level",
+        "tax_type"
     ],
     "fields": [
         {
@@ -103,6 +105,20 @@
         {
             "fieldname": "column_break_6",
             "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "tax_level",
+            "fieldtype": "Select",
+            "label": "Level",
+            "options": "1\n2",
+            "default": "1"
+        },
+        {
+            "fieldname": "tax_type",
+            "fieldtype": "Select",
+            "label": "Tax Type",
+            "options": "Exclusive\nInclusive\nAdditive",
+            "default": "Exclusive"
         }
     ],
     "index_web_pages_for_search": 1,

@@ -266,6 +266,15 @@ def _sync_service(op: object, result: dict) -> None:
 		svc.save(ignore_permissions=True)
 	except frappe.ValidationError:
 		pass
+	if target == "Active" and op.operation_type == "Create":
+		try:
+			from beaverbill.beaverbill.notifications import notify as _notify
+
+			login = svc.get("login_username") or svc.customer
+			detail = f"Service {svc.name} is active." + (f" IP {svc.ip_address}." if svc.get("ip_address") else "") + (f" Domain {svc.domain}." if svc.get("domain") else "") + f" Login {login}."
+			_notify(svc.customer, f"Welcome: {svc.name} active", detail, "Hosting Service", svc.name)
+		except Exception:
+			pass
 	_stamp_reconciled(svc)
 
 

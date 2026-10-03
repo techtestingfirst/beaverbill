@@ -13,12 +13,17 @@ def _invoice_payload(doc) -> dict:
 		"status": doc.status,
 		"invoice_date": str(doc.invoice_date),
 		"due_date": str(doc.due_date),
+		"subtotal": float(doc.subtotal or 0),
+		"discount_amount": float(doc.discount_amount or 0),
+		"tax_amount": float(doc.tax_amount or 0),
 		"total_amount": float(doc.total_amount or 0),
 		"paid_amount": float(doc.paid_amount or 0),
 		"outstanding_amount": float(doc.outstanding_amount or 0),
 		"currency": doc.currency,
 		"items": [
-			{"description": r.description, "qty": r.qty, "unit_price": float(r.unit_price or 0), "line_total": float(r.line_total or 0)}
+			{"description": r.description, "qty": r.qty, "unit_price": float(r.unit_price or 0),
+			 "discount_amount": float(r.discount_amount or 0), "tax_amount": float(r.tax_amount or 0),
+			 "line_total": float(r.line_total or 0)}
 			for r in doc.items
 		],
 	}

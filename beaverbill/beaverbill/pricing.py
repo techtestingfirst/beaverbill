@@ -166,33 +166,71 @@ def applicable_tax_rules(product_group, profile, on_date=None):
 	return matched
 
 
-def compute_taxes(subtotal, product_group, profile, currency):
-	"""Apply matching rules; split India GST by origin state."""
+def compute_taxes(subtotal, product_group, profile, currency, taxable=True):
+	"""Apply matching rules; split India GST by origin state.
+
+	Blesta parity additive: taxable flag skips lines, reverse-charge
+	zero-rates EU B2B, Inclusive back-calculates, Level 2 cascades on
+	subtotal + Level 1. Return shape preserved.
+	"""
+	from beaverbill.beaverbill import taxes as tax_helper
 	breakdown = []
 	total = 0.0
+	if not tax_helper.tax_enabled():
+		return breakdown, total
+	if not taxable:
+		return breakdown, total
 	if profile and profile.tax_exempt:
 		return breakdown, total
+	reverse = False
+	try:
+		reverse = tax_helper.is_reverse_charge(
+			(profile.country if profile else "") or "",
+			bool(profile and getattr(profile, "tax_id_validated", 0)),
+		)
+	except Exception:
+		reverse = False
+	level1_base = 0.0
+	level1_total = 0.0
 	for rule in applicable_tax_rules(product_group, profile, None):
 		rate = float(rule.rate or 0)
+		level = str(getattr(rule, "tax_level", "1") or "1")
+		type_ = (getattr(rule, "tax_type", "Exclusive") or "Exclusive")
+		if reverse:
+			breakdown.append({"rule": rule.tax_name, "part": "reverse-charge", "rate": 0.0, "amount": 0.0})
+			continue
 		if rule.country == "India" and rule.gst_mode == "CGST + SGST":
-			# Intra-state only; inter-state is covered by the IGST rule.
 			if not profile or profile.state != rule.state_code:
 				continue
 			half = money(subtotal * rate / 200.0, currency)
 			breakdown.append({"rule": rule.tax_name, "part": "CGST", "rate": rate / 2, "amount": half})
 			breakdown.append({"rule": rule.tax_name, "part": "SGST", "rate": rate / 2, "amount": half})
 			total += half * 2
-		elif rule.country == "India" and rule.gst_mode == "IGST":
-			# Inter-state only; intra-state uses the CGST + SGST rule.
+			level1_total += half * 2
+			continue
+		if rule.country == "India" and rule.gst_mode == "IGST":
 			if profile and profile.state == rule.state_code:
 				continue
 			amount = money(subtotal * rate / 100.0, currency)
 			breakdown.append({"rule": rule.tax_name, "part": "IGST", "rate": rate, "amount": amount})
 			total += amount
-		else:
-			amount = money(subtotal * rate / 100.0, currency)
-			breakdown.append({"rule": rule.tax_name, "part": "", "rate": rate, "amount": amount})
+			level1_total += amount
+			continue
+		if level == "2":
+			base = subtotal + level1_total
+			amount = money(base * rate / 100.0, currency)
+			breakdown.append({"rule": rule.tax_name, "part": "L2", "rate": rate, "amount": amount})
 			total += amount
+			continue
+		if type_ == "Inclusive":
+			amount = money(subtotal * rate / (100.0 + rate), currency)
+			breakdown.append({"rule": rule.tax_name, "part": "", "rate": rate, "amount": amount, "inclusive": True})
+			continue
+		amount = money(subtotal * rate / 100.0, currency)
+		breakdown.append({"rule": rule.tax_name, "part": "", "rate": rate, "amount": amount})
+		total += amount
+		level1_total += amount
+	level1_base = level1_total
 	return breakdown, money(total, currency)
 
 
@@ -250,12 +288,20 @@ def calculate_price(
 			discount = money(convert(float(promo.discount_value), product.currency, currency, on_date), currency)
 		total = max(0.0, money(total, currency) - discount)
 
+	from beaverbill.beaverbill import settings as _settings
+
+	setup_fee = money(convert(float(getattr(product, "setup_fee", 0) or 0), product.currency, currency, on_date), currency)
+	if setup_fee:
+		total += setup_fee
+		lines.append({"kind": "setup", "label": "Setup fee", "amount": setup_fee})
 	subtotal = money(total, currency)
+	tax_base = subtotal if _settings.get_int("tax_setup_fees", 1) == 1 else money(subtotal - setup_fee, currency)
+	taxable = bool(int(getattr(product, "taxable", 1) if getattr(product, "taxable", 1) is not None else 1))
 	if customer and frappe.db.exists("Hosting Customer", customer):
 		profile = get_tax_profile(customer=customer)
 	else:
 		profile = get_tax_profile(user=customer)
-	tax_breakdown, tax_total = compute_taxes(subtotal, product.product_group, profile, currency)
+	tax_breakdown, tax_total = compute_taxes(tax_base, product.product_group, profile, currency, taxable=taxable)
 	grand = money(subtotal + tax_total, currency)
 	result = {
 		"base_price": base_price,

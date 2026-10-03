@@ -59,19 +59,31 @@ def _priced_cart(user=None) -> dict:
 	cart = _load_cart(user)
 	lines = []
 	total = 0.0
+	subtotal = 0.0
+	discount = 0.0
+	tax_total = 0.0
 	currency = None
 	for item in cart["items"]:
+		qty = float(item.get("qty") or 1)
 		quote = pricing.calculate_price(
 			item["product"], config_options=item.get("options"), addons=item.get("addons"),
 			promo_code=_promo_name(cart.get("coupon")) if cart.get("coupon") else None,
 			billing_cycle=item.get("billing_cycle"), customer=user,
 			order_context={"is_first_order": True},
 		)
-		line_total = float(quote["total_price"]) * float(item.get("qty") or 1)
+		line_total = float(quote["total_price"]) * qty
 		total += line_total
+		subtotal += float(quote.get("subtotal") or 0) * qty
+		discount += float(quote.get("discount") or 0) * qty
+		tax_total += float(quote.get("tax_total") or 0) * qty
 		currency = currency or quote["currency"]
-		lines.append({"product": item["product"], "qty": item.get("qty") or 1, "unit_total": quote["total_price"], "line_total": round(line_total, 2)})
-	return {"items": lines, "coupon": cart.get("coupon"), "total": round(total, 2), "currency": currency or "USD"}
+		lines.append({"product": item["product"], "qty": item.get("qty") or 1, "unit_total": quote["total_price"], "line_total": round(line_total, 2),
+			"subtotal": round(float(quote.get("subtotal") or 0) * qty, 2),
+			"discount": round(float(quote.get("discount") or 0) * qty, 2),
+			"tax": round(float(quote.get("tax_total") or 0) * qty, 2)})
+	return {"items": lines, "coupon": cart.get("coupon"), "subtotal": round(subtotal, 2),
+		"discount": round(discount, 2), "tax_total": round(tax_total, 2),
+		"total": round(total, 2), "currency": currency or "USD"}
 
 
 @frappe.whitelist()
@@ -89,6 +101,12 @@ def cart_add(product: str, qty: int = 1, billing_cycle: str | None = None, optio
 		"addons": json.loads(addons) if addons else None,
 	})
 	_save_cart(cart)
+	try:
+		from beaverbill.beaverbill import carts as cart_trail
+
+		cart_trail.track_activity(cart=_load_cart())
+	except Exception:
+		pass
 	return _priced_cart()
 
 
@@ -110,7 +128,7 @@ def cart_remove(index: int) -> dict:
 def cart_clear() -> dict:
 	"""Empty the cart."""
 	_save_cart({"items": [], "coupon": None})
-	return {"items": [], "coupon": None, "total": 0.0}
+	return {"items": [], "coupon": None, "subtotal": 0.0, "discount": 0.0, "tax_total": 0.0, "total": 0.0, "currency": "USD"}
 
 
 @frappe.whitelist()
@@ -124,6 +142,12 @@ def cart_coupon(code: str | None = None) -> dict:
 	else:
 		cart["coupon"] = None
 	_save_cart(cart)
+	try:
+		from beaverbill.beaverbill import carts as cart_trail
+
+		cart_trail.track_activity(cart=_load_cart())
+	except Exception:
+		pass
 	return _priced_cart()
 
 
@@ -140,7 +164,15 @@ def _own_order(name: str, user=None) -> object:
 
 @frappe.whitelist()
 @portal_endpoint("portal.checkout", limit=10)
-def checkout(idempotency_key: str) -> dict:
+def checkout(
+	idempotency_key: str,
+	order_form: str | None = None,
+	domain_mode: str | None = None,
+	domain_name: str | None = None,
+	tos_consented: bool = False,
+	recurring_consented: bool = False,
+	captcha_verified: bool = False,
+) -> dict:
 	"""Convert the cart into an order plus an Issued invoice. Idempotent."""
 	user = frappe.session.user
 	customer = portal_customer()
@@ -150,6 +182,30 @@ def checkout(idempotency_key: str) -> dict:
 	if hit:
 		doc = _own_order(hit, user)
 		return {"order": doc.name, "status": doc.status, "duplicate_request": True}
+	form = None
+	if order_form:
+		form = frappe.get_doc("Hosting Order Form", order_form)
+		if not form.is_active:
+			frappe.throw(f"Order form {order_form} is not active", frappe.ValidationError)
+		if form.require_tos and not tos_consented:
+			frappe.throw("Terms of Service consent is required", frappe.ValidationError)
+		if form.require_recurring_consent and not recurring_consented:
+			frappe.throw("Recurring billing consent is required", frappe.ValidationError)
+		if form.require_captcha and not captcha_verified:
+			frappe.throw("Human verification is required", frappe.ValidationError)
+		if not form.allow_coupon and _load_cart(user).get("coupon"):
+			frappe.throw("Coupons are not allowed on this order form", frappe.ValidationError)
+	clean_domain = None
+	if domain_mode:
+		if domain_mode not in ("register", "existing"):
+			frappe.throw("domain_mode must be register or existing", frappe.ValidationError)
+		if not domain_name:
+			frappe.throw("domain_name is required with domain_mode", frappe.ValidationError)
+		from beaverbill.beaverbill import domains as domain_engine
+
+		clean_domain = domain_engine.normalize_domain(domain_name)
+		if domain_mode == "register" and frappe.db.exists("Hosting Domain", {"domain_name": clean_domain}):
+			frappe.throw(f"Domain {clean_domain} is already managed", frappe.ValidationError)
 	cart = _load_cart(user)
 	if not cart["items"]:
 		frappe.throw("Cart is empty", frappe.ValidationError)
@@ -172,6 +228,8 @@ def checkout(idempotency_key: str) -> dict:
 			"total": round(float(quote["total_price"]) * qty, 2),
 			"base_price": quote["base_price"],
 			"discount_amount": quote["discount"],
+			"tax_amount": round(float(quote.get("tax_total") or 0) * qty, 2),
+			"tax_breakdown": quote.get("tax_breakdown"),
 			"billing_cycle": quote["billing_cycle"],
 			"calculation_snapshot": quote["snapshot"][:4000],
 		})
@@ -194,26 +252,62 @@ def checkout(idempotency_key: str) -> dict:
 			"total_amount": total,
 			"items": lines,
 			"idempotency_key": idempotency_key,
+			"order_form": form.name if form else None,
+			"domain_mode": domain_mode,
+			"domain_name": clean_domain,
+			"tos_consented": 1 if tos_consented else 0,
+			"recurring_consented": 1 if recurring_consented else 0,
 		}
 	).insert()
+	from beaverbill.beaverbill import fraud as fraud_engine
+
+	screened = fraud_engine.screen_order(order.name)
+	decision = screened.get("decision")
+	if decision == "reject":
+		order.status = "Cancelled"
+		order.cancellation_reason = "Rejected by fraud screening"
+		order.save()
+		try:
+			from beaverbill.beaverbill import carts as cart_trail
+
+			cart_trail.mark_converted(user)
+		except Exception:
+			pass
+		_save_cart({"items": [], "coupon": None}, user)
+		return {"order": order.name, "status": order.status, "screening": decision,
+				"total": total, "currency": currency}
+	if decision in ("hold", "manual"):
+		order.status = "Fraud Hold" if decision == "hold" else "Manual Review"
+		order.save()
+		try:
+			from beaverbill.beaverbill import carts as cart_trail
+
+			cart_trail.mark_converted(user)
+		except Exception:
+			pass
+		_save_cart({"items": [], "coupon": None}, user)
+		return {"order": order.name, "status": order.status, "screening": decision,
+				"total": total, "currency": currency}
 	if promo:
 		pricing.redeem_promo(promo, order_context={"is_first_order": is_first}, customer=billable_customer(customer), order=order.name, discount_given=sum(float(line["discount_amount"] or 0) for line in lines))
 	order.status = "Confirmed"
 	order.save()
 	order.status = "Payment Pending"
 	order.save()
+	order.reload()
 	invoice = ledger.issue_invoice(
 		billable_customer(customer),
-		[{
-			"description": f"Order {order.name}",
-			"qty": 1,
-			"unit_price": total,
-			"line_total": total,
-		}],
+		ledger.build_invoice_items(order),
 		currency=currency,
 		order=order.name,
 		idempotency_key=f"{idempotency_key}-invoice",
 	)
+	try:
+		from beaverbill.beaverbill import carts as cart_trail
+
+		cart_trail.mark_converted(user)
+	except Exception:
+		pass
 	_save_cart({"items": [], "coupon": None}, user)
 	return {"order": order.name, "status": order.status, "invoice": invoice.name,
 			"total": total, "currency": currency}
@@ -253,6 +347,11 @@ def get_order(name: str) -> dict:
 		"order_date": str(doc.order_date),
 		"total_amount": float(doc.total_amount or 0),
 		"currency": doc.currency,
+		"order_form": doc.get("order_form"),
+		"domain_mode": doc.get("domain_mode"),
+		"domain_name": doc.get("domain_name"),
+		"tos_consented": int(doc.get("tos_consented") or 0),
+		"recurring_consented": int(doc.get("recurring_consented") or 0),
 		"items": [
 			{"product": r.product, "qty": r.qty, "price": float(r.price or 0), "total": float(r.total or 0), "billing_cycle": r.billing_cycle}
 			for r in doc.items

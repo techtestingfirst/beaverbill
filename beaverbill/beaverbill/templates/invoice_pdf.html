@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  body { font-family: Helvetica, Arial, sans-serif; color: #1a1a1a; font-size: 12px; margin: 0; }
+  .wrap { padding: 32px 36px; }
+  .head { display: table; width: 100%; margin-bottom: 24px; }
+  .brand, .meta { display: table-cell; vertical-align: top; }
+  .brand h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
+  .brand p { margin: 2px 0 0; color: #666; font-size: 11px; }
+  .meta { text-align: right; }
+  .meta h2 { margin: 0; font-size: 18px; }
+  .meta p { margin: 2px 0; color: #444; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+  .pill.Paid { background: #e6f4ea; color: #137333; }
+  .pill.Issued, .pill.Unpaid { background: #fef7e0; color: #b06000; }
+  .pill.Overdue { background: #fce8e6; color: #a50e0e; }
+  .pill.Draft, .pill.Cancelled { background: #f1f3f4; color: #5f6368; }
+  .cols { display: table; width: 100%; margin: 16px 0 20px; }
+  .col { display: table-cell; width: 50%; vertical-align: top; }
+  .col h3 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; color: #888; letter-spacing: 0.6px; }
+  .col p { margin: 2px 0; }
+  table.lines { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.lines th { text-align: left; font-size: 11px; text-transform: uppercase; color: #666; border-bottom: 2px solid #222; padding: 6px 8px; }
+  table.lines th.num, table.lines td.num { text-align: right; }
+  table.lines td { border-bottom: 1px solid #e0e0e0; padding: 8px; vertical-align: top; }
+  table.totals { width: 320px; margin-left: auto; border-collapse: collapse; margin-top: 12px; }
+  table.totals td { padding: 4px 8px; }
+  table.totals td:last-child { text-align: right; }
+  table.totals tr.grand td { font-size: 14px; font-weight: bold; border-top: 2px solid #222; }
+  .foot { margin-top: 28px; color: #666; font-size: 11px; border-top: 1px solid #e0e0e0; padding-top: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="brand">
+      <h1>BeaverBill</h1>
+      <p>Hosting billing{% if company_tax_id %} · Tax ID {{ company_tax_id }}{% endif %}</p>
+    </div>
+    <div class="meta">
+      <h2>INVOICE {{ doc.name }}</h2>
+      <p>Issued {{ doc.invoice_date }} · Due {{ doc.due_date }}</p>
+      <p><span class="pill {{ doc.status }}">{{ doc.status }}</span></p>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <h3>Billed to</h3>
+      <p><strong>{{ customer_name }}</strong></p>
+      {% if company %}<p>{{ company }}</p>{% endif %}
+      <p>{{ customer_email }}</p>
+      {% if addr1 %}<p>{{ addr1 }}</p>{% endif %}
+      {% if addr2 %}<p>{{ addr2 }}</p>{% endif %}
+      {% if city_line %}<p>{{ city_line }}</p>{% endif %}
+      {% if country %}<p>{{ country }}</p>{% endif %}
+      {% if tax_id %}<p>Tax ID: {{ tax_id }}</p>{% endif %}
+    </div>
+    <div class="col">
+      <h3>Details</h3>
+      {% if doc.order %}<p>Order: {{ doc.order }}</p>{% endif %}
+      <p>Currency: {{ doc.currency }}</p>
+      {% if doc.due_date %}<p>Please pay by {{ doc.due_date }}.</p>{% endif %}
+    </div>
+  </div>
+
+  <table class="lines">
+    <thead>
+      <tr><th>Description</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Tax</th><th class="num">Total</th></tr>
+    </thead>
+    <tbody>
+      {% for r in doc.items %}
+      <tr>
+        <td>{{ r.description }}</td>
+        <td class="num">{{ r.qty }}</td>
+        <td class="num">{{ r.unit_price }}</td>
+        <td class="num">{{ r.tax_amount or 0 }}</td>
+        <td class="num">{{ r.line_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="totals">
+    {% if doc.subtotal %}<tr><td>Subtotal</td><td>{{ doc.subtotal }} {{ doc.currency }}</td></tr>{% endif %}
+    {% if doc.discount_amount %}<tr><td>Discount</td><td>−{{ doc.discount_amount }} {{ doc.currency }}</td></tr>{% endif %}
+    <tr><td>Tax</td><td>{{ doc.tax_amount or 0 }} {{ doc.currency }}</td></tr>
+    <tr class="grand"><td>Total</td><td>{{ doc.total_amount }} {{ doc.currency }}</td></tr>
+    <tr><td>Paid</td><td>{{ doc.paid_amount or 0 }} {{ doc.currency }}</td></tr>
+    <tr><td>Outstanding</td><td>{{ doc.outstanding_amount }} {{ doc.currency }}</td></tr>
+  </table>
+
+  <div class="foot">
+    <p>Questions about this invoice? Reply to your hosting account email.</p>
+  </div>
+</div>
+</body>
+</html>

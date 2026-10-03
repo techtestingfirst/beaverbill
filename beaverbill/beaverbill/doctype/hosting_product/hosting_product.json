@@ -23,7 +23,9 @@
         "ram_mb",
         "column_break_7",
         "disk_gb",
-        "bandwidth_gb"
+        "bandwidth_gb",
+        "taxable",
+        "setup_fee"
     ],
     "fields": [
         {
@@ -124,6 +126,18 @@
         {
             "fieldname": "column_break_7",
             "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "taxable",
+            "fieldtype": "Check",
+            "label": "Taxable",
+            "default": "1"
+        },
+        {
+            "fieldname": "setup_fee",
+            "fieldtype": "Currency",
+            "label": "Setup Fee",
+            "default": "0"
         }
     ],
     "index_web_pages_for_search": 1,

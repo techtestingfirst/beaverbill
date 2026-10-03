@@ -1,0 +1,161 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:form_name",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_form",
+        "form_name",
+        "template",
+        "column_break_2",
+        "form_type",
+        "is_active",
+        "section_break_rules",
+        "product_groups",
+        "column_break_4",
+        "allow_coupon",
+        "section_break_consent",
+        "require_tos",
+        "tos_text",
+        "column_break_6",
+        "require_recurring_consent",
+        "require_captcha",
+        "section_break_review",
+        "require_manual_review"
+    ],
+    "fields": [
+        {
+            "fieldname": "form_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Form Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "template",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Template",
+            "options": "Standard\nAJAX\nWizard",
+            "default": "Standard",
+            "reqd": 1
+        },
+        {
+            "fieldname": "form_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Form Type",
+            "options": "general\ndomain-first\nregistration-only",
+            "default": "general",
+            "reqd": 1
+        },
+        {
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "label": "Is Active",
+            "default": "1"
+        },
+        {
+            "fieldname": "product_groups",
+            "fieldtype": "Small Text",
+            "label": "Product Groups (comma-separated, blank = all)"
+        },
+        {
+            "fieldname": "allow_coupon",
+            "fieldtype": "Check",
+            "label": "Allow Coupon",
+            "default": "1"
+        },
+        {
+            "fieldname": "require_tos",
+            "fieldtype": "Check",
+            "label": "Require TOS",
+            "default": "1"
+        },
+        {
+            "fieldname": "tos_text",
+            "fieldtype": "Text",
+            "label": "TOS Text"
+        },
+        {
+            "fieldname": "require_recurring_consent",
+            "fieldtype": "Check",
+            "label": "Require Recurring Consent",
+            "default": "1"
+        },
+        {
+            "fieldname": "require_captcha",
+            "fieldtype": "Check",
+            "label": "Require CAPTCHA",
+            "default": "0"
+        },
+        {
+            "fieldname": "require_manual_review",
+            "fieldtype": "Check",
+            "label": "Require Manual Review",
+            "default": "0"
+        },
+        {
+            "fieldname": "section_break_form",
+            "fieldtype": "Section Break",
+            "label": "Form"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_rules",
+            "fieldtype": "Section Break",
+            "label": "Rules"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_consent",
+            "fieldtype": "Section Break",
+            "label": "Consent"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_review",
+            "fieldtype": "Section Break",
+            "label": "Review"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "module": "BeaverBill",
+    "name": "Hosting Order Form",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Hosting Customer"
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}

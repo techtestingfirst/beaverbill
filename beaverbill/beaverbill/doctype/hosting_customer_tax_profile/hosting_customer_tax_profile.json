@@ -14,7 +14,13 @@
         "section_break_tax",
         "tax_exempt",
         "column_break_4",
-        "gstin"
+        "gstin",
+        "address_line1",
+        "address_line2",
+        "city",
+        "postal_code",
+        "tax_id",
+        "tax_id_validated"
     ],
     "fields": [
         {
@@ -71,6 +77,36 @@
         {
             "fieldname": "column_break_4",
             "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "address_line1",
+            "fieldtype": "Data",
+            "label": "Address Line 1"
+        },
+        {
+            "fieldname": "address_line2",
+            "fieldtype": "Data",
+            "label": "Address Line 2"
+        },
+        {
+            "fieldname": "city",
+            "fieldtype": "Data",
+            "label": "City"
+        },
+        {
+            "fieldname": "postal_code",
+            "fieldtype": "Data",
+            "label": "Postal Code"
+        },
+        {
+            "fieldname": "tax_id",
+            "fieldtype": "Data",
+            "label": "Tax ID / VAT"
+        },
+        {
+            "fieldname": "tax_id_validated",
+            "fieldtype": "Check",
+            "label": "Tax ID Validated"
         }
     ],
     "index_web_pages_for_search": 1,

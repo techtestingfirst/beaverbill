@@ -12,11 +12,14 @@ interface Invoice {
   status: string
   invoice_date: string
   due_date: string
+  subtotal: number
+  discount_amount: number
+  tax_amount: number
   total_amount: number
   paid_amount: number
   outstanding_amount: number
   currency: string
-  items: Array<{ description: string; qty: number; unit_price: number; line_total: number }>
+  items: Array<{ description: string; qty: number; unit_price: number; discount_amount: number; tax_amount: number; line_total: number }>
 }
 interface Method {
   name: string
@@ -112,16 +115,17 @@ async function pay() {
       idempotency_key: `web-pay-${name}-${Date.now()}`,
     })
     if (res.payment_url) {
-      // Provider checkout is a server page at site root (/razorpay_checkout).
-      // Navigate by token only: keeps the customer's current host:port (local
-      // DNS, LAN IP, port maps) and never carries the /beaverbill SPA base,
+      // Provider checkout is a bench page at site root (/razorpay_checkout).
+      // Keep backend origin as-is: checkout frappe.call POSTs to "/" with
+      // X-Frappe-CMD, which Vite dev (:8080) answers 404. Staying on :8080
+      // breaks confirmation, invoice stays unpaid until Verify. Absolute
+      // backend URL (e.g. :8000) keeps POST on bench. Strip /beaverbill base
       // which multisite answers with 404.
       try {
         const u = new URL(res.payment_url, window.location.origin)
-        const token = u.searchParams.get('token')
-        window.location.href = token
-          ? `/razorpay_checkout?token=${encodeURIComponent(token)}`
-          : `${u.pathname}${u.search}${u.hash}`.replace(/^\/beaverbill(?=\/)/, '')
+        const path = `${u.pathname}${u.search}${u.hash}`.replace(/^\/beaverbill(?=\/)/, '')
+        const absolute = /^https?:\/\//i.test(res.payment_url)
+        window.location.href = absolute ? `${u.origin}${path}` : path
       } catch {
         window.location.href = res.payment_url
       }
@@ -166,6 +170,9 @@ onMounted(async () => {
               <tr class="border-b border-outline-gray-1 text-left text-xs text-ink-gray-5">
                 <th scope="col" class="px-4 py-2">Description</th>
                 <th scope="col" class="px-4 py-2 text-right">Qty</th>
+                <th scope="col" class="px-4 py-2 text-right">Unit</th>
+                <th scope="col" class="px-4 py-2 text-right">Discount</th>
+                <th scope="col" class="px-4 py-2 text-right">Tax</th>
                 <th scope="col" class="px-4 py-2 text-right">Total</th>
               </tr>
             </thead>
@@ -173,14 +180,19 @@ onMounted(async () => {
               <tr v-for="(line, i) in invoice.items" :key="i" class="border-b border-outline-gray-1 last:border-0">
                 <td class="px-4 py-2">{{ line.description }}</td>
                 <td class="px-4 py-2 text-right">{{ line.qty }}</td>
+                <td class="px-4 py-2 text-right">{{ money(line.unit_price, invoice.currency) }}</td>
+                <td class="px-4 py-2 text-right">−{{ money(line.discount_amount, invoice.currency) }}</td>
+                <td class="px-4 py-2 text-right">{{ money(line.tax_amount, invoice.currency) }}</td>
                 <td class="px-4 py-2 text-right">{{ money(line.line_total, invoice.currency) }}</td>
               </tr>
             </tbody>
             <tfoot>
-              <tr class="font-medium">
-                <td class="px-4 py-2" colspan="2">Outstanding</td>
-                <td class="px-4 py-2 text-right">{{ money(invoice.outstanding_amount, invoice.currency) }}</td>
-              </tr>
+              <tr><td class="px-4 py-2" colspan="5">Subtotal</td><td class="px-4 py-2 text-right">{{ money(invoice.subtotal, invoice.currency) }}</td></tr>
+              <tr><td class="px-4 py-2" colspan="5">Discount</td><td class="px-4 py-2 text-right">−{{ money(invoice.discount_amount, invoice.currency) }}</td></tr>
+              <tr><td class="px-4 py-2" colspan="5">Tax</td><td class="px-4 py-2 text-right">{{ money(invoice.tax_amount, invoice.currency) }}</td></tr>
+              <tr class="font-medium"><td class="px-4 py-2" colspan="5">Total</td><td class="px-4 py-2 text-right">{{ money(invoice.total_amount, invoice.currency) }}</td></tr>
+              <tr><td class="px-4 py-2" colspan="5">Paid</td><td class="px-4 py-2 text-right">{{ money(invoice.paid_amount, invoice.currency) }}</td></tr>
+              <tr class="font-medium"><td class="px-4 py-2" colspan="5">Outstanding</td><td class="px-4 py-2 text-right">{{ money(invoice.outstanding_amount, invoice.currency) }}</td></tr>
             </tfoot>
           </table>
         </div>

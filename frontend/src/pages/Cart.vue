@@ -15,6 +15,9 @@ interface CartLine {
 interface Cart {
   items: CartLine[]
   coupon: string | null
+  subtotal: number
+  discount: number
+  tax_total: number
   total: number
   currency: string
 }
@@ -22,7 +25,7 @@ interface Cart {
 const router = useRouter()
 const loading = ref(true)
 const error = ref<string | null>(null)
-const cart = ref<Cart>({ items: [], coupon: null, total: 0, currency: 'USD' })
+const cart = ref<Cart>({ items: [], coupon: null, subtotal: 0, discount: 0, tax_total: 0, total: 0, currency: 'USD' })
 const coupon = ref('')
 const busy = ref(false)
 
@@ -96,10 +99,12 @@ onMounted(load)
           <TextInput id="cart-coupon" v-model="coupon" placeholder="SAVE10" autocomplete="off" class="w-full sm:w-56" />
         </div>
         <Button :loading="busy" @click="applyCoupon">{{ coupon ? 'Apply' : 'Clear' }}</Button>
-        <p class="w-full text-sm text-ink-gray-5">
-          {{ cart.coupon ? `Coupon ${cart.coupon} applied.` : 'No coupon applied.' }}
-          Total: <strong class="text-ink-gray-9">{{ money(cart.total, cart.currency) }}</strong>
-        </p>
+        <dl class="w-full space-y-1 text-sm">
+          <div class="flex justify-between text-ink-gray-6"><dt>Subtotal</dt><dd>{{ money(cart.subtotal, cart.currency) }}</dd></div>
+          <div class="flex justify-between text-ink-gray-6"><dt>{{ cart.coupon ? `Discount (${cart.coupon})` : 'Discount' }}</dt><dd>−{{ money(cart.discount, cart.currency) }}</dd></div>
+          <div class="flex justify-between text-ink-gray-6"><dt>Tax</dt><dd>{{ money(cart.tax_total, cart.currency) }}</dd></div>
+          <div class="flex justify-between pt-1 text-base font-semibold text-ink-gray-9"><dt>Total</dt><dd>{{ money(cart.total, cart.currency) }}</dd></div>
+        </dl>
       </div>
       <div class="mt-4 flex justify-end">
         <Button variant="solid" theme="blue" @click="checkout">Proceed to checkout</Button>
